@@ -97,6 +97,17 @@ class Project < ActiveRecord::Base
      TaxonName 
      ControlledVocabularyTerm
      OriginRelationship
+     Sequence
+     SequenceRelationship
+     Observation
+     Extract
+     GeneAttribute
+     MatrixColumnItem
+     MatrixColumn
+     MatrixRowItem
+     MatrixRow
+     Matrix
+     Descriptor
      ProjectMember  
     }
 
