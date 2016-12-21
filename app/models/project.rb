@@ -47,6 +47,7 @@ class Project < ActiveRecord::Base
 
     order = %w{
      ProtocolRelationship
+     CharacterState
      Protocol
      AlternateValue
      DataAttribute 

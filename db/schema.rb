@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109214506) do
+ActiveRecord::Schema.define(version: 20161221193429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
-  enable_extension "hstore"
   enable_extension "fuzzystrmatch"
+  enable_extension "hstore"
 
   create_table "alternate_values", force: :cascade do |t|
     t.text     "value",                            null: false
@@ -156,6 +156,25 @@ ActiveRecord::Schema.define(version: 20161109214506) do
   add_index "biological_relationships", ["created_by_id"], name: "bio_rel_created_by", using: :btree
   add_index "biological_relationships", ["project_id"], name: "bio_rel_project", using: :btree
   add_index "biological_relationships", ["updated_by_id"], name: "bio_rel_updated_by", using: :btree
+
+  create_table "character_states", force: :cascade do |t|
+    t.string   "name",          null: false
+    t.string   "label",         null: false
+    t.integer  "descriptor_id", null: false
+    t.integer  "position"
+    t.integer  "project_id"
+    t.integer  "updated_by_id", null: false
+    t.integer  "created_by_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "character_states", ["created_by_id"], name: "index_character_states_on_created_by_id", using: :btree
+  add_index "character_states", ["descriptor_id"], name: "index_character_states_on_descriptor_id", using: :btree
+  add_index "character_states", ["label"], name: "index_character_states_on_label", using: :btree
+  add_index "character_states", ["name"], name: "index_character_states_on_name", using: :btree
+  add_index "character_states", ["project_id"], name: "index_character_states_on_project_id", using: :btree
+  add_index "character_states", ["updated_by_id"], name: "index_character_states_on_updated_by_id", using: :btree
 
   create_table "citation_topics", force: :cascade do |t|
     t.integer  "topic_id",      null: false
@@ -564,10 +583,190 @@ ActiveRecord::Schema.define(version: 20161109214506) do
   add_index "documents", ["document_file_file_size"], name: "index_documents_on_document_file_file_size", using: :btree
   add_index "documents", ["document_file_updated_at"], name: "index_documents_on_document_file_updated_at", using: :btree
 
+  create_table "dwc_occurrences", force: :cascade do |t|
+    t.string   "acceptedNameUsage"
+    t.string   "acceptedNameUsageID"
+    t.string   "accessRights"
+    t.string   "associatedMedia"
+    t.string   "associatedOccurrences"
+    t.string   "associatedOrganisms"
+    t.string   "associatedReferences"
+    t.string   "associatedSequences"
+    t.string   "associatedTaxa"
+    t.string   "basisOfRecord"
+    t.string   "bed"
+    t.string   "behavior"
+    t.string   "bibliographicCitation"
+    t.string   "catalogNumber"
+    t.string   "dwcClass"
+    t.string   "collectionCode"
+    t.string   "collectionID"
+    t.string   "continent"
+    t.string   "coordinatePrecision"
+    t.string   "coordinateUncertaintyInMeters"
+    t.string   "country"
+    t.string   "countryCode"
+    t.string   "county"
+    t.string   "dataGeneralizations"
+    t.string   "datasetID"
+    t.string   "datasetName"
+    t.string   "dateIdentified"
+    t.string   "day"
+    t.string   "decimalLatitude"
+    t.string   "decimalLongitude"
+    t.string   "disposition"
+    t.string   "dynamicProperties"
+    t.string   "earliestAgeOrLowestStage"
+    t.string   "earliestEonOrLowestEonothem"
+    t.string   "earliestEpochOrLowestSeries"
+    t.string   "earliestEraOrLowestErathem"
+    t.string   "earliestPeriodOrLowestSystem"
+    t.string   "endDayOfYear"
+    t.string   "establishmentMeans"
+    t.string   "eventDate"
+    t.string   "eventID"
+    t.string   "eventRemarks"
+    t.string   "eventTime"
+    t.string   "family"
+    t.string   "fieldNotes"
+    t.string   "fieldNumber"
+    t.string   "footprintSRS"
+    t.string   "footprintSpatialFit"
+    t.string   "footprintWKT"
+    t.string   "formation"
+    t.string   "genus"
+    t.string   "geodeticDatum"
+    t.string   "geologicalContextID"
+    t.string   "georeferenceProtocol"
+    t.string   "georeferenceRemarks"
+    t.string   "georeferenceSources"
+    t.string   "georeferenceVerificationStatus"
+    t.string   "georeferencedBy"
+    t.string   "georeferencedDate"
+    t.string   "group"
+    t.string   "habitat"
+    t.string   "higherClassification"
+    t.string   "higherGeography"
+    t.string   "higherGeographyID"
+    t.string   "highestBiostratigraphicZone"
+    t.string   "identificationID"
+    t.string   "identificationQualifier"
+    t.string   "identificationReferences"
+    t.string   "identificationRemarks"
+    t.string   "identificationVerificationStatus"
+    t.string   "identifiedBy"
+    t.string   "individualCount"
+    t.string   "informationWithheld"
+    t.string   "infraspecificEpithet"
+    t.string   "institutionCode"
+    t.string   "institutionID"
+    t.string   "island"
+    t.string   "islandGroup"
+    t.string   "kingdom"
+    t.string   "language"
+    t.string   "latestAgeOrHighestStage"
+    t.string   "latestEonOrHighestEonothem"
+    t.string   "latestEpochOrHighestSeries"
+    t.string   "latestEraOrHighestErathem"
+    t.string   "latestPeriodOrHighestSystem"
+    t.string   "license"
+    t.string   "lifeStage"
+    t.string   "lithostratigraphicTerms"
+    t.string   "locality"
+    t.string   "locationAccordingTo"
+    t.string   "locationID"
+    t.string   "locationRemarks"
+    t.string   "lowestBiostratigraphicZone"
+    t.string   "materialSampleID"
+    t.string   "maximumDepthInMeters"
+    t.string   "maximumDistanceAboveSurfaceInMeters"
+    t.string   "maximumElevationInMeters"
+    t.string   "member"
+    t.string   "minimumDepthInMeters"
+    t.string   "minimumDistanceAboveSurfaceInMeters"
+    t.string   "minimumElevationInMeters"
+    t.string   "modified"
+    t.string   "month"
+    t.string   "municipality"
+    t.string   "nameAccordingTo"
+    t.string   "nameAccordingToID"
+    t.string   "namePublishedIn"
+    t.string   "namePublishedInID"
+    t.string   "namePublishedInYear"
+    t.string   "nomenclaturalCode"
+    t.string   "nomenclaturalStatus"
+    t.string   "occurrenceID"
+    t.string   "occurrenceRemarks"
+    t.string   "occurrenceStatus"
+    t.string   "order"
+    t.string   "organismID"
+    t.string   "organismName"
+    t.string   "organismQuantity"
+    t.string   "organismQuantityType"
+    t.string   "organismRemarks"
+    t.string   "organismScope"
+    t.string   "originalNameUsage"
+    t.string   "originalNameUsageID"
+    t.string   "otherCatalogNumbers"
+    t.string   "ownerInstitutionCode"
+    t.string   "parentEventID"
+    t.string   "parentNameUsage"
+    t.string   "parentNameUsageID"
+    t.string   "phylum"
+    t.string   "pointRadiusSpatialFit"
+    t.string   "preparations"
+    t.string   "previousIdentifications"
+    t.string   "recordNumber"
+    t.string   "recordedBy"
+    t.string   "references"
+    t.string   "reproductiveCondition"
+    t.string   "rightsHolder"
+    t.string   "sampleSizeUnit"
+    t.string   "sampleSizeValue"
+    t.string   "samplingEffort"
+    t.string   "samplingProtocol"
+    t.string   "scientificName"
+    t.string   "scientificNameAuthorship"
+    t.string   "scientificNameID"
+    t.string   "sex"
+    t.string   "specificEpithet"
+    t.string   "startDayOfYear"
+    t.string   "stateProvince"
+    t.string   "subgenus"
+    t.string   "taxonConceptID"
+    t.string   "taxonID"
+    t.string   "taxonRank"
+    t.string   "taxonRemarks"
+    t.string   "taxonomicStatus"
+    t.string   "type"
+    t.string   "typeStatus"
+    t.string   "verbatimCoordinateSystem"
+    t.string   "verbatimCoordinates"
+    t.string   "verbatimDepth"
+    t.string   "verbatimElevation"
+    t.string   "verbatimEventDate"
+    t.string   "verbatimLatitude"
+    t.string   "verbatimLocality"
+    t.string   "verbatimLongitude"
+    t.string   "verbatimSRS"
+    t.string   "verbatimTaxonRank"
+    t.string   "vernacularName"
+    t.string   "waterBody"
+    t.string   "year"
+    t.integer  "dwc_occurrence_object_id"
+    t.string   "dwc_occurrence_object_type"
+    t.integer  "created_by_id",                       null: false
+    t.integer  "updated_by_id",                       null: false
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dwc_occurrences", ["project_id"], name: "index_dwc_occurrences_on_project_id", using: :btree
+
   create_table "extracts", force: :cascade do |t|
     t.decimal  "quantity_value",             null: false
     t.string   "quantity_unit",              null: false
-    t.decimal  "quantity_concentration",     null: false
     t.string   "verbatim_anatomical_origin", null: false
     t.integer  "year_made",                  null: false
     t.integer  "month_made",                 null: false
@@ -577,6 +776,8 @@ ActiveRecord::Schema.define(version: 20161109214506) do
     t.integer  "project_id",                 null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.decimal  "concentration_value"
+    t.string   "concentration_unit"
   end
 
   add_index "extracts", ["project_id"], name: "index_extracts_on_project_id", using: :btree
@@ -1644,6 +1845,10 @@ ActiveRecord::Schema.define(version: 20161109214506) do
   add_foreign_key "biological_relationships", "projects", name: "biological_relationships_project_id_fkey"
   add_foreign_key "biological_relationships", "users", column: "created_by_id", name: "biological_relationships_created_by_id_fkey"
   add_foreign_key "biological_relationships", "users", column: "updated_by_id", name: "biological_relationships_updated_by_id_fkey"
+  add_foreign_key "character_states", "descriptors"
+  add_foreign_key "character_states", "projects"
+  add_foreign_key "character_states", "users", column: "created_by_id"
+  add_foreign_key "character_states", "users", column: "updated_by_id"
   add_foreign_key "citation_topics", "citations", name: "citation_topics_citation_id_fkey"
   add_foreign_key "citation_topics", "controlled_vocabulary_terms", column: "topic_id", name: "citation_topics_topic_id_fkey"
   add_foreign_key "citation_topics", "projects", name: "citation_topics_project_id_fkey"
@@ -1710,6 +1915,9 @@ ActiveRecord::Schema.define(version: 20161109214506) do
   add_foreign_key "documentation", "users", column: "updated_by_id"
   add_foreign_key "documents", "users", column: "created_by_id"
   add_foreign_key "documents", "users", column: "updated_by_id"
+  add_foreign_key "dwc_occurrences", "projects"
+  add_foreign_key "dwc_occurrences", "users", column: "created_by_id"
+  add_foreign_key "dwc_occurrences", "users", column: "updated_by_id"
   add_foreign_key "extracts", "projects"
   add_foreign_key "extracts", "users", column: "created_by_id"
   add_foreign_key "extracts", "users", column: "updated_by_id"
