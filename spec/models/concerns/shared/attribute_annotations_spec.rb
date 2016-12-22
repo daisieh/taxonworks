@@ -53,7 +53,7 @@ describe 'AttributeAnnotations', :type => :model do
 
 end
 
-class TestAttributeAnnotations< ActiveRecord::Base
+class TestAttributeAnnotations < ApplicationRecord
   include FakeTable
   include Shared::AttributeAnnotations
 

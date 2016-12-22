@@ -1,7 +1,7 @@
 
 # Each MatrixColumnItem is set of descriptors
 #
-class MatrixColumnItem < ActiveRecord::Base
+class MatrixColumnItem < ApplicationRecord
   include Housekeeping
   include Shared::Identifiable
   include Shared::IsData

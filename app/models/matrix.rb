@@ -1,4 +1,4 @@
-class Matrix < ActiveRecord::Base
+class Matrix < ApplicationRecord
   include Housekeeping
   include Shared::Citable              
   include Shared::Identifiable

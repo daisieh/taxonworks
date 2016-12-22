@@ -45,7 +45,7 @@
 #   @return [String]
 #   Text describing the source of the data used for creation (TDWG, GADM, NaturalEarth, etc.).
 #
-class GeographicArea < ActiveRecord::Base
+class GeographicArea < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::IsData

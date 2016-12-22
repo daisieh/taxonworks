@@ -38,7 +38,7 @@
 #   @return [Integer]
 #   the day of the month the determination was made
 #
-class TaxonDetermination < ActiveRecord::Base
+class TaxonDetermination < ApplicationRecord
   acts_as_list scope: [:biological_collection_object_id]
 
   include Housekeeping

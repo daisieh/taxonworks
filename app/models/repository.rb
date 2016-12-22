@@ -26,7 +26,7 @@
 #   @return [Boolean]
 #    see  http://grbio.org/
 #
-class Repository < ActiveRecord::Base
+class Repository < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::Notable

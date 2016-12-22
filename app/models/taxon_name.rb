@@ -111,8 +111,7 @@
 #   The sole purpose of this string is to represent visual differences from what is recorded in the
 #   latinized version of the name (Protonym#name, Combination#cached) from what was originally transcribed
 #
-class TaxonName < ActiveRecord::Base
-
+class TaxonName < ApplicationRecord
   has_closure_tree
   has_paper_trail
 

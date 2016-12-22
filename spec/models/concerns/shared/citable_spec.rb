@@ -290,7 +290,7 @@ describe 'Citable', type: :model, group: [:nomenclature, :citations] do
 
 end
 
-class TestCitable < ActiveRecord::Base
+class TestCitable < ApplicationRecord
   include FakeTable
   include Shared::Citable
 end

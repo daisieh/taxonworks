@@ -55,7 +55,7 @@ describe 'Loanable', type: :model, group: :loans do
 
 end
 
-class TestLoanable < ActiveRecord::Base
+class TestLoanable < ApplicationRecord
   include FakeTable
   include Shared::Loanable
 

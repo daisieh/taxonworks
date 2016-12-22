@@ -67,7 +67,7 @@ describe 'Taggable', :type => :model do
   end
 end
 
-class TestTaggable < ActiveRecord::Base
+class TestTaggable < ApplicationRecord
   include FakeTable
   include Shared::Taggable
 end

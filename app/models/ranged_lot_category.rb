@@ -18,7 +18,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class RangedLotCategory < ActiveRecord::Base
+class RangedLotCategory < ApplicationRecord
   include Housekeeping
   include Shared::IsData 
   include SoftValidation

@@ -60,7 +60,7 @@ describe 'Identifiable', :type => :model do
 
 end
 
-class TestIdentifiable < ActiveRecord::Base
+class TestIdentifiable < ApplicationRecord
   include FakeTable
   include Shared::Identifiable
 end

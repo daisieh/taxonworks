@@ -24,8 +24,7 @@
 #   @return [String]
 #     A SKOS relationship that defines/describes the relationship between the concept identified by the URI and the concept defined in the definition. 
 #
-class ControlledVocabularyTerm < ActiveRecord::Base
-
+class ControlledVocabularyTerm < ApplicationRecord
   include Housekeeping
   include Shared::AlternateValues
   include Shared::IsData

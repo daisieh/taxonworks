@@ -20,7 +20,7 @@
 #   @return [Integer]
 #    sort column 
 #
-class TypeMaterial < ActiveRecord::Base
+class TypeMaterial < ApplicationRecord
   include Housekeeping
   include Shared::Citable
   include Shared::DataAttributes

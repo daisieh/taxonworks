@@ -1,4 +1,4 @@
-class OriginRelationship < ActiveRecord::Base
+class OriginRelationship < ApplicationRecord
   include Housekeeping
   
   belongs_to :old_object, polymorphic: true # Source of new object

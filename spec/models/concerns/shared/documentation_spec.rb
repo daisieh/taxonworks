@@ -79,7 +79,7 @@ describe 'Documention', type: :model, group: :documentation do
 
 end
 
-class TestDocumentable < ActiveRecord::Base
+class TestDocumentable < ApplicationRecord
   include FakeTable
   include Shared::Documentation
 end

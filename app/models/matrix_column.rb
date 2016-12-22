@@ -1,4 +1,4 @@
-class MatrixColumn < ActiveRecord::Base
+class MatrixColumn < ApplicationRecord
   include Housekeeping
   include Shared::IsData
   include Shared::Taggable

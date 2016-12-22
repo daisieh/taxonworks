@@ -31,7 +31,7 @@
 #   @return [String]
 #   @todo
 #
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::AlternateValues

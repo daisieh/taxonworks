@@ -233,12 +233,12 @@ describe 'Housekeeping::User' do
 end
 
 module HousekeepingTestClass
-  class WithBoth  < ActiveRecord::Base 
+  class WithBoth < ApplicationRecord
     include FakeTable  
     include Housekeeping 
   end
 
-  class WithUser < ActiveRecord::Base
+  class WithUser < ApplicationRecord
     include FakeTable 
     include Housekeeping::Users 
   end

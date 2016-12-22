@@ -10,7 +10,7 @@
 #   @return [Hash]
 #     Settings for the project (for all users)   
 #
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Housekeeping::AssociationHelpers
@@ -43,7 +43,7 @@ class Project < ActiveRecord::Base
   # @return [Boolean]
   #   based on whether the project has successfully been deleted.  Can also raise on detected problems with configuration.
   def nuke
-    known = ActiveRecord::Base.subclasses.select { |a| a.column_names.include?('project_id') }.map(&:name)
+    known = ApplicationRecord.subclasses.select { |a| a.column_names.include?('project_id') }.map(&:name)
 
     order = %w{
      ProtocolRelationship

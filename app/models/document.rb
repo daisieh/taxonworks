@@ -18,7 +18,7 @@
 #   @return [Timestamp]
 #     last time this document was updated 
 #
-class Document < ActiveRecord::Base
+class Document < ApplicationRecord
   include Housekeeping
   include Shared::Identifiable
   include Shared::Notable

@@ -21,8 +21,7 @@
 #   @return [Integer]
 #     a user definable sort code on the tags on an object, handled by acts_as_list
 #
-class Confidence < ActiveRecord::Base
-
+class Confidence < ApplicationRecord
   include Housekeeping
   include Shared::IsData
 

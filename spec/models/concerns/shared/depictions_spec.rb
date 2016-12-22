@@ -81,7 +81,7 @@ describe 'Depictions', type: :model do
 
 end
 
-class TestDepictionable < ActiveRecord::Base
+class TestDepictionable < ApplicationRecord
   include FakeTable
   include Shared::Depictions
 end

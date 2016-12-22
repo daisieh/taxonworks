@@ -16,7 +16,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class BiologicalRelationship < ActiveRecord::Base
+class BiologicalRelationship < ApplicationRecord
   include Housekeeping
   include Shared::Taggable
   include Shared::Notable

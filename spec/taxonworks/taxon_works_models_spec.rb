@@ -9,7 +9,7 @@ describe TaxonWorks do
   Rails.application.eager_load!
 
   context 'model includes/attributes' do
-    ActiveRecord::Base.descendants.each { |model|
+    ApplicationRecord.descendants.each { |model|
       if model < Shared::AlternateValues
         it "#{model} should define the array ALTERNATE_VALUES_FOR" do
           expect(model::ALTERNATE_VALUES_FOR).to be_an(Array), "#{model} is missing ALTERNATE_VALUES_FOR"
@@ -75,7 +75,7 @@ describe TaxonWorks do
 end
 
 module TaxonWorksModels
-  class GenericModel  < ActiveRecord::Base 
+  class GenericModel < ApplicationRecord
     include FakeTable  
   end
 end

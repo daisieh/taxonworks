@@ -16,7 +16,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class CollectionObjectObservation < ActiveRecord::Base
+class CollectionObjectObservation < ApplicationRecord
   include Housekeeping
   include Shared::IsData
   include Shared::Taggable

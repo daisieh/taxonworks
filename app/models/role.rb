@@ -24,7 +24,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class Role < ActiveRecord::Base
+class Role < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::IsData

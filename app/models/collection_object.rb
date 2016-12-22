@@ -56,8 +56,7 @@
 #   @return [Date]
 #   The date when the object was removed from tracking.  If provide then Repository must be null?! TODO: resolve
 #
-class CollectionObject < ActiveRecord::Base
-
+class CollectionObject < ApplicationRecord
   include GlobalID::Identification
 
   # @todo DDA: may be buffered_accession_number should be added.  MJY: This would promote non-"barcoded" data capture, I'm not sure we want to do this?!

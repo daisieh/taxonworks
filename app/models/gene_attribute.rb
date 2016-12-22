@@ -1,4 +1,4 @@
-class GeneAttribute < ActiveRecord::Base
+class GeneAttribute < ApplicationRecord
   include Housekeeping
   include Shared::Identifiable
   include Shared::IsData

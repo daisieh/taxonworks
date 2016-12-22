@@ -20,8 +20,7 @@
 #   @return [Integer]
 #     the container the label will be attached to 
 #
-class ContainerLabel < ActiveRecord::Base
-
+class ContainerLabel < ApplicationRecord
   acts_as_list scope: [:container]
 
   include Housekeeping

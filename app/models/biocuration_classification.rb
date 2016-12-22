@@ -17,7 +17,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class BiocurationClassification < ActiveRecord::Base
+class BiocurationClassification < ApplicationRecord
   acts_as_list scope: [:biological_collection_object]
 
   include Housekeeping

@@ -3,7 +3,7 @@
 # Protocols are simple records, they can be Document(ed) with
 #  external files (pdfs, text files, etc.)
 # 
-class Protocol < ActiveRecord::Base
+class Protocol < ApplicationRecord
   include Housekeeping
   include Shared::IsData
 #  include Shared::Documentable

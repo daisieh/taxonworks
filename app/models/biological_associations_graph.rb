@@ -8,7 +8,7 @@
 #   @return [String]
 #     the name of the graph 
 #
-class BiologicalAssociationsGraph < ActiveRecord::Base
+class BiologicalAssociationsGraph < ApplicationRecord
   include Housekeeping
   include Shared::Citable
   include Shared::IsData 

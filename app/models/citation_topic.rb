@@ -23,8 +23,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class CitationTopic < ActiveRecord::Base
-
+class CitationTopic < ApplicationRecord
   include Housekeeping
   include Shared::IsData
 

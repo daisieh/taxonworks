@@ -38,7 +38,7 @@
 #   been included in TW then a new short name must be minted, and a verbatim_short_name used to indicate the 
 #   physically/and or historically recorded value.
 #
-class Namespace < ActiveRecord::Base
+class Namespace < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::SharedAcrossProjects

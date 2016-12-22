@@ -1,4 +1,4 @@
-class Observation < ActiveRecord::Base
+class Observation < ApplicationRecord
   include Housekeeping
   include Shared::Citable             
   include Shared::DataAttributes

@@ -1,4 +1,4 @@
-class Sequence < ActiveRecord::Base
+class Sequence < ApplicationRecord
   include Housekeeping
   # include Shared::Protocol
   # include Shared::Confidence

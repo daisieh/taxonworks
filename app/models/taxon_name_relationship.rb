@@ -40,7 +40,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class TaxonNameRelationship < ActiveRecord::Base
+class TaxonNameRelationship < ApplicationRecord
   include Housekeeping
   include Shared::Citable
   include Shared::IsData

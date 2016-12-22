@@ -55,7 +55,7 @@ describe 'DataAttributes', :type => :model do
 
 end
 
-class TestDataAttribute < ActiveRecord::Base
+class TestDataAttribute < ApplicationRecord
   include FakeTable
   include Shared::DataAttributes
 end

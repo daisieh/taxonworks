@@ -17,7 +17,7 @@
 #   @return [Integer]
 #     the project ID
 #
-class Depiction < ActiveRecord::Base
+class Depiction < ApplicationRecord
   # TODO: add position scoping
 
   include Housekeeping

@@ -9,7 +9,7 @@
 #   @return [String]
 #     a definition describing the preparation 
 #
-class PreparationType < ActiveRecord::Base
+class PreparationType < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::IsData

@@ -25,7 +25,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class OtuPageLayoutSection < ActiveRecord::Base
+class OtuPageLayoutSection < ApplicationRecord
   acts_as_list scope: :otu_page_layout
 
   include Housekeeping 

@@ -17,7 +17,7 @@
 #   @return [Integer]
 #   @todo
 #
-class TaggedSectionKeyword < ActiveRecord::Base
+class TaggedSectionKeyword < ApplicationRecord
   include Housekeeping
   include Shared::IsData 
 

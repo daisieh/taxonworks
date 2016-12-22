@@ -38,7 +38,7 @@
 #   @return (String)
 #   Added by paperclip_meta gem, stores the sizes of derived images
 #
-class Image < ActiveRecord::Base
+class Image < ApplicationRecord
   include Housekeeping
   include Shared::Identifiable
   include Shared::Notable

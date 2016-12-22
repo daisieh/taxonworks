@@ -28,7 +28,7 @@
 #   @return [String]
 #   @todo
 #
-class Serial < ActiveRecord::Base
+class Serial < ApplicationRecord
   # Include statements, and acts_as_type
   include Housekeeping::Users
   include Housekeeping::Timestamps  # needed for the views

@@ -20,7 +20,7 @@
 #   @return [String]
 #     a specific location/localization for the data in the Source  
 #
-class Citation < ActiveRecord::Base
+class Citation < ApplicationRecord
   include Housekeeping
   include Shared::IsData
   include Shared::Notable

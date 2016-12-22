@@ -61,7 +61,7 @@
 #   @return [String]
 #     one of 'wet', 'dry', 'slide' sensu Favret.  Model is extensible via editing .yml and new profile types.
 #
-class CollectionProfile < ActiveRecord::Base
+class CollectionProfile < ApplicationRecord
   include Housekeeping
   include Shared::IsData 
   include SoftValidation

@@ -25,7 +25,7 @@ describe 'Has_roles', :type => :model do
   end
 end
 
-class TestHasRole < ActiveRecord::Base
+class TestHasRole < ApplicationRecord
   include FakeTable
   include Shared::HasRoles
 end

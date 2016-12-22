@@ -22,7 +22,7 @@
 #   @return [Integer]
 #   Stubbed placeholder for Revision (sensus taxonomy) model.  NOT PRESENTLY USED.
 #
-class Content < ActiveRecord::Base
+class Content < ApplicationRecord
   include Housekeeping
   include Shared::IsData
 

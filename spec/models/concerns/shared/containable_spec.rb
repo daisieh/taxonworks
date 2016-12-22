@@ -61,7 +61,7 @@ describe 'Containables', type: :model, group: :containers do
   end
 end
 
-class TestContainable < ActiveRecord::Base
+class TestContainable < ApplicationRecord
   include FakeTable
   include Shared::Containable
 end

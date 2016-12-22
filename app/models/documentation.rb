@@ -20,7 +20,7 @@
 #   @return [Hash]
 #     maps page numbers, key is Document page, value is Recorded page (e.g. first page of the pdf => published page 10)
 #
-class Documentation < ActiveRecord::Base
+class Documentation < ApplicationRecord
   include Housekeeping
   include Shared::Identifiable
   include Shared::Notable

@@ -12,7 +12,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class TaxonNameClassification < ActiveRecord::Base
+class TaxonNameClassification < ApplicationRecord
   include Housekeeping
   include Shared::Citable
   include Shared::IsData

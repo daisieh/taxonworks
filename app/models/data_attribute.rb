@@ -26,7 +26,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class DataAttribute < ActiveRecord::Base
+class DataAttribute < ApplicationRecord
   include Housekeeping
   include Shared::IsData 
   include Shared::DualAnnotator

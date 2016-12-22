@@ -17,8 +17,7 @@
 #   @return [String]
 #     a free text description of the position of this container
 #
-class Container < ActiveRecord::Base
-
+class Container < ApplicationRecord
   include Housekeeping
   include Shared::IsData
   include Shared::Identifiable

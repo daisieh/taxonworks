@@ -17,7 +17,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class BiologicalRelationshipType < ActiveRecord::Base
+class BiologicalRelationshipType < ApplicationRecord
   include Housekeeping
   include Shared::IsData 
 

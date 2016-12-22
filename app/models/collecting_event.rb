@@ -152,7 +152,7 @@
 #     the auto-calculated level2 value (e.g. county) drawn from GeographicNames, never directly user supplied
 #
 #
-class CollectingEvent < ActiveRecord::Base
+class CollectingEvent < ApplicationRecord
   include Housekeeping
   include Shared::Citable
   include Shared::DataAttributes

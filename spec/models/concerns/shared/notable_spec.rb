@@ -42,7 +42,7 @@ describe 'Notable', type: :model do
 
 end
 
-class TestNotable < ActiveRecord::Base
+class TestNotable < ApplicationRecord
   include FakeTable
   include Shared::Notable
 end

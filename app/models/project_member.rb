@@ -12,7 +12,7 @@
 #   @return [Boolean]
 #    whether the user is a project administrator 
 #
-class ProjectMember < ActiveRecord::Base
+class ProjectMember < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::IsData 

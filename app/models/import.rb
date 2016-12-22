@@ -25,7 +25,7 @@
 #   i.get('my_values_name') # =>  ['a', 'b', 'c']
 #
 #
-class Import < ActiveRecord::Base
+class Import < ApplicationRecord
   store_accessor :metadata
 
   validates_presence_of :name

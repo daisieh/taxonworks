@@ -55,7 +55,7 @@
 #   @return [String]
 #     as in Prof. Mrs. Dr. M. Mr. etc.
 #
-class Loan < ActiveRecord::Base
+class Loan < ApplicationRecord
   include Housekeeping
   include Shared::IsData
   include Shared::DataAttributes

@@ -25,7 +25,7 @@
 #     a positive negative, when true then there exists an assertion that the taxon is not present in the spatial area
 #
 #
-class AssertedDistribution < ActiveRecord::Base
+class AssertedDistribution < ApplicationRecord
   include Housekeeping
   include Shared::Notable
   include SoftValidation

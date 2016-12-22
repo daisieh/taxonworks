@@ -1,4 +1,4 @@
-class ProtocolRelationship < ActiveRecord::Base
+class ProtocolRelationship < ApplicationRecord
   include Housekeeping
   include Shared::IsData
 

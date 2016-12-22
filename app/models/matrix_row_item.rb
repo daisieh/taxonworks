@@ -1,4 +1,4 @@
-class MatrixRowItem < ActiveRecord::Base
+class MatrixRowItem < ApplicationRecord
   include Housekeeping
   include Shared::Citable
   include Shared::Identifiable

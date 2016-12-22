@@ -1,6 +1,6 @@
 # An extract is the quantified physical entity that originated from a collection object
 
-class Extract < ActiveRecord::Base
+class Extract < ApplicationRecord
   include Housekeeping
   include Shared::IsData
 

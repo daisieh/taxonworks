@@ -181,7 +181,7 @@
 #   @return [DateTime]
 #     Date sensu nomenclature algorithm in TaxonWorks (see Utilities::Dates) 
 #
-class Source < ActiveRecord::Base
+class Source < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::AlternateValues

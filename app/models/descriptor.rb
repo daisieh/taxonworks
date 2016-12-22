@@ -1,4 +1,4 @@
-class Descriptor < ActiveRecord::Base
+class Descriptor < ApplicationRecord
   include Housekeeping
   include Shared::Citable              
   include Shared::Identifiable

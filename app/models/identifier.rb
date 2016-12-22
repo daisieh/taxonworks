@@ -38,8 +38,7 @@
 #   @return [String]
 #   The type of the identified object, used in a polymorphic relationship.
 #
-class Identifier < ActiveRecord::Base
-
+class Identifier < ApplicationRecord
   acts_as_list scope: [:identifier_object_id, :identifier_object_type]
 
   # @todo @mjy resolve this to not require project id

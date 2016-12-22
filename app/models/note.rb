@@ -21,7 +21,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class Note < ActiveRecord::Base
+class Note < ApplicationRecord
   include Housekeeping
   include Shared::IsData 
   include Shared::AttributeAnnotations

@@ -13,7 +13,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class BiologicalAssociationsBiologicalAssociationsGraph < ActiveRecord::Base
+class BiologicalAssociationsBiologicalAssociationsGraph < ApplicationRecord
   include Housekeeping
   include Shared::IsData 
 

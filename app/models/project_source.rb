@@ -8,7 +8,7 @@
 #   @return [Integer]
 #     the source  
 #
-class ProjectSource < ActiveRecord::Base
+class ProjectSource < ApplicationRecord
   include Housekeeping
   include Shared::IsData 
 

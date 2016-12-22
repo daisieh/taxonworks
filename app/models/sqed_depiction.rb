@@ -33,7 +33,7 @@
 #   @return [Hash]
 #    A cache for the ocr result 
 #
-class SqedDepiction < ActiveRecord::Base
+class SqedDepiction < ApplicationRecord
   include Housekeeping
   include Shared::Taggable
   include Shared::Notable

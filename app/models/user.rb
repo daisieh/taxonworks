@@ -95,7 +95,7 @@
 #   Only used for when .new_record? is true. If true assigns creator and updater as self.
 #
 #
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Housekeeping::AssociationHelpers

@@ -12,7 +12,7 @@
 #   @return [String]
 #     the type of transition b/w the old and new
 #
-class SerialChronology < ActiveRecord::Base
+class SerialChronology < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::IsData

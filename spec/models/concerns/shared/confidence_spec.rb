@@ -68,7 +68,7 @@ describe 'Confidence', type: :model, group: :confidence do
   end
 end
 
-class TestConfidence < ActiveRecord::Base
+class TestConfidence < ApplicationRecord
   include FakeTable
   include Shared::Confidence
 end

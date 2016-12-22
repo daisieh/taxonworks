@@ -10,7 +10,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class OtuPageLayout < ActiveRecord::Base
+class OtuPageLayout < ApplicationRecord
   include Housekeeping
   include Shared::IsData 
 

@@ -83,7 +83,7 @@ describe 'Housekeeping::Project' do
 end
 
 module HousekeepingTestClass
-  class WithProject < ActiveRecord::Base
+  class WithProject < ApplicationRecord
     include FakeTable 
     include Housekeeping::Projects 
   end

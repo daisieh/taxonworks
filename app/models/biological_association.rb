@@ -24,7 +24,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class BiologicalAssociation < ActiveRecord::Base
+class BiologicalAssociation < ApplicationRecord
   include Housekeeping
   include Shared::Citable
   include Shared::IsData

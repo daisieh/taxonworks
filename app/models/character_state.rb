@@ -1,5 +1,4 @@
-class CharacterState < ActiveRecord::Base
-
+class CharacterState < ApplicationRecord
   include Housekeeping
   include Shared::Depictions
   include Shared::IsData

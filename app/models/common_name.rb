@@ -1,4 +1,4 @@
-class CommonName < ActiveRecord::Base
+class CommonName < ApplicationRecord
   include Housekeeping
   include Shared::AlternateValues 
   include Shared::Citable         

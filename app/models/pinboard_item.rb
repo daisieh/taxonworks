@@ -32,7 +32,7 @@
 #   @return [Integer]
 #     (not implemented) - the number of times this item has been inserted 
 #
-class PinboardItem < ActiveRecord::Base
+class PinboardItem < ApplicationRecord
   include Housekeeping
 
   acts_as_list scope: [:project_id, :pinned_object_type]

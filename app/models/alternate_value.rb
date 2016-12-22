@@ -29,7 +29,7 @@
 #   @return [Integer]
 #   the project ID
 #
-class AlternateValue < ActiveRecord::Base
+class AlternateValue < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::IsData

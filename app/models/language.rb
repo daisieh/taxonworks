@@ -26,7 +26,7 @@
 #   @return [String]
 #   @todo
 #
-class Language < ActiveRecord::Base
+class Language < ApplicationRecord
   include Housekeeping::Users
   include Housekeeping::Timestamps
   include Shared::IsData 

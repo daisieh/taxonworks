@@ -1,4 +1,4 @@
-class SequenceRelationship < ActiveRecord::Base
+class SequenceRelationship < ApplicationRecord
   include Housekeeping
   # include Shared::Protocol
   # include Shared::Confidence

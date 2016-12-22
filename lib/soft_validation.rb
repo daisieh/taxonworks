@@ -14,7 +14,7 @@ require 'soft_validation/soft_validation_method'
 #
 # Usage:
 #
-#   class Foo < ActiveRecord::Base
+#   class Foo < ApplicationRecord
 #     include SoftValidation
 #     soft_validate(:a_soft_validation_method )
 #
@@ -85,7 +85,7 @@ module SoftValidation
 
   ANCESTORS_WITH_SOFT_VALIDATIONS = 
     Hash.new do |h, klass|
-      h[klass.name] = (klass.ancestors.select{|a| a.respond_to?(:soft_validates?) && a.soft_validates?} - [klass] ) # a < ActiveRecord::Base && would be faster but requires AR in spec 
+      h[klass.name] = (klass.ancestors.select{|a| a.respond_to?(:soft_validates?) && a.soft_validates?} - [klass] ) # a < ApplicationRecord && would be faster but requires AR in spec 
     end
 
   extend ActiveSupport::Concern
@@ -255,6 +255,6 @@ module SoftValidation
 end
 
 # Original version was an AR extension, might revert to this at some point.
-# class ActiveRecord::Base
+# class ApplicationRecord
 #   include SoftValidation
 # end

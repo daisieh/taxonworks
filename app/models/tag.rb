@@ -24,7 +24,7 @@
 #   @return [Integer]
 #     acts_as_list sort, scope is tagged object
 #
-class Tag < ActiveRecord::Base
+class Tag < ApplicationRecord
   include Housekeeping
   include Shared::IsData
   include Shared::AttributeAnnotations
