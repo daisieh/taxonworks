@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -31,14 +30,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "alternate_value_object_id",        null: false
     t.string   "alternate_value_object_type",      null: false
     t.integer  "project_id"
+    t.index ["alternate_value_object_id", "alternate_value_object_type"], name: "index_alternate_values_on_alternate_value_object_id_and_type", using: :btree
+    t.index ["created_by_id"], name: "index_alternate_values_on_created_by_id", using: :btree
+    t.index ["language_id"], name: "index_alternate_values_on_language_id", using: :btree
+    t.index ["project_id"], name: "index_alternate_values_on_project_id", using: :btree
+    t.index ["type"], name: "index_alternate_values_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_alternate_values_on_updated_by_id", using: :btree
   end
-
-  add_index "alternate_values", ["alternate_value_object_id", "alternate_value_object_type"], name: "index_alternate_values_on_alternate_value_object_id_and_type", using: :btree
-  add_index "alternate_values", ["created_by_id"], name: "index_alternate_values_on_created_by_id", using: :btree
-  add_index "alternate_values", ["language_id"], name: "index_alternate_values_on_language_id", using: :btree
-  add_index "alternate_values", ["project_id"], name: "index_alternate_values_on_project_id", using: :btree
-  add_index "alternate_values", ["type"], name: "index_alternate_values_on_type", using: :btree
-  add_index "alternate_values", ["updated_by_id"], name: "index_alternate_values_on_updated_by_id", using: :btree
 
   create_table "asserted_distributions", force: :cascade do |t|
     t.integer  "otu_id",             null: false
@@ -49,13 +47,12 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.boolean  "is_absent"
+    t.index ["created_by_id"], name: "index_asserted_distributions_on_created_by_id", using: :btree
+    t.index ["geographic_area_id"], name: "index_asserted_distributions_on_geographic_area_id", using: :btree
+    t.index ["otu_id"], name: "index_asserted_distributions_on_otu_id", using: :btree
+    t.index ["project_id"], name: "index_asserted_distributions_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_asserted_distributions_on_updated_by_id", using: :btree
   end
-
-  add_index "asserted_distributions", ["created_by_id"], name: "index_asserted_distributions_on_created_by_id", using: :btree
-  add_index "asserted_distributions", ["geographic_area_id"], name: "index_asserted_distributions_on_geographic_area_id", using: :btree
-  add_index "asserted_distributions", ["otu_id"], name: "index_asserted_distributions_on_otu_id", using: :btree
-  add_index "asserted_distributions", ["project_id"], name: "index_asserted_distributions_on_project_id", using: :btree
-  add_index "asserted_distributions", ["updated_by_id"], name: "index_asserted_distributions_on_updated_by_id", using: :btree
 
   create_table "biocuration_classifications", force: :cascade do |t|
     t.integer  "biocuration_class_id",            null: false
@@ -66,14 +63,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",                   null: false
     t.integer  "updated_by_id",                   null: false
     t.integer  "project_id",                      null: false
+    t.index ["biocuration_class_id"], name: "index_biocuration_classifications_on_biocuration_class_id", using: :btree
+    t.index ["biological_collection_object_id"], name: "bio_c_bio_collection_object", using: :btree
+    t.index ["created_by_id"], name: "index_biocuration_classifications_on_created_by_id", using: :btree
+    t.index ["position"], name: "index_biocuration_classifications_on_position", using: :btree
+    t.index ["project_id"], name: "index_biocuration_classifications_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_biocuration_classifications_on_updated_by_id", using: :btree
   end
-
-  add_index "biocuration_classifications", ["biocuration_class_id"], name: "index_biocuration_classifications_on_biocuration_class_id", using: :btree
-  add_index "biocuration_classifications", ["biological_collection_object_id"], name: "bio_c_bio_collection_object", using: :btree
-  add_index "biocuration_classifications", ["created_by_id"], name: "index_biocuration_classifications_on_created_by_id", using: :btree
-  add_index "biocuration_classifications", ["position"], name: "index_biocuration_classifications_on_position", using: :btree
-  add_index "biocuration_classifications", ["project_id"], name: "index_biocuration_classifications_on_project_id", using: :btree
-  add_index "biocuration_classifications", ["updated_by_id"], name: "index_biocuration_classifications_on_updated_by_id", using: :btree
 
   create_table "biological_associations", force: :cascade do |t|
     t.integer  "biological_relationship_id",          null: false
@@ -86,14 +82,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",                       null: false
     t.integer  "updated_by_id",                       null: false
     t.integer  "project_id",                          null: false
+    t.index ["biological_association_object_id", "biological_association_object_type"], name: "index_biological_associations_on_object_id_and_type", using: :btree
+    t.index ["biological_association_subject_id", "biological_association_subject_type"], name: "index_biological_associations_on_subject_id_and_type", using: :btree
+    t.index ["biological_relationship_id"], name: "index_biological_associations_on_biological_relationship_id", using: :btree
+    t.index ["created_by_id"], name: "index_biological_associations_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_biological_associations_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_biological_associations_on_updated_by_id", using: :btree
   end
-
-  add_index "biological_associations", ["biological_association_object_id", "biological_association_object_type"], name: "index_biological_associations_on_object_id_and_type", using: :btree
-  add_index "biological_associations", ["biological_association_subject_id", "biological_association_subject_type"], name: "index_biological_associations_on_subject_id_and_type", using: :btree
-  add_index "biological_associations", ["biological_relationship_id"], name: "index_biological_associations_on_biological_relationship_id", using: :btree
-  add_index "biological_associations", ["created_by_id"], name: "index_biological_associations_on_created_by_id", using: :btree
-  add_index "biological_associations", ["project_id"], name: "index_biological_associations_on_project_id", using: :btree
-  add_index "biological_associations", ["updated_by_id"], name: "index_biological_associations_on_updated_by_id", using: :btree
 
   create_table "biological_associations_biological_associations_graphs", force: :cascade do |t|
     t.integer  "biological_associations_graph_id", null: false
@@ -103,13 +98,12 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",                    null: false
     t.integer  "updated_by_id",                    null: false
     t.integer  "project_id",                       null: false
+    t.index ["biological_association_id"], name: "bio_asc_bio_asc_graph_bio_asc", using: :btree
+    t.index ["biological_associations_graph_id"], name: "bio_asc_bio_asc_graph_bio_asc_graph", using: :btree
+    t.index ["created_by_id"], name: "bio_asc_bio_asc_graph_created_by", using: :btree
+    t.index ["project_id"], name: "bio_asc_bio_asc_graph_project", using: :btree
+    t.index ["updated_by_id"], name: "bio_asc_bio_asc_graph_updated_by", using: :btree
   end
-
-  add_index "biological_associations_biological_associations_graphs", ["biological_association_id"], name: "bio_asc_bio_asc_graph_bio_asc", using: :btree
-  add_index "biological_associations_biological_associations_graphs", ["biological_associations_graph_id"], name: "bio_asc_bio_asc_graph_bio_asc_graph", using: :btree
-  add_index "biological_associations_biological_associations_graphs", ["created_by_id"], name: "bio_asc_bio_asc_graph_created_by", using: :btree
-  add_index "biological_associations_biological_associations_graphs", ["project_id"], name: "bio_asc_bio_asc_graph_project", using: :btree
-  add_index "biological_associations_biological_associations_graphs", ["updated_by_id"], name: "bio_asc_bio_asc_graph_updated_by", using: :btree
 
   create_table "biological_associations_graphs", force: :cascade do |t|
     t.datetime "created_at",    null: false
@@ -118,11 +112,10 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id", null: false
     t.integer  "project_id",    null: false
     t.string   "name"
+    t.index ["created_by_id"], name: "index_biological_associations_graphs_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_biological_associations_graphs_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_biological_associations_graphs_on_updated_by_id", using: :btree
   end
-
-  add_index "biological_associations_graphs", ["created_by_id"], name: "index_biological_associations_graphs_on_created_by_id", using: :btree
-  add_index "biological_associations_graphs", ["project_id"], name: "index_biological_associations_graphs_on_project_id", using: :btree
-  add_index "biological_associations_graphs", ["updated_by_id"], name: "index_biological_associations_graphs_on_updated_by_id", using: :btree
 
   create_table "biological_relationship_types", force: :cascade do |t|
     t.string   "type",                       null: false
@@ -133,14 +126,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",              null: false
     t.integer  "updated_by_id",              null: false
     t.integer  "project_id",                 null: false
+    t.index ["biological_property_id"], name: "index_biological_relationship_types_on_biological_property_id", using: :btree
+    t.index ["biological_relationship_id"], name: "bio_rel_type_bio_rel", using: :btree
+    t.index ["created_by_id"], name: "bio_rel_type_created_by", using: :btree
+    t.index ["project_id"], name: "bio_rel_type_project", using: :btree
+    t.index ["type"], name: "index_biological_relationship_types_on_type", using: :btree
+    t.index ["updated_by_id"], name: "bio_rel_type_updated_by", using: :btree
   end
-
-  add_index "biological_relationship_types", ["biological_property_id"], name: "index_biological_relationship_types_on_biological_property_id", using: :btree
-  add_index "biological_relationship_types", ["biological_relationship_id"], name: "bio_rel_type_bio_rel", using: :btree
-  add_index "biological_relationship_types", ["created_by_id"], name: "bio_rel_type_created_by", using: :btree
-  add_index "biological_relationship_types", ["project_id"], name: "bio_rel_type_project", using: :btree
-  add_index "biological_relationship_types", ["type"], name: "index_biological_relationship_types_on_type", using: :btree
-  add_index "biological_relationship_types", ["updated_by_id"], name: "bio_rel_type_updated_by", using: :btree
 
   create_table "biological_relationships", force: :cascade do |t|
     t.string   "name",          null: false
@@ -151,11 +143,10 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id", null: false
     t.integer  "updated_by_id", null: false
     t.integer  "project_id",    null: false
+    t.index ["created_by_id"], name: "bio_rel_created_by", using: :btree
+    t.index ["project_id"], name: "bio_rel_project", using: :btree
+    t.index ["updated_by_id"], name: "bio_rel_updated_by", using: :btree
   end
-
-  add_index "biological_relationships", ["created_by_id"], name: "bio_rel_created_by", using: :btree
-  add_index "biological_relationships", ["project_id"], name: "bio_rel_project", using: :btree
-  add_index "biological_relationships", ["updated_by_id"], name: "bio_rel_updated_by", using: :btree
 
   create_table "character_states", force: :cascade do |t|
     t.string   "name",          null: false
@@ -167,14 +158,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["created_by_id"], name: "index_character_states_on_created_by_id", using: :btree
+    t.index ["descriptor_id"], name: "index_character_states_on_descriptor_id", using: :btree
+    t.index ["label"], name: "index_character_states_on_label", using: :btree
+    t.index ["name"], name: "index_character_states_on_name", using: :btree
+    t.index ["project_id"], name: "index_character_states_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_character_states_on_updated_by_id", using: :btree
   end
-
-  add_index "character_states", ["created_by_id"], name: "index_character_states_on_created_by_id", using: :btree
-  add_index "character_states", ["descriptor_id"], name: "index_character_states_on_descriptor_id", using: :btree
-  add_index "character_states", ["label"], name: "index_character_states_on_label", using: :btree
-  add_index "character_states", ["name"], name: "index_character_states_on_name", using: :btree
-  add_index "character_states", ["project_id"], name: "index_character_states_on_project_id", using: :btree
-  add_index "character_states", ["updated_by_id"], name: "index_character_states_on_updated_by_id", using: :btree
 
   create_table "citation_topics", force: :cascade do |t|
     t.integer  "topic_id",      null: false
@@ -185,13 +175,12 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id", null: false
     t.integer  "updated_by_id", null: false
     t.integer  "project_id",    null: false
+    t.index ["citation_id"], name: "index_citation_topics_on_citation_id", using: :btree
+    t.index ["created_by_id"], name: "index_citation_topics_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_citation_topics_on_project_id", using: :btree
+    t.index ["topic_id"], name: "index_citation_topics_on_topic_id", using: :btree
+    t.index ["updated_by_id"], name: "index_citation_topics_on_updated_by_id", using: :btree
   end
-
-  add_index "citation_topics", ["citation_id"], name: "index_citation_topics_on_citation_id", using: :btree
-  add_index "citation_topics", ["created_by_id"], name: "index_citation_topics_on_created_by_id", using: :btree
-  add_index "citation_topics", ["project_id"], name: "index_citation_topics_on_project_id", using: :btree
-  add_index "citation_topics", ["topic_id"], name: "index_citation_topics_on_topic_id", using: :btree
-  add_index "citation_topics", ["updated_by_id"], name: "index_citation_topics_on_updated_by_id", using: :btree
 
   create_table "citations", force: :cascade do |t|
     t.string   "citation_object_type", null: false
@@ -204,14 +193,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "citation_object_id",   null: false
     t.string   "pages"
     t.boolean  "is_original"
+    t.index ["citation_object_id"], name: "index_citations_on_citation_object_id", using: :btree
+    t.index ["citation_object_type"], name: "index_citations_on_citation_object_type", using: :btree
+    t.index ["created_by_id"], name: "index_citations_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_citations_on_project_id", using: :btree
+    t.index ["source_id"], name: "index_citations_on_source_id", using: :btree
+    t.index ["updated_by_id"], name: "index_citations_on_updated_by_id", using: :btree
   end
-
-  add_index "citations", ["citation_object_id"], name: "index_citations_on_citation_object_id", using: :btree
-  add_index "citations", ["citation_object_type"], name: "index_citations_on_citation_object_type", using: :btree
-  add_index "citations", ["created_by_id"], name: "index_citations_on_created_by_id", using: :btree
-  add_index "citations", ["project_id"], name: "index_citations_on_project_id", using: :btree
-  add_index "citations", ["source_id"], name: "index_citations_on_source_id", using: :btree
-  add_index "citations", ["updated_by_id"], name: "index_citations_on_updated_by_id", using: :btree
 
   create_table "collecting_events", force: :cascade do |t|
     t.text     "verbatim_label"
@@ -255,12 +243,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.string   "cached_level0_geographic_name"
     t.string   "cached_level1_geographic_name"
     t.string   "cached_level2_geographic_name"
+    t.index ["created_by_id"], name: "index_collecting_events_on_created_by_id", using: :btree
+    t.index ["geographic_area_id"], name: "index_collecting_events_on_geographic_area_id", using: :btree
+    t.index ["project_id"], name: "index_collecting_events_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_collecting_events_on_updated_by_id", using: :btree
   end
-
-  add_index "collecting_events", ["created_by_id"], name: "index_collecting_events_on_created_by_id", using: :btree
-  add_index "collecting_events", ["geographic_area_id"], name: "index_collecting_events_on_geographic_area_id", using: :btree
-  add_index "collecting_events", ["project_id"], name: "index_collecting_events_on_project_id", using: :btree
-  add_index "collecting_events", ["updated_by_id"], name: "index_collecting_events_on_updated_by_id", using: :btree
 
   create_table "collection_object_observations", force: :cascade do |t|
     t.text     "data",          null: false
@@ -269,12 +256,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["created_by_id"], name: "index_collection_object_observations_on_created_by_id", using: :btree
+    t.index ["data"], name: "index_collection_object_observations_on_data", using: :btree
+    t.index ["project_id"], name: "index_collection_object_observations_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_collection_object_observations_on_updated_by_id", using: :btree
   end
-
-  add_index "collection_object_observations", ["created_by_id"], name: "index_collection_object_observations_on_created_by_id", using: :btree
-  add_index "collection_object_observations", ["data"], name: "index_collection_object_observations_on_data", using: :btree
-  add_index "collection_object_observations", ["project_id"], name: "index_collection_object_observations_on_project_id", using: :btree
-  add_index "collection_object_observations", ["updated_by_id"], name: "index_collection_object_observations_on_updated_by_id", using: :btree
 
   create_table "collection_objects", force: :cascade do |t|
     t.integer  "total"
@@ -294,16 +280,15 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.date     "accessioned_at"
     t.string   "deaccession_reason"
     t.date     "deaccessioned_at"
+    t.index ["collecting_event_id"], name: "index_collection_objects_on_collecting_event_id", using: :btree
+    t.index ["created_by_id"], name: "index_collection_objects_on_created_by_id", using: :btree
+    t.index ["preparation_type_id"], name: "index_collection_objects_on_preparation_type_id", using: :btree
+    t.index ["project_id"], name: "index_collection_objects_on_project_id", using: :btree
+    t.index ["ranged_lot_category_id"], name: "index_collection_objects_on_ranged_lot_category_id", using: :btree
+    t.index ["repository_id"], name: "index_collection_objects_on_repository_id", using: :btree
+    t.index ["type"], name: "index_collection_objects_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_collection_objects_on_updated_by_id", using: :btree
   end
-
-  add_index "collection_objects", ["collecting_event_id"], name: "index_collection_objects_on_collecting_event_id", using: :btree
-  add_index "collection_objects", ["created_by_id"], name: "index_collection_objects_on_created_by_id", using: :btree
-  add_index "collection_objects", ["preparation_type_id"], name: "index_collection_objects_on_preparation_type_id", using: :btree
-  add_index "collection_objects", ["project_id"], name: "index_collection_objects_on_project_id", using: :btree
-  add_index "collection_objects", ["ranged_lot_category_id"], name: "index_collection_objects_on_ranged_lot_category_id", using: :btree
-  add_index "collection_objects", ["repository_id"], name: "index_collection_objects_on_repository_id", using: :btree
-  add_index "collection_objects", ["type"], name: "index_collection_objects_on_type", using: :btree
-  add_index "collection_objects", ["updated_by_id"], name: "index_collection_objects_on_updated_by_id", using: :btree
 
   create_table "collection_profiles", force: :cascade do |t|
     t.integer  "container_id"
@@ -324,14 +309,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.string   "collection_type"
+    t.index ["collection_type"], name: "index_collection_profiles_on_collection_type", using: :btree
+    t.index ["container_id"], name: "index_collection_profiles_on_container_id", using: :btree
+    t.index ["created_by_id"], name: "index_collection_profiles_on_created_by_id", using: :btree
+    t.index ["otu_id"], name: "index_collection_profiles_on_otu_id", using: :btree
+    t.index ["project_id"], name: "index_collection_profiles_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_collection_profiles_on_updated_by_id", using: :btree
   end
-
-  add_index "collection_profiles", ["collection_type"], name: "index_collection_profiles_on_collection_type", using: :btree
-  add_index "collection_profiles", ["container_id"], name: "index_collection_profiles_on_container_id", using: :btree
-  add_index "collection_profiles", ["created_by_id"], name: "index_collection_profiles_on_created_by_id", using: :btree
-  add_index "collection_profiles", ["otu_id"], name: "index_collection_profiles_on_otu_id", using: :btree
-  add_index "collection_profiles", ["project_id"], name: "index_collection_profiles_on_project_id", using: :btree
-  add_index "collection_profiles", ["updated_by_id"], name: "index_collection_profiles_on_updated_by_id", using: :btree
 
   create_table "common_names", force: :cascade do |t|
     t.string   "name",               null: false
@@ -345,19 +329,18 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id",      null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.index ["created_by_id"], name: "index_common_names_on_created_by_id", using: :btree
+    t.index ["geographic_area_id"], name: "index_common_names_on_geographic_area_id", using: :btree
+    t.index ["language_id"], name: "index_common_names_on_language_id", using: :btree
+    t.index ["name"], name: "index_common_names_on_name", using: :btree
+    t.index ["otu_id"], name: "index_common_names_on_otu_id", using: :btree
+    t.index ["project_id"], name: "index_common_names_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_common_names_on_updated_by_id", using: :btree
   end
 
-  add_index "common_names", ["created_by_id"], name: "index_common_names_on_created_by_id", using: :btree
-  add_index "common_names", ["geographic_area_id"], name: "index_common_names_on_geographic_area_id", using: :btree
-  add_index "common_names", ["language_id"], name: "index_common_names_on_language_id", using: :btree
-  add_index "common_names", ["name"], name: "index_common_names_on_name", using: :btree
-  add_index "common_names", ["otu_id"], name: "index_common_names_on_otu_id", using: :btree
-  add_index "common_names", ["project_id"], name: "index_common_names_on_project_id", using: :btree
-  add_index "common_names", ["updated_by_id"], name: "index_common_names_on_updated_by_id", using: :btree
-
   create_table "confidences", force: :cascade do |t|
-    t.integer  "confidence_object_id",   null: false
     t.string   "confidence_object_type", null: false
+    t.integer  "confidence_object_id",   null: false
     t.integer  "position",               null: false
     t.integer  "created_by_id",          null: false
     t.integer  "updated_by_id",          null: false
@@ -365,18 +348,16 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "confidence_level_id",    null: false
+    t.index ["project_id"], name: "index_confidences_on_project_id", using: :btree
   end
-
-  add_index "confidences", ["project_id"], name: "index_confidences_on_project_id", using: :btree
 
   create_table "container_item_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
     t.integer "generations",   null: false
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "container_item_anc_desc_idx", unique: true, using: :btree
+    t.index ["descendant_id"], name: "container_item_desc_idx", using: :btree
   end
-
-  add_index "container_item_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "container_item_anc_desc_idx", unique: true, using: :btree
-  add_index "container_item_hierarchies", ["descendant_id"], name: "container_item_desc_idx", using: :btree
 
   create_table "container_items", force: :cascade do |t|
     t.datetime "created_at",            null: false
@@ -391,12 +372,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "disposition_y"
     t.integer  "disposition_z"
     t.integer  "parent_id"
+    t.index ["contained_object_id", "contained_object_type"], name: "index_container_items_on_contained_object_id_and_type", using: :btree
+    t.index ["created_by_id"], name: "index_container_items_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_container_items_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_container_items_on_updated_by_id", using: :btree
   end
-
-  add_index "container_items", ["contained_object_id", "contained_object_type"], name: "index_container_items_on_contained_object_id_and_type", using: :btree
-  add_index "container_items", ["created_by_id"], name: "index_container_items_on_created_by_id", using: :btree
-  add_index "container_items", ["project_id"], name: "index_container_items_on_project_id", using: :btree
-  add_index "container_items", ["updated_by_id"], name: "index_container_items_on_updated_by_id", using: :btree
 
   create_table "container_labels", force: :cascade do |t|
     t.text     "label",         null: false
@@ -409,13 +389,12 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "container_id",  null: false
+    t.index ["container_id"], name: "index_container_labels_on_container_id", using: :btree
+    t.index ["created_by_id"], name: "index_container_labels_on_created_by_id", using: :btree
+    t.index ["position"], name: "index_container_labels_on_position", using: :btree
+    t.index ["project_id"], name: "index_container_labels_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_container_labels_on_updated_by_id", using: :btree
   end
-
-  add_index "container_labels", ["container_id"], name: "index_container_labels_on_container_id", using: :btree
-  add_index "container_labels", ["created_by_id"], name: "index_container_labels_on_created_by_id", using: :btree
-  add_index "container_labels", ["position"], name: "index_container_labels_on_position", using: :btree
-  add_index "container_labels", ["project_id"], name: "index_container_labels_on_project_id", using: :btree
-  add_index "container_labels", ["updated_by_id"], name: "index_container_labels_on_updated_by_id", using: :btree
 
   create_table "containers", force: :cascade do |t|
     t.datetime "created_at",    null: false
@@ -429,13 +408,12 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "size_x"
     t.integer  "size_y"
     t.integer  "size_z"
+    t.index ["created_by_id"], name: "index_containers_on_created_by_id", using: :btree
+    t.index ["disposition"], name: "index_containers_on_disposition", using: :btree
+    t.index ["project_id"], name: "index_containers_on_project_id", using: :btree
+    t.index ["type"], name: "index_containers_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_containers_on_updated_by_id", using: :btree
   end
-
-  add_index "containers", ["created_by_id"], name: "index_containers_on_created_by_id", using: :btree
-  add_index "containers", ["disposition"], name: "index_containers_on_disposition", using: :btree
-  add_index "containers", ["project_id"], name: "index_containers_on_project_id", using: :btree
-  add_index "containers", ["type"], name: "index_containers_on_type", using: :btree
-  add_index "containers", ["updated_by_id"], name: "index_containers_on_updated_by_id", using: :btree
 
   create_table "contents", force: :cascade do |t|
     t.text     "text",          null: false
@@ -447,14 +425,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id", null: false
     t.integer  "project_id",    null: false
     t.integer  "revision_id"
+    t.index ["created_by_id"], name: "index_contents_on_created_by_id", using: :btree
+    t.index ["otu_id"], name: "index_contents_on_otu_id", using: :btree
+    t.index ["project_id"], name: "index_contents_on_project_id", using: :btree
+    t.index ["revision_id"], name: "index_contents_on_revision_id", using: :btree
+    t.index ["topic_id"], name: "index_contents_on_topic_id", using: :btree
+    t.index ["updated_by_id"], name: "index_contents_on_updated_by_id", using: :btree
   end
-
-  add_index "contents", ["created_by_id"], name: "index_contents_on_created_by_id", using: :btree
-  add_index "contents", ["otu_id"], name: "index_contents_on_otu_id", using: :btree
-  add_index "contents", ["project_id"], name: "index_contents_on_project_id", using: :btree
-  add_index "contents", ["revision_id"], name: "index_contents_on_revision_id", using: :btree
-  add_index "contents", ["topic_id"], name: "index_contents_on_topic_id", using: :btree
-  add_index "contents", ["updated_by_id"], name: "index_contents_on_updated_by_id", using: :btree
 
   create_table "controlled_vocabulary_terms", force: :cascade do |t|
     t.string   "type",          null: false
@@ -468,12 +445,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.string   "uri"
     t.string   "uri_relation"
     t.string   "css_color"
+    t.index ["created_by_id"], name: "index_controlled_vocabulary_terms_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_controlled_vocabulary_terms_on_project_id", using: :btree
+    t.index ["type"], name: "index_controlled_vocabulary_terms_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_controlled_vocabulary_terms_on_updated_by_id", using: :btree
   end
-
-  add_index "controlled_vocabulary_terms", ["created_by_id"], name: "index_controlled_vocabulary_terms_on_created_by_id", using: :btree
-  add_index "controlled_vocabulary_terms", ["project_id"], name: "index_controlled_vocabulary_terms_on_project_id", using: :btree
-  add_index "controlled_vocabulary_terms", ["type"], name: "index_controlled_vocabulary_terms_on_type", using: :btree
-  add_index "controlled_vocabulary_terms", ["updated_by_id"], name: "index_controlled_vocabulary_terms_on_updated_by_id", using: :btree
 
   create_table "data_attributes", force: :cascade do |t|
     t.string   "type",                          null: false
@@ -487,15 +463,14 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.index ["attribute_subject_id", "attribute_subject_type"], name: "index_data_attributes_on_attribute_subject_id_and_type", using: :btree
+    t.index ["attribute_subject_type"], name: "index_data_attributes_on_attribute_subject_type", using: :btree
+    t.index ["controlled_vocabulary_term_id"], name: "index_data_attributes_on_controlled_vocabulary_term_id", using: :btree
+    t.index ["created_by_id"], name: "index_data_attributes_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_data_attributes_on_project_id", using: :btree
+    t.index ["type"], name: "index_data_attributes_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_data_attributes_on_updated_by_id", using: :btree
   end
-
-  add_index "data_attributes", ["attribute_subject_id", "attribute_subject_type"], name: "index_data_attributes_on_attribute_subject_id_and_type", using: :btree
-  add_index "data_attributes", ["attribute_subject_type"], name: "index_data_attributes_on_attribute_subject_type", using: :btree
-  add_index "data_attributes", ["controlled_vocabulary_term_id"], name: "index_data_attributes_on_controlled_vocabulary_term_id", using: :btree
-  add_index "data_attributes", ["created_by_id"], name: "index_data_attributes_on_created_by_id", using: :btree
-  add_index "data_attributes", ["project_id"], name: "index_data_attributes_on_project_id", using: :btree
-  add_index "data_attributes", ["type"], name: "index_data_attributes_on_type", using: :btree
-  add_index "data_attributes", ["updated_by_id"], name: "index_data_attributes_on_updated_by_id", using: :btree
 
   create_table "depictions", force: :cascade do |t|
     t.string   "depiction_object_type", null: false
@@ -507,14 +482,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "position"
+    t.index ["created_by_id"], name: "index_depictions_on_created_by_id", using: :btree
+    t.index ["depiction_object_id"], name: "index_depictions_on_depiction_object_id", using: :btree
+    t.index ["depiction_object_type"], name: "index_depictions_on_depiction_object_type", using: :btree
+    t.index ["image_id"], name: "index_depictions_on_image_id", using: :btree
+    t.index ["project_id"], name: "index_depictions_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_depictions_on_updated_by_id", using: :btree
   end
-
-  add_index "depictions", ["created_by_id"], name: "index_depictions_on_created_by_id", using: :btree
-  add_index "depictions", ["depiction_object_id"], name: "index_depictions_on_depiction_object_id", using: :btree
-  add_index "depictions", ["depiction_object_type"], name: "index_depictions_on_depiction_object_type", using: :btree
-  add_index "depictions", ["image_id"], name: "index_depictions_on_image_id", using: :btree
-  add_index "depictions", ["project_id"], name: "index_depictions_on_project_id", using: :btree
-  add_index "depictions", ["updated_by_id"], name: "index_depictions_on_updated_by_id", using: :btree
 
   create_table "derived_collection_objects", force: :cascade do |t|
     t.integer  "collection_object_observation_id", null: false
@@ -525,11 +499,10 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id",                    null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.index ["collection_object_id"], name: "dco_collection_object", using: :btree
+    t.index ["collection_object_observation_id"], name: "dco_collection_object_observation", using: :btree
+    t.index ["project_id"], name: "index_derived_collection_objects_on_project_id", using: :btree
   end
-
-  add_index "derived_collection_objects", ["collection_object_id"], name: "dco_collection_object", using: :btree
-  add_index "derived_collection_objects", ["collection_object_observation_id"], name: "dco_collection_object_observation", using: :btree
-  add_index "derived_collection_objects", ["project_id"], name: "index_derived_collection_objects_on_project_id", using: :btree
 
   create_table "descriptors", force: :cascade do |t|
     t.string   "name",          null: false
@@ -540,17 +513,16 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id",    null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["created_by_id"], name: "index_descriptors_on_created_by_id", using: :btree
+    t.index ["name"], name: "index_descriptors_on_name", using: :btree
+    t.index ["project_id"], name: "index_descriptors_on_project_id", using: :btree
+    t.index ["short_name"], name: "index_descriptors_on_short_name", using: :btree
+    t.index ["updated_by_id"], name: "index_descriptors_on_updated_by_id", using: :btree
   end
 
-  add_index "descriptors", ["created_by_id"], name: "index_descriptors_on_created_by_id", using: :btree
-  add_index "descriptors", ["name"], name: "index_descriptors_on_name", using: :btree
-  add_index "descriptors", ["project_id"], name: "index_descriptors_on_project_id", using: :btree
-  add_index "descriptors", ["short_name"], name: "index_descriptors_on_short_name", using: :btree
-  add_index "descriptors", ["updated_by_id"], name: "index_descriptors_on_updated_by_id", using: :btree
-
   create_table "documentation", force: :cascade do |t|
-    t.integer  "documentation_object_id",   null: false
     t.string   "documentation_object_type", null: false
+    t.integer  "documentation_object_id",   null: false
     t.integer  "document_id",               null: false
     t.json     "page_map"
     t.integer  "project_id",                null: false
@@ -558,13 +530,12 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id",             null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.index ["created_by_id"], name: "index_documentation_on_created_by_id", using: :btree
+    t.index ["document_id"], name: "index_documentation_on_document_id", using: :btree
+    t.index ["documentation_object_id", "documentation_object_type"], name: "index_doc_on_doc_object_type_and_doc_object_id", using: :btree
+    t.index ["project_id"], name: "index_documentation_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_documentation_on_updated_by_id", using: :btree
   end
-
-  add_index "documentation", ["created_by_id"], name: "index_documentation_on_created_by_id", using: :btree
-  add_index "documentation", ["document_id"], name: "index_documentation_on_document_id", using: :btree
-  add_index "documentation", ["documentation_object_id", "documentation_object_type"], name: "index_doc_on_doc_object_type_and_doc_object_id", using: :btree
-  add_index "documentation", ["project_id"], name: "index_documentation_on_project_id", using: :btree
-  add_index "documentation", ["updated_by_id"], name: "index_documentation_on_updated_by_id", using: :btree
 
   create_table "documents", force: :cascade do |t|
     t.string   "document_file_file_name",    null: false
@@ -576,12 +547,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id",              null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["document_file_content_type"], name: "index_documents_on_document_file_content_type", using: :btree
+    t.index ["document_file_file_name"], name: "index_documents_on_document_file_file_name", using: :btree
+    t.index ["document_file_file_size"], name: "index_documents_on_document_file_file_size", using: :btree
+    t.index ["document_file_updated_at"], name: "index_documents_on_document_file_updated_at", using: :btree
   end
-
-  add_index "documents", ["document_file_content_type"], name: "index_documents_on_document_file_content_type", using: :btree
-  add_index "documents", ["document_file_file_name"], name: "index_documents_on_document_file_file_name", using: :btree
-  add_index "documents", ["document_file_file_size"], name: "index_documents_on_document_file_file_size", using: :btree
-  add_index "documents", ["document_file_updated_at"], name: "index_documents_on_document_file_updated_at", using: :btree
 
   create_table "extracts", force: :cascade do |t|
     t.decimal  "quantity_value",             null: false
@@ -597,9 +567,8 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "updated_at",                 null: false
     t.decimal  "concentration_value"
     t.string   "concentration_unit"
+    t.index ["project_id"], name: "index_extracts_on_project_id", using: :btree
   end
-
-  add_index "extracts", ["project_id"], name: "index_extracts_on_project_id", using: :btree
 
   create_table "gene_attributes", force: :cascade do |t|
     t.integer  "descriptor_id",                 null: false
@@ -612,20 +581,18 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id",                    null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.index ["controlled_vocabulary_term_id"], name: "index_gene_attributes_on_controlled_vocabulary_term_id", using: :btree
+    t.index ["project_id"], name: "index_gene_attributes_on_project_id", using: :btree
+    t.index ["sequence_id"], name: "index_gene_attributes_on_sequence_id", using: :btree
   end
-
-  add_index "gene_attributes", ["controlled_vocabulary_term_id"], name: "index_gene_attributes_on_controlled_vocabulary_term_id", using: :btree
-  add_index "gene_attributes", ["project_id"], name: "index_gene_attributes_on_project_id", using: :btree
-  add_index "gene_attributes", ["sequence_id"], name: "index_gene_attributes_on_sequence_id", using: :btree
 
   create_table "geographic_area_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
     t.integer "generations",   null: false
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "geographic_area_anc_desc_idx", unique: true, using: :btree
+    t.index ["descendant_id"], name: "geographic_area_desc_idx", using: :btree
   end
-
-  add_index "geographic_area_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "geographic_area_anc_desc_idx", unique: true, using: :btree
-  add_index "geographic_area_hierarchies", ["descendant_id"], name: "geographic_area_desc_idx", using: :btree
 
   create_table "geographic_area_types", force: :cascade do |t|
     t.string   "name",          null: false
@@ -633,11 +600,10 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "updated_at",    null: false
     t.integer  "created_by_id", null: false
     t.integer  "updated_by_id", null: false
+    t.index ["created_by_id"], name: "index_geographic_area_types_on_created_by_id", using: :btree
+    t.index ["name"], name: "index_geographic_area_types_on_name", using: :btree
+    t.index ["updated_by_id"], name: "index_geographic_area_types_on_updated_by_id", using: :btree
   end
-
-  add_index "geographic_area_types", ["created_by_id"], name: "index_geographic_area_types_on_created_by_id", using: :btree
-  add_index "geographic_area_types", ["name"], name: "index_geographic_area_types_on_name", using: :btree
-  add_index "geographic_area_types", ["updated_by_id"], name: "index_geographic_area_types_on_updated_by_id", using: :btree
 
   create_table "geographic_areas", force: :cascade do |t|
     t.string   "name",                    null: false
@@ -654,16 +620,15 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.string   "data_origin",             null: false
     t.integer  "created_by_id",           null: false
     t.integer  "updated_by_id",           null: false
+    t.index ["created_by_id"], name: "index_geographic_areas_on_created_by_id", using: :btree
+    t.index ["geographic_area_type_id"], name: "index_geographic_areas_on_geographic_area_type_id", using: :btree
+    t.index ["level0_id"], name: "index_geographic_areas_on_level0_id", using: :btree
+    t.index ["level1_id"], name: "index_geographic_areas_on_level1_id", using: :btree
+    t.index ["level2_id"], name: "index_geographic_areas_on_level2_id", using: :btree
+    t.index ["name"], name: "index_geographic_areas_on_name", using: :btree
+    t.index ["parent_id"], name: "index_geographic_areas_on_parent_id", using: :btree
+    t.index ["updated_by_id"], name: "index_geographic_areas_on_updated_by_id", using: :btree
   end
-
-  add_index "geographic_areas", ["created_by_id"], name: "index_geographic_areas_on_created_by_id", using: :btree
-  add_index "geographic_areas", ["geographic_area_type_id"], name: "index_geographic_areas_on_geographic_area_type_id", using: :btree
-  add_index "geographic_areas", ["level0_id"], name: "index_geographic_areas_on_level0_id", using: :btree
-  add_index "geographic_areas", ["level1_id"], name: "index_geographic_areas_on_level1_id", using: :btree
-  add_index "geographic_areas", ["level2_id"], name: "index_geographic_areas_on_level2_id", using: :btree
-  add_index "geographic_areas", ["name"], name: "index_geographic_areas_on_name", using: :btree
-  add_index "geographic_areas", ["parent_id"], name: "index_geographic_areas_on_parent_id", using: :btree
-  add_index "geographic_areas", ["updated_by_id"], name: "index_geographic_areas_on_updated_by_id", using: :btree
 
   create_table "geographic_areas_geographic_items", force: :cascade do |t|
     t.integer  "geographic_area_id", null: false
@@ -674,10 +639,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.string   "date_valid_to"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.index ["geographic_area_id"], name: "index_geographic_areas_geographic_items_on_geographic_area_id", using: :btree
+    t.index ["geographic_item_id"], name: "index_geographic_areas_geographic_items_on_geographic_item_id", using: :btree
   end
-
-  add_index "geographic_areas_geographic_items", ["geographic_area_id"], name: "index_geographic_areas_geographic_items_on_geographic_area_id", using: :btree
-  add_index "geographic_areas_geographic_items", ["geographic_item_id"], name: "index_geographic_areas_geographic_items_on_geographic_item_id", using: :btree
 
   create_table "geographic_items", force: :cascade do |t|
     t.datetime  "created_at",                                                                                               null: false
@@ -692,18 +656,17 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer   "created_by_id",                                                                                            null: false
     t.integer   "updated_by_id",                                                                                            null: false
     t.string    "type",                                                                                                     null: false
+    t.index ["created_by_id"], name: "index_geographic_items_on_created_by_id", using: :btree
+    t.index ["geometry_collection"], name: "geometry_collection_gix", using: :gist
+    t.index ["line_string"], name: "line_string_gix", using: :gist
+    t.index ["multi_line_string"], name: "multi_line_string_gix", using: :gist
+    t.index ["multi_point"], name: "multi_point_gix", using: :gist
+    t.index ["multi_polygon"], name: "multi_polygon_gix", using: :gist
+    t.index ["point"], name: "point_gix", using: :gist
+    t.index ["polygon"], name: "polygon_gix", using: :gist
+    t.index ["type"], name: "index_geographic_items_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_geographic_items_on_updated_by_id", using: :btree
   end
-
-  add_index "geographic_items", ["created_by_id"], name: "index_geographic_items_on_created_by_id", using: :btree
-  add_index "geographic_items", ["geometry_collection"], name: "geometry_collection_gix", using: :gist
-  add_index "geographic_items", ["line_string"], name: "line_string_gix", using: :gist
-  add_index "geographic_items", ["multi_line_string"], name: "multi_line_string_gix", using: :gist
-  add_index "geographic_items", ["multi_point"], name: "multi_point_gix", using: :gist
-  add_index "geographic_items", ["multi_polygon"], name: "multi_polygon_gix", using: :gist
-  add_index "geographic_items", ["point"], name: "point_gix", using: :gist
-  add_index "geographic_items", ["polygon"], name: "polygon_gix", using: :gist
-  add_index "geographic_items", ["type"], name: "index_geographic_items_on_type", using: :btree
-  add_index "geographic_items", ["updated_by_id"], name: "index_geographic_items_on_updated_by_id", using: :btree
 
   create_table "georeferences", force: :cascade do |t|
     t.integer  "geographic_item_id",                       null: false
@@ -722,16 +685,15 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id",                               null: false
     t.boolean  "is_undefined_z"
     t.boolean  "is_median_z"
+    t.index ["collecting_event_id"], name: "index_georeferences_on_collecting_event_id", using: :btree
+    t.index ["created_by_id"], name: "index_georeferences_on_created_by_id", using: :btree
+    t.index ["error_geographic_item_id"], name: "index_georeferences_on_error_geographic_item_id", using: :btree
+    t.index ["geographic_item_id"], name: "index_georeferences_on_geographic_item_id", using: :btree
+    t.index ["position"], name: "index_georeferences_on_position", using: :btree
+    t.index ["project_id"], name: "index_georeferences_on_project_id", using: :btree
+    t.index ["type"], name: "index_georeferences_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_georeferences_on_updated_by_id", using: :btree
   end
-
-  add_index "georeferences", ["collecting_event_id"], name: "index_georeferences_on_collecting_event_id", using: :btree
-  add_index "georeferences", ["created_by_id"], name: "index_georeferences_on_created_by_id", using: :btree
-  add_index "georeferences", ["error_geographic_item_id"], name: "index_georeferences_on_error_geographic_item_id", using: :btree
-  add_index "georeferences", ["geographic_item_id"], name: "index_georeferences_on_geographic_item_id", using: :btree
-  add_index "georeferences", ["position"], name: "index_georeferences_on_position", using: :btree
-  add_index "georeferences", ["project_id"], name: "index_georeferences_on_project_id", using: :btree
-  add_index "georeferences", ["type"], name: "index_georeferences_on_type", using: :btree
-  add_index "georeferences", ["updated_by_id"], name: "index_georeferences_on_updated_by_id", using: :btree
 
   create_table "identifiers", force: :cascade do |t|
     t.string   "identifier",             null: false
@@ -747,14 +709,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.string   "identifier_object_type", null: false
     t.string   "relation"
     t.integer  "position"
+    t.index ["created_by_id"], name: "index_identifiers_on_created_by_id", using: :btree
+    t.index ["identifier_object_id", "identifier_object_type"], name: "index_identifiers_on_identifier_object_id_and_type", using: :btree
+    t.index ["namespace_id"], name: "index_identifiers_on_namespace_id", using: :btree
+    t.index ["project_id"], name: "index_identifiers_on_project_id", using: :btree
+    t.index ["type"], name: "index_identifiers_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_identifiers_on_updated_by_id", using: :btree
   end
-
-  add_index "identifiers", ["created_by_id"], name: "index_identifiers_on_created_by_id", using: :btree
-  add_index "identifiers", ["identifier_object_id", "identifier_object_type"], name: "index_identifiers_on_identifier_object_id_and_type", using: :btree
-  add_index "identifiers", ["namespace_id"], name: "index_identifiers_on_namespace_id", using: :btree
-  add_index "identifiers", ["project_id"], name: "index_identifiers_on_project_id", using: :btree
-  add_index "identifiers", ["type"], name: "index_identifiers_on_type", using: :btree
-  add_index "identifiers", ["updated_by_id"], name: "index_identifiers_on_updated_by_id", using: :btree
 
   create_table "images", force: :cascade do |t|
     t.string   "user_file_name"
@@ -771,12 +732,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "image_file_updated_at"
     t.integer  "updated_by_id",           null: false
     t.text     "image_file_meta"
+    t.index ["created_by_id"], name: "index_images_on_created_by_id", using: :btree
+    t.index ["image_file_content_type"], name: "index_images_on_image_file_content_type", using: :btree
+    t.index ["project_id"], name: "index_images_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_images_on_updated_by_id", using: :btree
   end
-
-  add_index "images", ["created_by_id"], name: "index_images_on_created_by_id", using: :btree
-  add_index "images", ["image_file_content_type"], name: "index_images_on_image_file_content_type", using: :btree
-  add_index "images", ["project_id"], name: "index_images_on_project_id", using: :btree
-  add_index "images", ["updated_by_id"], name: "index_images_on_updated_by_id", using: :btree
 
   create_table "imports", force: :cascade do |t|
     t.string   "name"
@@ -796,10 +756,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "updated_at",            null: false
     t.integer  "created_by_id",         null: false
     t.integer  "updated_by_id",         null: false
+    t.index ["created_by_id"], name: "index_languages_on_created_by_id", using: :btree
+    t.index ["updated_by_id"], name: "index_languages_on_updated_by_id", using: :btree
   end
-
-  add_index "languages", ["created_by_id"], name: "index_languages_on_created_by_id", using: :btree
-  add_index "languages", ["updated_by_id"], name: "index_languages_on_updated_by_id", using: :btree
 
   create_table "loan_items", force: :cascade do |t|
     t.integer  "loan_id",               null: false
@@ -810,17 +769,16 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id",            null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
-    t.integer  "loan_item_object_id"
     t.string   "loan_item_object_type"
+    t.integer  "loan_item_object_id"
     t.integer  "total"
     t.string   "disposition"
+    t.index ["created_by_id"], name: "index_loan_items_on_created_by_id", using: :btree
+    t.index ["loan_id"], name: "index_loan_items_on_loan_id", using: :btree
+    t.index ["position"], name: "index_loan_items_on_position", using: :btree
+    t.index ["project_id"], name: "index_loan_items_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_loan_items_on_updated_by_id", using: :btree
   end
-
-  add_index "loan_items", ["created_by_id"], name: "index_loan_items_on_created_by_id", using: :btree
-  add_index "loan_items", ["loan_id"], name: "index_loan_items_on_loan_id", using: :btree
-  add_index "loan_items", ["position"], name: "index_loan_items_on_position", using: :btree
-  add_index "loan_items", ["project_id"], name: "index_loan_items_on_project_id", using: :btree
-  add_index "loan_items", ["updated_by_id"], name: "index_loan_items_on_updated_by_id", using: :btree
 
   create_table "loans", force: :cascade do |t|
     t.date     "date_requested"
@@ -842,11 +800,10 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.string   "recipient_honorarium"
     t.string   "recipient_country"
     t.text     "lender_address",       default: "Lender's address not provided.", null: false
+    t.index ["created_by_id"], name: "index_loans_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_loans_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_loans_on_updated_by_id", using: :btree
   end
-
-  add_index "loans", ["created_by_id"], name: "index_loans_on_created_by_id", using: :btree
-  add_index "loans", ["project_id"], name: "index_loans_on_project_id", using: :btree
-  add_index "loans", ["updated_by_id"], name: "index_loans_on_updated_by_id", using: :btree
 
   create_table "matrices", force: :cascade do |t|
     t.string   "name",          null: false
@@ -855,12 +812,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["created_by_id"], name: "index_matrices_on_created_by_id", using: :btree
+    t.index ["name"], name: "index_matrices_on_name", using: :btree
+    t.index ["project_id"], name: "index_matrices_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_matrices_on_updated_by_id", using: :btree
   end
-
-  add_index "matrices", ["created_by_id"], name: "index_matrices_on_created_by_id", using: :btree
-  add_index "matrices", ["name"], name: "index_matrices_on_name", using: :btree
-  add_index "matrices", ["project_id"], name: "index_matrices_on_project_id", using: :btree
-  add_index "matrices", ["updated_by_id"], name: "index_matrices_on_updated_by_id", using: :btree
 
   create_table "matrix_column_items", force: :cascade do |t|
     t.integer  "matrix_id",                     null: false
@@ -872,14 +828,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id",                    null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.index ["controlled_vocabulary_term_id"], name: "index_matrix_column_items_on_controlled_vocabulary_term_id", using: :btree
+    t.index ["created_by_id"], name: "index_matrix_column_items_on_created_by_id", using: :btree
+    t.index ["descriptor_id"], name: "index_matrix_column_items_on_descriptor_id", using: :btree
+    t.index ["matrix_id"], name: "index_matrix_column_items_on_matrix_id", using: :btree
+    t.index ["project_id"], name: "index_matrix_column_items_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_matrix_column_items_on_updated_by_id", using: :btree
   end
-
-  add_index "matrix_column_items", ["controlled_vocabulary_term_id"], name: "index_matrix_column_items_on_controlled_vocabulary_term_id", using: :btree
-  add_index "matrix_column_items", ["created_by_id"], name: "index_matrix_column_items_on_created_by_id", using: :btree
-  add_index "matrix_column_items", ["descriptor_id"], name: "index_matrix_column_items_on_descriptor_id", using: :btree
-  add_index "matrix_column_items", ["matrix_id"], name: "index_matrix_column_items_on_matrix_id", using: :btree
-  add_index "matrix_column_items", ["project_id"], name: "index_matrix_column_items_on_project_id", using: :btree
-  add_index "matrix_column_items", ["updated_by_id"], name: "index_matrix_column_items_on_updated_by_id", using: :btree
 
   create_table "matrix_columns", force: :cascade do |t|
     t.integer  "matrix_id",       null: false
@@ -891,13 +846,12 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "reference_count"
+    t.index ["created_by_id"], name: "index_matrix_columns_on_created_by_id", using: :btree
+    t.index ["descriptor_id"], name: "index_matrix_columns_on_descriptor_id", using: :btree
+    t.index ["matrix_id"], name: "index_matrix_columns_on_matrix_id", using: :btree
+    t.index ["project_id"], name: "index_matrix_columns_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_matrix_columns_on_updated_by_id", using: :btree
   end
-
-  add_index "matrix_columns", ["created_by_id"], name: "index_matrix_columns_on_created_by_id", using: :btree
-  add_index "matrix_columns", ["descriptor_id"], name: "index_matrix_columns_on_descriptor_id", using: :btree
-  add_index "matrix_columns", ["matrix_id"], name: "index_matrix_columns_on_matrix_id", using: :btree
-  add_index "matrix_columns", ["project_id"], name: "index_matrix_columns_on_project_id", using: :btree
-  add_index "matrix_columns", ["updated_by_id"], name: "index_matrix_columns_on_updated_by_id", using: :btree
 
   create_table "matrix_row_items", force: :cascade do |t|
     t.integer  "matrix_id",                     null: false
@@ -911,15 +865,14 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.integer  "position"
+    t.index ["collection_object_id"], name: "index_matrix_row_items_on_collection_object_id", using: :btree
+    t.index ["controlled_vocabulary_term_id"], name: "index_matrix_row_items_on_controlled_vocabulary_term_id", using: :btree
+    t.index ["created_by_id"], name: "index_matrix_row_items_on_created_by_id", using: :btree
+    t.index ["matrix_id"], name: "index_matrix_row_items_on_matrix_id", using: :btree
+    t.index ["otu_id"], name: "index_matrix_row_items_on_otu_id", using: :btree
+    t.index ["project_id"], name: "index_matrix_row_items_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_matrix_row_items_on_updated_by_id", using: :btree
   end
-
-  add_index "matrix_row_items", ["collection_object_id"], name: "index_matrix_row_items_on_collection_object_id", using: :btree
-  add_index "matrix_row_items", ["controlled_vocabulary_term_id"], name: "index_matrix_row_items_on_controlled_vocabulary_term_id", using: :btree
-  add_index "matrix_row_items", ["created_by_id"], name: "index_matrix_row_items_on_created_by_id", using: :btree
-  add_index "matrix_row_items", ["matrix_id"], name: "index_matrix_row_items_on_matrix_id", using: :btree
-  add_index "matrix_row_items", ["otu_id"], name: "index_matrix_row_items_on_otu_id", using: :btree
-  add_index "matrix_row_items", ["project_id"], name: "index_matrix_row_items_on_project_id", using: :btree
-  add_index "matrix_row_items", ["updated_by_id"], name: "index_matrix_row_items_on_updated_by_id", using: :btree
 
   create_table "matrix_rows", force: :cascade do |t|
     t.integer  "matrix_id",            null: false
@@ -932,14 +885,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "reference_count"
+    t.index ["collection_object_id"], name: "index_matrix_rows_on_collection_object_id", using: :btree
+    t.index ["created_by_id"], name: "index_matrix_rows_on_created_by_id", using: :btree
+    t.index ["matrix_id"], name: "index_matrix_rows_on_matrix_id", using: :btree
+    t.index ["otu_id"], name: "index_matrix_rows_on_otu_id", using: :btree
+    t.index ["project_id"], name: "index_matrix_rows_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_matrix_rows_on_updated_by_id", using: :btree
   end
-
-  add_index "matrix_rows", ["collection_object_id"], name: "index_matrix_rows_on_collection_object_id", using: :btree
-  add_index "matrix_rows", ["created_by_id"], name: "index_matrix_rows_on_created_by_id", using: :btree
-  add_index "matrix_rows", ["matrix_id"], name: "index_matrix_rows_on_matrix_id", using: :btree
-  add_index "matrix_rows", ["otu_id"], name: "index_matrix_rows_on_otu_id", using: :btree
-  add_index "matrix_rows", ["project_id"], name: "index_matrix_rows_on_project_id", using: :btree
-  add_index "matrix_rows", ["updated_by_id"], name: "index_matrix_rows_on_updated_by_id", using: :btree
 
   create_table "namespaces", force: :cascade do |t|
     t.string   "institution"
@@ -950,10 +902,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",       null: false
     t.integer  "updated_by_id",       null: false
     t.string   "verbatim_short_name"
+    t.index ["created_by_id"], name: "index_namespaces_on_created_by_id", using: :btree
+    t.index ["updated_by_id"], name: "index_namespaces_on_updated_by_id", using: :btree
   end
-
-  add_index "namespaces", ["created_by_id"], name: "index_namespaces_on_created_by_id", using: :btree
-  add_index "namespaces", ["updated_by_id"], name: "index_namespaces_on_updated_by_id", using: :btree
 
   create_table "notes", force: :cascade do |t|
     t.text     "text",                  null: false
@@ -965,12 +916,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",         null: false
     t.integer  "updated_by_id",         null: false
     t.integer  "project_id",            null: false
+    t.index ["created_by_id"], name: "index_notes_on_created_by_id", using: :btree
+    t.index ["note_object_id", "note_object_type"], name: "index_notes_on_note_object_id_and_type", using: :btree
+    t.index ["project_id"], name: "index_notes_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_notes_on_updated_by_id", using: :btree
   end
-
-  add_index "notes", ["created_by_id"], name: "index_notes_on_created_by_id", using: :btree
-  add_index "notes", ["note_object_id", "note_object_type"], name: "index_notes_on_note_object_id_and_type", using: :btree
-  add_index "notes", ["project_id"], name: "index_notes_on_project_id", using: :btree
-  add_index "notes", ["updated_by_id"], name: "index_notes_on_updated_by_id", using: :btree
 
   create_table "observations", force: :cascade do |t|
     t.integer  "descriptor_id"
@@ -999,32 +949,30 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.string   "type",                      null: false
+    t.index ["character_state_id"], name: "index_observations_on_character_state_id", using: :btree
+    t.index ["collection_object_id"], name: "index_observations_on_collection_object_id", using: :btree
+    t.index ["descriptor_id"], name: "index_observations_on_descriptor_id", using: :btree
+    t.index ["otu_id"], name: "index_observations_on_otu_id", using: :btree
+    t.index ["project_id"], name: "index_observations_on_project_id", using: :btree
   end
 
-  add_index "observations", ["character_state_id"], name: "index_observations_on_character_state_id", using: :btree
-  add_index "observations", ["collection_object_id"], name: "index_observations_on_collection_object_id", using: :btree
-  add_index "observations", ["descriptor_id"], name: "index_observations_on_descriptor_id", using: :btree
-  add_index "observations", ["otu_id"], name: "index_observations_on_otu_id", using: :btree
-  add_index "observations", ["project_id"], name: "index_observations_on_project_id", using: :btree
-
   create_table "origin_relationships", force: :cascade do |t|
-    t.integer  "old_object_id",   null: false
     t.string   "old_object_type", null: false
-    t.integer  "new_object_id",   null: false
+    t.integer  "old_object_id",   null: false
     t.string   "new_object_type", null: false
+    t.integer  "new_object_id",   null: false
     t.integer  "position"
     t.integer  "created_by_id",   null: false
     t.integer  "updated_by_id",   null: false
     t.integer  "project_id",      null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["created_by_id"], name: "index_origin_relationships_on_created_by_id", using: :btree
+    t.index ["new_object_type", "new_object_id"], name: "index_origin_relationships_on_new_object_type_and_new_object_id", using: :btree
+    t.index ["old_object_type", "old_object_id"], name: "index_origin_relationships_on_old_object_type_and_old_object_id", using: :btree
+    t.index ["project_id"], name: "index_origin_relationships_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_origin_relationships_on_updated_by_id", using: :btree
   end
-
-  add_index "origin_relationships", ["created_by_id"], name: "index_origin_relationships_on_created_by_id", using: :btree
-  add_index "origin_relationships", ["new_object_type", "new_object_id"], name: "index_origin_relationships_on_new_object_type_and_new_object_id", using: :btree
-  add_index "origin_relationships", ["old_object_type", "old_object_id"], name: "index_origin_relationships_on_old_object_type_and_old_object_id", using: :btree
-  add_index "origin_relationships", ["project_id"], name: "index_origin_relationships_on_project_id", using: :btree
-  add_index "origin_relationships", ["updated_by_id"], name: "index_origin_relationships_on_updated_by_id", using: :btree
 
   create_table "otu_page_layout_sections", force: :cascade do |t|
     t.integer  "otu_page_layout_id",    null: false
@@ -1037,15 +985,14 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id",            null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.index ["created_by_id"], name: "index_otu_page_layout_sections_on_created_by_id", using: :btree
+    t.index ["otu_page_layout_id"], name: "index_otu_page_layout_sections_on_otu_page_layout_id", using: :btree
+    t.index ["position"], name: "index_otu_page_layout_sections_on_position", using: :btree
+    t.index ["project_id"], name: "index_otu_page_layout_sections_on_project_id", using: :btree
+    t.index ["topic_id"], name: "index_otu_page_layout_sections_on_topic_id", using: :btree
+    t.index ["type"], name: "index_otu_page_layout_sections_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_otu_page_layout_sections_on_updated_by_id", using: :btree
   end
-
-  add_index "otu_page_layout_sections", ["created_by_id"], name: "index_otu_page_layout_sections_on_created_by_id", using: :btree
-  add_index "otu_page_layout_sections", ["otu_page_layout_id"], name: "index_otu_page_layout_sections_on_otu_page_layout_id", using: :btree
-  add_index "otu_page_layout_sections", ["position"], name: "index_otu_page_layout_sections_on_position", using: :btree
-  add_index "otu_page_layout_sections", ["project_id"], name: "index_otu_page_layout_sections_on_project_id", using: :btree
-  add_index "otu_page_layout_sections", ["topic_id"], name: "index_otu_page_layout_sections_on_topic_id", using: :btree
-  add_index "otu_page_layout_sections", ["type"], name: "index_otu_page_layout_sections_on_type", using: :btree
-  add_index "otu_page_layout_sections", ["updated_by_id"], name: "index_otu_page_layout_sections_on_updated_by_id", using: :btree
 
   create_table "otu_page_layouts", force: :cascade do |t|
     t.string   "name",          null: false
@@ -1054,11 +1001,10 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id",    null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["created_by_id"], name: "index_otu_page_layouts_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_otu_page_layouts_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_otu_page_layouts_on_updated_by_id", using: :btree
   end
-
-  add_index "otu_page_layouts", ["created_by_id"], name: "index_otu_page_layouts_on_created_by_id", using: :btree
-  add_index "otu_page_layouts", ["project_id"], name: "index_otu_page_layouts_on_project_id", using: :btree
-  add_index "otu_page_layouts", ["updated_by_id"], name: "index_otu_page_layouts_on_updated_by_id", using: :btree
 
   create_table "otus", force: :cascade do |t|
     t.string   "name"
@@ -1068,12 +1014,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id", null: false
     t.integer  "project_id",    null: false
     t.integer  "taxon_name_id"
+    t.index ["created_by_id"], name: "index_otus_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_otus_on_project_id", using: :btree
+    t.index ["taxon_name_id"], name: "index_otus_on_taxon_name_id", using: :btree
+    t.index ["updated_by_id"], name: "index_otus_on_updated_by_id", using: :btree
   end
-
-  add_index "otus", ["created_by_id"], name: "index_otus_on_created_by_id", using: :btree
-  add_index "otus", ["project_id"], name: "index_otus_on_project_id", using: :btree
-  add_index "otus", ["taxon_name_id"], name: "index_otus_on_taxon_name_id", using: :btree
-  add_index "otus", ["updated_by_id"], name: "index_otus_on_updated_by_id", using: :btree
 
   create_table "people", force: :cascade do |t|
     t.string   "type",          null: false
@@ -1086,15 +1031,14 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id", null: false
     t.integer  "updated_by_id", null: false
     t.text     "cached"
+    t.index ["created_by_id"], name: "index_people_on_created_by_id", using: :btree
+    t.index ["type"], name: "index_people_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_people_on_updated_by_id", using: :btree
   end
 
-  add_index "people", ["created_by_id"], name: "index_people_on_created_by_id", using: :btree
-  add_index "people", ["type"], name: "index_people_on_type", using: :btree
-  add_index "people", ["updated_by_id"], name: "index_people_on_updated_by_id", using: :btree
-
   create_table "pinboard_items", force: :cascade do |t|
-    t.integer  "pinned_object_id",   null: false
     t.string   "pinned_object_type", null: false
+    t.integer  "pinned_object_id",   null: false
     t.integer  "user_id",            null: false
     t.integer  "project_id",         null: false
     t.integer  "position",           null: false
@@ -1105,14 +1049,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id",      null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.index ["created_by_id"], name: "index_pinboard_items_on_created_by_id", using: :btree
+    t.index ["pinned_object_type", "pinned_object_id"], name: "index_pinboard_items_on_pinned_object_type_and_pinned_object_id", using: :btree
+    t.index ["position"], name: "index_pinboard_items_on_position", using: :btree
+    t.index ["project_id"], name: "index_pinboard_items_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_pinboard_items_on_updated_by_id", using: :btree
+    t.index ["user_id"], name: "index_pinboard_items_on_user_id", using: :btree
   end
-
-  add_index "pinboard_items", ["created_by_id"], name: "index_pinboard_items_on_created_by_id", using: :btree
-  add_index "pinboard_items", ["pinned_object_type", "pinned_object_id"], name: "index_pinboard_items_on_pinned_object_type_and_pinned_object_id", using: :btree
-  add_index "pinboard_items", ["position"], name: "index_pinboard_items_on_position", using: :btree
-  add_index "pinboard_items", ["project_id"], name: "index_pinboard_items_on_project_id", using: :btree
-  add_index "pinboard_items", ["updated_by_id"], name: "index_pinboard_items_on_updated_by_id", using: :btree
-  add_index "pinboard_items", ["user_id"], name: "index_pinboard_items_on_user_id", using: :btree
 
   create_table "preparation_types", force: :cascade do |t|
     t.string   "name",          null: false
@@ -1121,10 +1064,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id", null: false
     t.integer  "updated_by_id", null: false
     t.text     "definition",    null: false
+    t.index ["created_by_id"], name: "index_preparation_types_on_created_by_id", using: :btree
+    t.index ["updated_by_id"], name: "index_preparation_types_on_updated_by_id", using: :btree
   end
-
-  add_index "preparation_types", ["created_by_id"], name: "index_preparation_types_on_created_by_id", using: :btree
-  add_index "preparation_types", ["updated_by_id"], name: "index_preparation_types_on_updated_by_id", using: :btree
 
   create_table "project_members", force: :cascade do |t|
     t.integer  "project_id",               null: false
@@ -1134,12 +1076,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",            null: false
     t.integer  "updated_by_id",            null: false
     t.boolean  "is_project_administrator"
+    t.index ["created_by_id"], name: "index_project_members_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_project_members_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_project_members_on_updated_by_id", using: :btree
+    t.index ["user_id"], name: "index_project_members_on_user_id", using: :btree
   end
-
-  add_index "project_members", ["created_by_id"], name: "index_project_members_on_created_by_id", using: :btree
-  add_index "project_members", ["project_id"], name: "index_project_members_on_project_id", using: :btree
-  add_index "project_members", ["updated_by_id"], name: "index_project_members_on_updated_by_id", using: :btree
-  add_index "project_members", ["user_id"], name: "index_project_members_on_user_id", using: :btree
 
   create_table "project_sources", force: :cascade do |t|
     t.integer  "project_id",    null: false
@@ -1148,12 +1089,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["created_by_id"], name: "index_project_sources_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_project_sources_on_project_id", using: :btree
+    t.index ["source_id"], name: "index_project_sources_on_source_id", using: :btree
+    t.index ["updated_by_id"], name: "index_project_sources_on_updated_by_id", using: :btree
   end
-
-  add_index "project_sources", ["created_by_id"], name: "index_project_sources_on_created_by_id", using: :btree
-  add_index "project_sources", ["project_id"], name: "index_project_sources_on_project_id", using: :btree
-  add_index "project_sources", ["source_id"], name: "index_project_sources_on_source_id", using: :btree
-  add_index "project_sources", ["updated_by_id"], name: "index_project_sources_on_updated_by_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.string   "name",               null: false
@@ -1162,25 +1102,23 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",      null: false
     t.integer  "updated_by_id",      null: false
     t.hstore   "workbench_settings", null: false
+    t.index ["created_by_id"], name: "index_projects_on_created_by_id", using: :btree
+    t.index ["updated_by_id"], name: "index_projects_on_updated_by_id", using: :btree
   end
-
-  add_index "projects", ["created_by_id"], name: "index_projects_on_created_by_id", using: :btree
-  add_index "projects", ["updated_by_id"], name: "index_projects_on_updated_by_id", using: :btree
 
   create_table "protocol_relationships", force: :cascade do |t|
     t.integer  "protocol_id",                       null: false
-    t.integer  "protocol_relationship_object_id",   null: false
     t.string   "protocol_relationship_object_type", null: false
+    t.integer  "protocol_relationship_object_id",   null: false
     t.integer  "position",                          null: false
     t.integer  "created_by_id",                     null: false
     t.integer  "updated_by_id",                     null: false
     t.integer  "project_id",                        null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.index ["project_id"], name: "index_protocol_relationships_on_project_id", using: :btree
+    t.index ["protocol_id"], name: "index_protocol_relationships_on_protocol_id", using: :btree
   end
-
-  add_index "protocol_relationships", ["project_id"], name: "index_protocol_relationships_on_project_id", using: :btree
-  add_index "protocol_relationships", ["protocol_id"], name: "index_protocol_relationships_on_protocol_id", using: :btree
 
   create_table "protocols", force: :cascade do |t|
     t.string   "name",          null: false
@@ -1191,9 +1129,8 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id",    null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["project_id"], name: "index_protocols_on_project_id", using: :btree
   end
-
-  add_index "protocols", ["project_id"], name: "index_protocols_on_project_id", using: :btree
 
   create_table "public_contents", force: :cascade do |t|
     t.integer  "otu_id",        null: false
@@ -1205,14 +1142,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "content_id",    null: false
+    t.index ["content_id"], name: "index_public_contents_on_content_id", using: :btree
+    t.index ["created_by_id"], name: "index_public_contents_on_created_by_id", using: :btree
+    t.index ["otu_id"], name: "index_public_contents_on_otu_id", using: :btree
+    t.index ["project_id"], name: "index_public_contents_on_project_id", using: :btree
+    t.index ["topic_id"], name: "index_public_contents_on_topic_id", using: :btree
+    t.index ["updated_by_id"], name: "index_public_contents_on_updated_by_id", using: :btree
   end
-
-  add_index "public_contents", ["content_id"], name: "index_public_contents_on_content_id", using: :btree
-  add_index "public_contents", ["created_by_id"], name: "index_public_contents_on_created_by_id", using: :btree
-  add_index "public_contents", ["otu_id"], name: "index_public_contents_on_otu_id", using: :btree
-  add_index "public_contents", ["project_id"], name: "index_public_contents_on_project_id", using: :btree
-  add_index "public_contents", ["topic_id"], name: "index_public_contents_on_topic_id", using: :btree
-  add_index "public_contents", ["updated_by_id"], name: "index_public_contents_on_updated_by_id", using: :btree
 
   create_table "ranged_lot_categories", force: :cascade do |t|
     t.string   "name",          null: false
@@ -1223,11 +1159,10 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id", null: false
     t.integer  "updated_by_id", null: false
     t.integer  "project_id",    null: false
+    t.index ["created_by_id"], name: "index_ranged_lot_categories_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_ranged_lot_categories_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_ranged_lot_categories_on_updated_by_id", using: :btree
   end
-
-  add_index "ranged_lot_categories", ["created_by_id"], name: "index_ranged_lot_categories_on_created_by_id", using: :btree
-  add_index "ranged_lot_categories", ["project_id"], name: "index_ranged_lot_categories_on_project_id", using: :btree
-  add_index "ranged_lot_categories", ["updated_by_id"], name: "index_ranged_lot_categories_on_updated_by_id", using: :btree
 
   create_table "repositories", force: :cascade do |t|
     t.string   "name",                 null: false
@@ -1240,10 +1175,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",        null: false
     t.integer  "updated_by_id",        null: false
     t.boolean  "is_index_herbariorum"
+    t.index ["created_by_id"], name: "index_repositories_on_created_by_id", using: :btree
+    t.index ["updated_by_id"], name: "index_repositories_on_updated_by_id", using: :btree
   end
-
-  add_index "repositories", ["created_by_id"], name: "index_repositories_on_created_by_id", using: :btree
-  add_index "repositories", ["updated_by_id"], name: "index_repositories_on_updated_by_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.integer  "person_id",        null: false
@@ -1256,15 +1190,14 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",    null: false
     t.integer  "updated_by_id",    null: false
     t.integer  "project_id"
+    t.index ["created_by_id"], name: "index_roles_on_created_by_id", using: :btree
+    t.index ["person_id"], name: "index_roles_on_person_id", using: :btree
+    t.index ["position"], name: "index_roles_on_position", using: :btree
+    t.index ["project_id"], name: "index_roles_on_project_id", using: :btree
+    t.index ["role_object_id", "role_object_type"], name: "index_roles_on_role_object_id_and_type", using: :btree
+    t.index ["type"], name: "index_roles_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_roles_on_updated_by_id", using: :btree
   end
-
-  add_index "roles", ["created_by_id"], name: "index_roles_on_created_by_id", using: :btree
-  add_index "roles", ["person_id"], name: "index_roles_on_person_id", using: :btree
-  add_index "roles", ["position"], name: "index_roles_on_position", using: :btree
-  add_index "roles", ["project_id"], name: "index_roles_on_project_id", using: :btree
-  add_index "roles", ["role_object_id", "role_object_type"], name: "index_roles_on_role_object_id_and_type", using: :btree
-  add_index "roles", ["type"], name: "index_roles_on_type", using: :btree
-  add_index "roles", ["updated_by_id"], name: "index_roles_on_updated_by_id", using: :btree
 
   create_table "sequence_relationships", force: :cascade do |t|
     t.integer  "subject_sequence_id", null: false
@@ -1286,10 +1219,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.string   "sequence_type", null: false
     t.integer  "project_id",    null: false
     t.string   "name"
+    t.index ["created_by_id"], name: "index_sequences_on_created_by_id", using: :btree
+    t.index ["updated_by_id"], name: "index_sequences_on_updated_by_id", using: :btree
   end
-
-  add_index "sequences", ["created_by_id"], name: "index_sequences_on_created_by_id", using: :btree
-  add_index "sequences", ["updated_by_id"], name: "index_sequences_on_updated_by_id", using: :btree
 
   create_table "serial_chronologies", force: :cascade do |t|
     t.integer  "preceding_serial_id",  null: false
@@ -1299,13 +1231,12 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "updated_at",           null: false
     t.integer  "updated_by_id",        null: false
     t.string   "type",                 null: false
+    t.index ["created_by_id"], name: "index_serial_chronologies_on_created_by_id", using: :btree
+    t.index ["preceding_serial_id"], name: "index_serial_chronologies_on_preceding_serial_id", using: :btree
+    t.index ["succeeding_serial_id"], name: "index_serial_chronologies_on_succeeding_serial_id", using: :btree
+    t.index ["type"], name: "index_serial_chronologies_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_serial_chronologies_on_updated_by_id", using: :btree
   end
-
-  add_index "serial_chronologies", ["created_by_id"], name: "index_serial_chronologies_on_created_by_id", using: :btree
-  add_index "serial_chronologies", ["preceding_serial_id"], name: "index_serial_chronologies_on_preceding_serial_id", using: :btree
-  add_index "serial_chronologies", ["succeeding_serial_id"], name: "index_serial_chronologies_on_succeeding_serial_id", using: :btree
-  add_index "serial_chronologies", ["type"], name: "index_serial_chronologies_on_type", using: :btree
-  add_index "serial_chronologies", ["updated_by_id"], name: "index_serial_chronologies_on_updated_by_id", using: :btree
 
   create_table "serials", force: :cascade do |t|
     t.integer  "created_by_id",                       null: false
@@ -1319,12 +1250,11 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "translated_from_serial_id"
     t.text     "publisher"
     t.text     "name",                                null: false
+    t.index ["created_by_id"], name: "index_serials_on_created_by_id", using: :btree
+    t.index ["primary_language_id"], name: "index_serials_on_primary_language_id", using: :btree
+    t.index ["translated_from_serial_id"], name: "index_serials_on_translated_from_serial_id", using: :btree
+    t.index ["updated_by_id"], name: "index_serials_on_updated_by_id", using: :btree
   end
-
-  add_index "serials", ["created_by_id"], name: "index_serials_on_created_by_id", using: :btree
-  add_index "serials", ["primary_language_id"], name: "index_serials_on_primary_language_id", using: :btree
-  add_index "serials", ["translated_from_serial_id"], name: "index_serials_on_translated_from_serial_id", using: :btree
-  add_index "serials", ["updated_by_id"], name: "index_serials_on_updated_by_id", using: :btree
 
   create_table "sources", force: :cascade do |t|
     t.integer  "serial_id"
@@ -1375,14 +1305,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.text     "cached"
     t.text     "cached_author_string"
     t.date     "cached_nomenclature_date"
+    t.index ["bibtex_type"], name: "index_sources_on_bibtex_type", using: :btree
+    t.index ["created_by_id"], name: "index_sources_on_created_by_id", using: :btree
+    t.index ["language_id"], name: "index_sources_on_language_id", using: :btree
+    t.index ["serial_id"], name: "index_sources_on_serial_id", using: :btree
+    t.index ["type"], name: "index_sources_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_sources_on_updated_by_id", using: :btree
   end
-
-  add_index "sources", ["bibtex_type"], name: "index_sources_on_bibtex_type", using: :btree
-  add_index "sources", ["created_by_id"], name: "index_sources_on_created_by_id", using: :btree
-  add_index "sources", ["language_id"], name: "index_sources_on_language_id", using: :btree
-  add_index "sources", ["serial_id"], name: "index_sources_on_serial_id", using: :btree
-  add_index "sources", ["type"], name: "index_sources_on_type", using: :btree
-  add_index "sources", ["updated_by_id"], name: "index_sources_on_updated_by_id", using: :btree
 
   create_table "sqed_depictions", force: :cascade do |t|
     t.integer  "depiction_id",                null: false
@@ -1399,10 +1328,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "updated_at",                  null: false
     t.json     "result_boundary_coordinates"
     t.json     "result_ocr"
+    t.index ["depiction_id"], name: "index_sqed_depictions_on_depiction_id", using: :btree
+    t.index ["project_id"], name: "index_sqed_depictions_on_project_id", using: :btree
   end
-
-  add_index "sqed_depictions", ["depiction_id"], name: "index_sqed_depictions_on_depiction_id", using: :btree
-  add_index "sqed_depictions", ["project_id"], name: "index_sqed_depictions_on_project_id", using: :btree
 
   create_table "tagged_section_keywords", force: :cascade do |t|
     t.integer  "otu_page_layout_section_id", null: false
@@ -1413,14 +1341,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "keyword_id",                 null: false
+    t.index ["created_by_id"], name: "index_tagged_section_keywords_on_created_by_id", using: :btree
+    t.index ["keyword_id"], name: "index_tagged_section_keywords_on_keyword_id", using: :btree
+    t.index ["otu_page_layout_section_id"], name: "index_tagged_section_keywords_on_otu_page_layout_section_id", using: :btree
+    t.index ["position"], name: "index_tagged_section_keywords_on_position", using: :btree
+    t.index ["project_id"], name: "index_tagged_section_keywords_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_tagged_section_keywords_on_updated_by_id", using: :btree
   end
-
-  add_index "tagged_section_keywords", ["created_by_id"], name: "index_tagged_section_keywords_on_created_by_id", using: :btree
-  add_index "tagged_section_keywords", ["keyword_id"], name: "index_tagged_section_keywords_on_keyword_id", using: :btree
-  add_index "tagged_section_keywords", ["otu_page_layout_section_id"], name: "index_tagged_section_keywords_on_otu_page_layout_section_id", using: :btree
-  add_index "tagged_section_keywords", ["position"], name: "index_tagged_section_keywords_on_position", using: :btree
-  add_index "tagged_section_keywords", ["project_id"], name: "index_tagged_section_keywords_on_project_id", using: :btree
-  add_index "tagged_section_keywords", ["updated_by_id"], name: "index_tagged_section_keywords_on_updated_by_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.integer  "keyword_id",           null: false
@@ -1433,14 +1360,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "updated_by_id",        null: false
     t.integer  "project_id",           null: false
     t.integer  "position",             null: false
+    t.index ["created_by_id"], name: "index_tags_on_created_by_id", using: :btree
+    t.index ["keyword_id"], name: "index_tags_on_keyword_id", using: :btree
+    t.index ["position"], name: "index_tags_on_position", using: :btree
+    t.index ["project_id"], name: "index_tags_on_project_id", using: :btree
+    t.index ["tag_object_id", "tag_object_type"], name: "index_tags_on_tag_object_id_and_type", using: :btree
+    t.index ["updated_by_id"], name: "index_tags_on_updated_by_id", using: :btree
   end
-
-  add_index "tags", ["created_by_id"], name: "index_tags_on_created_by_id", using: :btree
-  add_index "tags", ["keyword_id"], name: "index_tags_on_keyword_id", using: :btree
-  add_index "tags", ["position"], name: "index_tags_on_position", using: :btree
-  add_index "tags", ["project_id"], name: "index_tags_on_project_id", using: :btree
-  add_index "tags", ["tag_object_id", "tag_object_type"], name: "index_tags_on_tag_object_id_and_type", using: :btree
-  add_index "tags", ["updated_by_id"], name: "index_tags_on_updated_by_id", using: :btree
 
   create_table "taxon_determinations", force: :cascade do |t|
     t.integer  "biological_collection_object_id", null: false
@@ -1454,14 +1380,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "year_made"
     t.integer  "month_made"
     t.integer  "day_made"
+    t.index ["biological_collection_object_id"], name: "index_taxon_determinations_on_biological_collection_object_id", using: :btree
+    t.index ["created_by_id"], name: "index_taxon_determinations_on_created_by_id", using: :btree
+    t.index ["otu_id"], name: "index_taxon_determinations_on_otu_id", using: :btree
+    t.index ["position"], name: "index_taxon_determinations_on_position", using: :btree
+    t.index ["project_id"], name: "index_taxon_determinations_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_taxon_determinations_on_updated_by_id", using: :btree
   end
-
-  add_index "taxon_determinations", ["biological_collection_object_id"], name: "index_taxon_determinations_on_biological_collection_object_id", using: :btree
-  add_index "taxon_determinations", ["created_by_id"], name: "index_taxon_determinations_on_created_by_id", using: :btree
-  add_index "taxon_determinations", ["otu_id"], name: "index_taxon_determinations_on_otu_id", using: :btree
-  add_index "taxon_determinations", ["position"], name: "index_taxon_determinations_on_position", using: :btree
-  add_index "taxon_determinations", ["project_id"], name: "index_taxon_determinations_on_project_id", using: :btree
-  add_index "taxon_determinations", ["updated_by_id"], name: "index_taxon_determinations_on_updated_by_id", using: :btree
 
   create_table "taxon_name_classifications", force: :cascade do |t|
     t.integer  "taxon_name_id", null: false
@@ -1471,22 +1396,20 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id", null: false
     t.integer  "updated_by_id", null: false
     t.integer  "project_id",    null: false
+    t.index ["created_by_id"], name: "index_taxon_name_classifications_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_taxon_name_classifications_on_project_id", using: :btree
+    t.index ["taxon_name_id"], name: "index_taxon_name_classifications_on_taxon_name_id", using: :btree
+    t.index ["type"], name: "index_taxon_name_classifications_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_taxon_name_classifications_on_updated_by_id", using: :btree
   end
-
-  add_index "taxon_name_classifications", ["created_by_id"], name: "index_taxon_name_classifications_on_created_by_id", using: :btree
-  add_index "taxon_name_classifications", ["project_id"], name: "index_taxon_name_classifications_on_project_id", using: :btree
-  add_index "taxon_name_classifications", ["taxon_name_id"], name: "index_taxon_name_classifications_on_taxon_name_id", using: :btree
-  add_index "taxon_name_classifications", ["type"], name: "index_taxon_name_classifications_on_type", using: :btree
-  add_index "taxon_name_classifications", ["updated_by_id"], name: "index_taxon_name_classifications_on_updated_by_id", using: :btree
 
   create_table "taxon_name_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
     t.integer "generations",   null: false
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "taxon_name_anc_desc_idx", unique: true, using: :btree
+    t.index ["descendant_id"], name: "taxon_name_desc_idx", using: :btree
   end
-
-  add_index "taxon_name_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "taxon_name_anc_desc_idx", unique: true, using: :btree
-  add_index "taxon_name_hierarchies", ["descendant_id"], name: "taxon_name_desc_idx", using: :btree
 
   create_table "taxon_name_relationships", force: :cascade do |t|
     t.integer  "subject_taxon_name_id", null: false
@@ -1497,14 +1420,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "created_by_id",         null: false
     t.integer  "updated_by_id",         null: false
     t.integer  "project_id",            null: false
+    t.index ["created_by_id"], name: "index_taxon_name_relationships_on_created_by_id", using: :btree
+    t.index ["object_taxon_name_id"], name: "index_taxon_name_relationships_on_object_taxon_name_id", using: :btree
+    t.index ["project_id"], name: "index_taxon_name_relationships_on_project_id", using: :btree
+    t.index ["subject_taxon_name_id"], name: "index_taxon_name_relationships_on_subject_taxon_name_id", using: :btree
+    t.index ["type"], name: "index_taxon_name_relationships_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_taxon_name_relationships_on_updated_by_id", using: :btree
   end
-
-  add_index "taxon_name_relationships", ["created_by_id"], name: "index_taxon_name_relationships_on_created_by_id", using: :btree
-  add_index "taxon_name_relationships", ["object_taxon_name_id"], name: "index_taxon_name_relationships_on_object_taxon_name_id", using: :btree
-  add_index "taxon_name_relationships", ["project_id"], name: "index_taxon_name_relationships_on_project_id", using: :btree
-  add_index "taxon_name_relationships", ["subject_taxon_name_id"], name: "index_taxon_name_relationships_on_subject_taxon_name_id", using: :btree
-  add_index "taxon_name_relationships", ["type"], name: "index_taxon_name_relationships_on_type", using: :btree
-  add_index "taxon_name_relationships", ["updated_by_id"], name: "index_taxon_name_relationships_on_updated_by_id", using: :btree
 
   create_table "taxon_names", force: :cascade do |t|
     t.string   "name"
@@ -1534,14 +1456,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.string   "cached"
     t.string   "verbatim_name"
     t.integer  "cached_valid_taxon_name_id"
+    t.index ["created_by_id"], name: "index_taxon_names_on_created_by_id", using: :btree
+    t.index ["name"], name: "index_taxon_names_on_name", using: :btree
+    t.index ["parent_id"], name: "index_taxon_names_on_parent_id", using: :btree
+    t.index ["project_id"], name: "index_taxon_names_on_project_id", using: :btree
+    t.index ["type"], name: "index_taxon_names_on_type", using: :btree
+    t.index ["updated_by_id"], name: "index_taxon_names_on_updated_by_id", using: :btree
   end
-
-  add_index "taxon_names", ["created_by_id"], name: "index_taxon_names_on_created_by_id", using: :btree
-  add_index "taxon_names", ["name"], name: "index_taxon_names_on_name", using: :btree
-  add_index "taxon_names", ["parent_id"], name: "index_taxon_names_on_parent_id", using: :btree
-  add_index "taxon_names", ["project_id"], name: "index_taxon_names_on_project_id", using: :btree
-  add_index "taxon_names", ["type"], name: "index_taxon_names_on_type", using: :btree
-  add_index "taxon_names", ["updated_by_id"], name: "index_taxon_names_on_updated_by_id", using: :btree
 
   create_table "test_classes", force: :cascade do |t|
     t.integer  "project_id"
@@ -1556,11 +1477,10 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.string   "type"
     t.integer  "sti_id"
     t.string   "sti_type"
+    t.index ["created_by_id"], name: "index_test_classes_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_test_classes_on_project_id", using: :btree
+    t.index ["updated_by_id"], name: "index_test_classes_on_updated_by_id", using: :btree
   end
-
-  add_index "test_classes", ["created_by_id"], name: "index_test_classes_on_created_by_id", using: :btree
-  add_index "test_classes", ["project_id"], name: "index_test_classes_on_project_id", using: :btree
-  add_index "test_classes", ["updated_by_id"], name: "index_test_classes_on_updated_by_id", using: :btree
 
   create_table "type_materials", force: :cascade do |t|
     t.integer  "protonym_id",          null: false
@@ -1571,14 +1491,13 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.integer  "project_id",           null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.index ["biological_object_id"], name: "index_type_materials_on_biological_object_id", using: :btree
+    t.index ["created_by_id"], name: "index_type_materials_on_created_by_id", using: :btree
+    t.index ["project_id"], name: "index_type_materials_on_project_id", using: :btree
+    t.index ["protonym_id"], name: "index_type_materials_on_protonym_id", using: :btree
+    t.index ["type_type"], name: "index_type_materials_on_type_type", using: :btree
+    t.index ["updated_by_id"], name: "index_type_materials_on_updated_by_id", using: :btree
   end
-
-  add_index "type_materials", ["biological_object_id"], name: "index_type_materials_on_biological_object_id", using: :btree
-  add_index "type_materials", ["created_by_id"], name: "index_type_materials_on_created_by_id", using: :btree
-  add_index "type_materials", ["project_id"], name: "index_type_materials_on_project_id", using: :btree
-  add_index "type_materials", ["protonym_id"], name: "index_type_materials_on_protonym_id", using: :btree
-  add_index "type_materials", ["type_type"], name: "index_type_materials_on_type_type", using: :btree
-  add_index "type_materials", ["updated_by_id"], name: "index_type_materials_on_updated_by_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                                         null: false
@@ -1602,20 +1521,18 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.json     "footprints",                    default: {}
     t.integer  "sign_in_count",                 default: 0
     t.json     "hub_favorites"
+    t.index ["created_by_id"], name: "index_users_on_created_by_id", using: :btree
+    t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
+    t.index ["updated_by_id"], name: "index_users_on_updated_by_id", using: :btree
   end
-
-  add_index "users", ["created_by_id"], name: "index_users_on_created_by_id", using: :btree
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
-  add_index "users", ["updated_by_id"], name: "index_users_on_updated_by_id", using: :btree
 
   create_table "version_associations", force: :cascade do |t|
     t.integer "version_id"
     t.string  "foreign_key_name", null: false
     t.integer "foreign_key_id"
+    t.index ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key", using: :btree
+    t.index ["version_id"], name: "index_version_associations_on_version_id", using: :btree
   end
-
-  add_index "version_associations", ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key", using: :btree
-  add_index "version_associations", ["version_id"], name: "index_version_associations_on_version_id", using: :btree
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",      null: false
@@ -1625,10 +1542,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.text     "object"
     t.datetime "created_at",     null: false
     t.integer  "transaction_id"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+    t.index ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
   end
-
-  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
-  add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
 
   add_foreign_key "alternate_values", "languages", name: "alternate_values_language_id_fkey"
   add_foreign_key "alternate_values", "projects", name: "alternate_values_project_id_fkey"

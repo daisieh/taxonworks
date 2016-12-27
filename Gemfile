@@ -9,7 +9,7 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
-gem 'rails', '~> 4.2.7.1'
+gem 'rails', '~> 5.0', '>= 5.0.1'
 gem 'psych', '~> 2.0.16'
 gem 'responders', '~> 2.0'
 
@@ -17,7 +17,7 @@ gem 'responders', '~> 2.0'
 gem 'pg', '~> 0.18.4'
 
 # Postgis
-gem 'activerecord-postgis-adapter', '~> 3.1.4'
+gem 'activerecord-postgis-adapter', '~> 4.0', '>= 4.0.2'
 
 # rgeo support
 gem 'ffi-geos'
