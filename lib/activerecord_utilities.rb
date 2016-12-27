@@ -29,7 +29,7 @@ module ActiverecordUtilities
 
 end
 
-class ApplicationRecord
+class ActiveRecord::Base
   include ActiverecordUtilities
 end
 
