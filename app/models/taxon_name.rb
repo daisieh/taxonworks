@@ -490,7 +490,7 @@ class TaxonName < ApplicationRecord
   # @return [TaxonNameRelationship]
   #  returns youngest taxon name relationship where self is the subject.
   def first_possible_valid_taxon_name_relationship
-    taxon_name_relationships(true).with_type_array(TAXON_NAME_RELATIONSHIP_NAMES_INVALID).youngest_by_citation 
+    reload_taxon_name_relationships.with_type_array(TAXON_NAME_RELATIONSHIP_NAMES_INVALID).youngest_by_citation 
   end
 
   # @return [TaxonName]
@@ -794,7 +794,7 @@ class TaxonName < ApplicationRecord
       ancestors_through_parents
     else
     
-      self.self_and_ancestors(true).to_a.reverse ## .self_and_ancestors returns empty array!!!!!!!
+      self.reload_self_and_ancestors.to_a.reverse ## .self_and_ancestors returns empty array!!!!!!!
     end
   end
 
@@ -963,7 +963,7 @@ class TaxonName < ApplicationRecord
     str = nil
 
     if GENUS_AND_SPECIES_RANK_NAMES.include?(self.rank_string) && self.class == Protonym
-      relationships = self.original_combination_relationships(true) # force a reload of the relationships
+      relationships = self.reload_original_combination_relationships
 
       return nil if relationships.count == 0
 
@@ -1146,7 +1146,7 @@ class TaxonName < ApplicationRecord
 
   def get_cached_classified_as
     return nil unless self.type == 'Combination' || self.type == 'Protonym'
-    r = self.source_classified_as(true)
+    r = self.reload_source_classified_as
     unless r.blank?
       return " (as #{r.name})"
     end
@@ -1362,7 +1362,7 @@ class TaxonName < ApplicationRecord
                            fix:             :sv_fix_parent_is_valid_name,
                            success_message: 'Parent was updated')
     else # TODO: This seems like a different validation, split with above?
-      classifications      = self.taxon_name_classifications(true)
+      classifications      = self.reload_taxon_name_classifications
       classification_names = classifications.map { |i| i.type_name }
       compare              = TAXON_NAME_CLASS_NAMES_UNAVAILABLE_AND_INVALID & classification_names
       unless compare.empty?

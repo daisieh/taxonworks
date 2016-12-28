@@ -155,6 +155,7 @@ group :doc do
 end
 
 group :test do
+  gem 'rails-controller-testing'
   gem 'rspec', '~> 3.4'
   gem 'coveralls', '~> 0.8.13', require: false
   gem 'capybara', '~> 2.10.2'
