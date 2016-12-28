@@ -373,7 +373,7 @@ module Protonym::SoftValidationExtensions
           if rank_string =~ /Species/
             primary_types = self.get_primary_type
             unless primary_types.empty?
-              p = primary_types.collect!{|t| t.biological_object_id}
+              p = primary_types.collect{|t| t.biological_object_id}
               possible_synonyms = Protonym.with_type_material_array(p).that_is_valid.without_taxon_name_classification_array(TAXON_NAME_CLASS_NAMES_UNAVAILABLE_AND_INVALID).not_self(self).with_project(self.project_id)
             end
           else

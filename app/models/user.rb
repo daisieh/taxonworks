@@ -141,6 +141,8 @@ class User < ApplicationRecord
 
   scope :is_administrator, -> {where(is_administrator: true)}
 
+  serialize :footprints, Hash
+
   def administered_projects
     projects.where(id: project_members.where(is_project_administrator: true).pluck(:project_id) ) 
   end
