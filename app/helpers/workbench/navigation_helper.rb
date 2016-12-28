@@ -195,7 +195,7 @@ module Workbench::NavigationHelper
     route = hsh.keys.first
     o = safe_object_from_attributes(hsh[route])
     if o.nil?
-      link_to(route.parameterize(' - ').humanize.capitalize, route)
+      link_to(route.parameterize(separator: ' - ').humanize.capitalize, route)
     elsif o
       o = o.metamorphosize if o.respond_to?(:metamorphosize)
       link_to(object_tag(o) +  " [#{hsh[route]['object_type']}]" , route) 
