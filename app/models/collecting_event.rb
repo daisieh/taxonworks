@@ -381,7 +381,7 @@ class CollectingEvent < ApplicationRecord
     def in_date_range(search_start_date: nil, search_end_date: nil, partial_overlap: 'on')
       allow_partial = (partial_overlap.downcase == 'off' ? false : true)
       sql_string    = date_sql_from_dates(search_start_date, search_end_date, allow_partial)
-      CollectingEvent.where(sql_string).where(project: $project_id).uniq
+      CollectingEvent.where(sql_string).where(project: $project_id).distinct
     end
 
     # @param [Hash] of parameters in the style of 'params'
@@ -615,7 +615,7 @@ class CollectingEvent < ApplicationRecord
   # @return [Scope]
   # Find all (other) CEs which have GIs or EGIs (through georeferences) which intersect self
   def collecting_events_intersecting_with
-    pieces = GeographicItem.with_collecting_event_through_georeferences.intersecting('any', self.geographic_items.first).uniq
+    pieces = GeographicItem.with_collecting_event_through_georeferences.intersecting('any', self.geographic_items.first).distinct
     gr     = [] # all collecting events for a geographic_item
 
     pieces.each { |o|
@@ -688,7 +688,7 @@ class CollectingEvent < ApplicationRecord
       # pieces = gi_list
       ga_list = GeographicArea.joins(:geographic_area_type, :geographic_areas_geographic_items).
         where(geographic_area_types:             {name: types},
-              geographic_areas_geographic_items: {geographic_item_id: gi_list}).uniq
+              geographic_areas_geographic_items: {geographic_item_id: gi_list}).distinct
 
       # WAS: now find all of the GAs which have the same names as the ones we collected.
 

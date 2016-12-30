@@ -203,7 +203,7 @@ class TaxonName < ApplicationRecord
   scope :ancestors_and_descendants_of, -> (taxon_name) { 
     joins('LEFT OUTER JOIN taxon_name_hierarchies a ON taxon_names.id = a.descendant_id
              LEFT JOIN taxon_name_hierarchies b ON taxon_names.id = b.ancestor_id').
-    where("(a.ancestor_id = ?) OR (b.descendant_id = ?)", taxon_name.id, taxon_name.id ).uniq }
+    where("(a.ancestor_id = ?) OR (b.descendant_id = ?)", taxon_name.id, taxon_name.id ).distinct }
 
   scope :with_rank_class, -> (rank_class_name) { where(rank_class: rank_class_name) }
   scope :with_parent_taxon_name, -> (parent) { where(parent_id: parent) }
