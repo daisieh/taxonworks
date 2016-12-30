@@ -1,7 +1,7 @@
 class Tasks::Accessions::Verify::MaterialController < ApplicationController
   include TaskControllerConfiguration
 
-  before_filter :get_data_to_verify
+  before_action :get_data_to_verify
 
   def index
   end 

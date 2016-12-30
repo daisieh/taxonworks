@@ -2,7 +2,7 @@ module DataControllerConfiguration
   extend ActiveSupport::Concern
 
   included do
-    before_filter :set_is_data_controller, :set_data_model, :set_hub_model_metadata
+    before_action :set_is_data_controller, :set_data_model, :set_hub_model_metadata
   end
 
   def related

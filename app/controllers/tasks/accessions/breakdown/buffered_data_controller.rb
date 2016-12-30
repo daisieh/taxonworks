@@ -2,9 +2,9 @@
 class Tasks::Accessions::Breakdown::BufferedDataController < ApplicationController
   include TaskControllerConfiguration
 
-  before_filter :set_collection_object, only: [:index, :update]
+  before_action :set_collection_object, only: [:index, :update]
 
-  # before_filter 
+  # before_action 
 
   # GET /tasks/accession/breakdown/buffered_data/:id
   def index

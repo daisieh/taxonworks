@@ -1,7 +1,7 @@
 class Tasks::Gis::AssertedDistributionController < ApplicationController
   include TaskControllerConfiguration
  
-  before_filter :build_locks, only: [:new, :create, :generate_choices]
+  before_action :build_locks, only: [:new, :create, :generate_choices]
 
   # GET /new 
   def new

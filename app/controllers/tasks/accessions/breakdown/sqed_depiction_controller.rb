@@ -2,7 +2,7 @@
 class Tasks::Accessions::Breakdown::SqedDepictionController < ApplicationController
   include TaskControllerConfiguration
 
-  before_filter :set_sqed_depiction, except: [:todo_map]
+  before_action :set_sqed_depiction, except: [:todo_map]
 
   # GET /tasks/accession/breakdown/depiction/:id
   def index

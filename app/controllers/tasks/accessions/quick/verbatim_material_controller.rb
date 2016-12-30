@@ -1,6 +1,6 @@
 class Tasks::Accessions::Quick::VerbatimMaterialController < ApplicationController
   include TaskControllerConfiguration
-  before_filter :set_fixed_variables, :get_recent
+  before_action :set_fixed_variables, :get_recent
 
   # GET quick_verbatim_material_task
   def new

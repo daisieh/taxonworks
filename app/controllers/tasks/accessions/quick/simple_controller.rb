@@ -1,7 +1,7 @@
 class Tasks::Accessions::Quick::SimpleController < ApplicationController
   include TaskControllerConfiguration
 
-  before_filter :build_locks, :get_recent, only: [:new, :create]
+  before_action :build_locks, :get_recent, only: [:new, :create]
 
   # POST /tasks/accessions/simple/new.html
   def new
