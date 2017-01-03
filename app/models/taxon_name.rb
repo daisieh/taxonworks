@@ -963,7 +963,7 @@ class TaxonName < ApplicationRecord
     str = nil
 
     if GENUS_AND_SPECIES_RANK_NAMES.include?(self.rank_string) && self.class == Protonym
-      relationships = self.original_combination_relationships.reload
+      relationships = reload_original_combination_relationships
 
       return nil if relationships.count == 0
 
