@@ -697,7 +697,7 @@ describe Source::Bibtex, type: :model, group: :sources do
       #   expect(s.roles.count).to eq(0)
       #   s.authors << Person.create(last_name: 'Jones')
       #   expect(s.save).to be_truthy
-      #   expect(s.roles(true).size).to eq(1)
+      #   expect(s.roles.reload.size).to eq(1)
       #   expect(s.roles.first.valid?).to be_truthy
       #   expect(s.roles.first.creator.nil?).to be_falsey
       #   expect(s.roles.first.updater.nil?).to be_falsey
@@ -1236,10 +1236,10 @@ describe Source::Bibtex, type: :model, group: :sources do
         ) }
         let(:b) { Source::Bibtex.create!(params) }
         specify 'has one role' do
-          expect(b.roles(true).size).to eq(1)
+          expect(b.roles.reload.size).to eq(1)
         end
         specify 'has one author' do
-          expect(b.authors(true).size).to eq(1)
+          expect(b.authors.reload.size).to eq(1)
         end
       end
 
@@ -1249,10 +1249,10 @@ describe Source::Bibtex, type: :model, group: :sources do
         ) }
         let(:b) { Source::Bibtex.create!(params) }
         specify 'has one role' do
-          expect(b.roles(true).size).to eq(1)
+          expect(b.roles.reload.size).to eq(1)
         end
         specify 'has one author' do
-          expect(b.authors(true).size).to eq(1)
+          expect(b.authors.reload.size).to eq(1)
         end
       end
 
@@ -1277,7 +1277,7 @@ describe Source::Bibtex, type: :model, group: :sources do
         let(:params) { required_params.merge(one_author_params) }
         specify 'update adds role' do
           expect(b.update(params)).to be_truthy
-          expect(b.roles(true).size).to eq(1)
+          expect(b.roles.reload.size).to eq(1)
         end
       end
 
@@ -1287,7 +1287,7 @@ describe Source::Bibtex, type: :model, group: :sources do
         ) }
         specify 'update adds role' do
           expect(b.update(params)).to be_truthy
-          expect(b.roles(true).size).to eq(1)
+          expect(b.roles.reload.size).to eq(1)
         end
       end
 
@@ -1298,9 +1298,9 @@ describe Source::Bibtex, type: :model, group: :sources do
             author_roles_attributes: [{id: b.roles.first.id, _destroy: 1}]
           } }
           specify 'update destroys role' do
-            expect(b.roles(true).size).to eq(1)
+            expect(b.roles.reload.size).to eq(1)
             expect(b.update(params)).to be_truthy
-            expect(b.roles(true).size).to eq(0)
+            expect(b.roles.reload.size).to eq(0)
           end
         end
       end
@@ -1311,15 +1311,15 @@ describe Source::Bibtex, type: :model, group: :sources do
           author_roles_attributes: [{id: b.roles.second.id, _destroy: 1}]
         } }
         specify 'three authors exist' do
-          expect(b.authors(true).size).to eq(3)
+          expect(b.authors.reload.size).to eq(3)
         end
         specify 'update updates position' do
-          expect(b.authors(true).count).to eq(3)
+          expect(b.authors.reload.count).to eq(3)
           expect(b.authority_name).to eq('un, deux & trois')
           expect(b.update(params)).to be_truthy
-          expect(b.authors(true).count).to eq(2)
+          expect(b.authors.reload.count).to eq(2)
           expect(b.authority_name).to eq('un & trois')
-          expect(b.roles(true).first.position).to eq(1)
+          expect(b.roles.reload.first.position).to eq(1)
           expect(b.roles.last.position).to eq(2)
           expect(b.authors.last.last_name).to eq('trois')
         end
@@ -1331,11 +1331,11 @@ describe Source::Bibtex, type: :model, group: :sources do
           author_roles_attributes: [{id: b.roles.second.id, position: 1}, {id: b.roles.third.id, position: 2}, {id: b.roles.first.id, position: 3}]
         } }
         specify 'update updates position' do
-          expect(b.authors(true).count).to eq(3)
+          expect(b.authors.reload.count).to eq(3)
           expect(b.authority_name).to eq('un, deux & trois')
           expect(b.update(params)).to be_truthy
-          expect(b.authors(true).collect { |a| a.last_name }).to eq(%w{deux trois un})
-          expect(b.authors(true).count).to eq(3)
+          expect(b.authors.reload.collect { |a| a.last_name }).to eq(%w{deux trois un})
+          expect(b.authors.reload.count).to eq(3)
           expect(b.authority_name).to eq('deux, trois & un')
         end
       end

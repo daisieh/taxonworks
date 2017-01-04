@@ -50,7 +50,7 @@ class CollectionObject::BiologicalCollectionObject < CollectionObject
   end
 
   def sv_missing_determination
-    soft_validations.add(:base, 'Determination is missing') if self.current_taxon_determination(true).nil?
+    soft_validations.add(:base, 'Determination is missing') if self.reload_current_taxon_determination.nil?
   end
 
   def sv_missing_collecting_event
