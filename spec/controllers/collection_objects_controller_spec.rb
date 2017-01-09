@@ -81,10 +81,10 @@ describe CollectionObjectsController, :type => :controller do
       end
 
       context 'valid collection_object' do
-        before { get :show, {id:      collection_object.to_param,
+        before { get :show, params: {id:      collection_object.to_param,
                              include: ['images'],
                              format:  :json},
-                     valid_session }
+                     session: valid_session }
         let (:data) { JSON.parse(response.body) }
 
         it "returns a successful JSON response" do
@@ -114,10 +114,10 @@ describe CollectionObjectsController, :type => :controller do
               end
 
               it "has images as empty array" do
-                get :show, {:id      => collection_object.to_param,
+                get :show, params: {:id      => collection_object.to_param,
                             :include => ["images"],
                             :format  => :json},
-                    valid_session
+                    session: valid_session
                 expect(result["images"]).to eq([])
               end
             end
@@ -147,9 +147,9 @@ describe CollectionObjectsController, :type => :controller do
               context 'when not requested' do
 
                 it 'does not have images attribute' do
-                  get :show, {id:     collection_object.to_param,
+                  get :show, params: {id:     collection_object.to_param,
                               format: :json},
-                      valid_session
+                      session: valid_session
                   expect(JSON.parse(response.body)['result']['images']).to be nil
                 end
               end

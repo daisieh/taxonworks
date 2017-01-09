@@ -149,14 +149,14 @@ describe Tasks::Gis::MatchGeoreferenceController, type: :controller do
 
       it 'processes case 1my: start date' do
         [ce1, ce2, ce3, ce4].map(&:save)
-        get :filtered_collecting_events, {start_date_month: '1',
+        get :filtered_collecting_events, params: {start_date_month: '1',
                                           start_date_year:  '2015'}
         expect(assigns(:collecting_events)).to contain_exactly(ce1)
       end
 
       it 'processes case 1dmy: start date' do
         [ce1, ce2, ce3, ce4].map(&:save)
-        get :filtered_collecting_events, {start_date_day:   '15',
+        get :filtered_collecting_events, params: {start_date_day:   '15',
                                           start_date_month: '12',
                                           start_date_year:  '2015'}
         expect(assigns(:collecting_events)).to contain_exactly(ce2)
@@ -164,14 +164,14 @@ describe Tasks::Gis::MatchGeoreferenceController, type: :controller do
 
       it 'processes case 2yy: start date, end date' do
         [ce1, ce2, ce3, ce4].map(&:save)
-        get :filtered_collecting_events, {start_date_year: '2001',
+        get :filtered_collecting_events, params: {start_date_year: '2001',
                                           end_date_year:   '2015'}
         expect(assigns(:collecting_events)).to contain_exactly(ce2, ce1, ce3)
       end
 
       it 'processes case 2mm: start date, end date' do
         [ce1, ce2, ce3, ce4].map(&:save)
-        get :filtered_collecting_events, {start_date_month: '5',
+        get :filtered_collecting_events, params: {start_date_month: '5',
                                           end_date_month:   '8'}
         expect(assigns(:collecting_events)).to contain_exactly(ce4, ce3)
       end
@@ -196,14 +196,14 @@ describe Tasks::Gis::MatchGeoreferenceController, type: :controller do
 
         it 'processes case 1my: start date' do
           [ce1, ce2, ce3, ce4].map(&:save)
-          get :filtered_collecting_events, {start_date_month: '1',
+          get :filtered_collecting_events, params: {start_date_month: '1',
                                             start_date_year:  '2001'}
           expect(assigns(:collecting_events)).to be_empty
         end
 
         it 'processes case 2: end only, no start' do
           [ce1, ce2, ce3, ce4].map(&:save)
-          get :filtered_collecting_events, {end_date_day:   '15',
+          get :filtered_collecting_events, params: {end_date_day:   '15',
                                             end_date_month: '1',
                                             end_date_year:  '2015'}
           expect(assigns(:collecting_events)).to be_empty
@@ -211,7 +211,7 @@ describe Tasks::Gis::MatchGeoreferenceController, type: :controller do
 
         it 'processes case 2mm: start date, end date' do
           [ce1, ce2, ce3, ce4].map(&:save)
-          get :filtered_collecting_events, {start_date_month: '2',
+          get :filtered_collecting_events, params: {start_date_month: '2',
                                             end_date_month:   '5'}
           expect(assigns(:collecting_events)).to be_empty
         end

@@ -10,7 +10,7 @@ describe Tasks::Gis::AssertedDistributionController, :type => :controller do
 
   describe "GET new" do
     it "returns http success" do
-      get 'new', asserted_distribution: {otu_id: valid_otu.id, source_id: valid_source.id}
+      get 'new', params: { asserted_distribution: {otu_id: valid_otu.id, source_id: valid_source.id} }
       expect(response).to have_http_status(:success)
     end
   end

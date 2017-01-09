@@ -45,7 +45,7 @@ describe ApiController, type: :controller do
     end
 
     context 'when project_id is missing' do
-      before { get :index, token: user.api_access_token }
+      before { get :index, params: { token: user.api_access_token } }
 
       it 'returns HTTP Status 400 Bad Request' do
         expect(response).to be_bad_request
