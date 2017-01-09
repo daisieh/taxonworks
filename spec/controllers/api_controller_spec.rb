@@ -32,14 +32,14 @@ describe ApiController, type: :controller do
     context 'when provided in header' do
       before do
         @request.headers['Authorization'] = 'Token token=' + user.api_access_token
-        get :index, params
+        get :index, params: params
       end
 
       it_behaves_like 'successful response'
     end
 
     context 'when provided in query params' do
-      before { get :index, {token: user.api_access_token}.merge(params) }
+      before { get :index, params: {token: user.api_access_token}.merge(params) }
 
       it_behaves_like 'successful response'
     end
@@ -64,20 +64,20 @@ describe ApiController, type: :controller do
     context 'when provided in header' do
       before do
         @request.headers['Authorization'] = 'Token token=FOO'
-        get :index, params
+        get :index, params: params
       end
 
       it_behaves_like 'unauthorized response'
     end
 
     context 'when provided in query params' do
-      before { get :index, {token: 'foo'}.merge(params) }
+      before { get :index, params: {token: 'foo'}.merge(params) }
 
       it_behaves_like 'unauthorized response'
     end
 
     context 'when not provided' do
-      before { get :index, params }
+      before { get :index, params: params }
 
       it_behaves_like 'unauthorized response'
     end

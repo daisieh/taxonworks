@@ -44,18 +44,18 @@ describe SerialChronologiesController, :type => :controller do
       it "creates a new SerialChronology" do
         s = FactoryGirl.create(:valid_source_bibtex)
         expect {
-          post :create, {serial_chronology: valid_attributes}, valid_session
+          post :create, params: {serial_chronology: valid_attributes}, session: valid_session
         }.to change(SerialChronology, :count).by(1)
       end
 
       it "assigns a newly created serial_chronology as @serial_chronology" do
-        post :create, {serial_chronology: valid_attributes}, valid_session
+        post :create, params: {serial_chronology: valid_attributes}, session: valid_session
         expect(assigns(:serial_chronology)).to be_a(SerialChronology)
         expect(assigns(:serial_chronology)).to be_persisted
       end
 
       it "redirects to :back" do
-        post :create, {serial_chronology: valid_attributes}, valid_session
+        post :create, params: {serial_chronology: valid_attributes}, session: valid_session
         expect(response).to redirect_to(serial_path(serial1))
       end
     end
@@ -64,7 +64,7 @@ describe SerialChronologiesController, :type => :controller do
       it "assigns a newly created but unsaved serial_chronology as @serial_chronology" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(SerialChronology).to receive(:save).and_return(false)
-        post :create, {:serial_chronology => { "preceding_serial_id" => "invalid value" }}, valid_session
+        post :create, params: {:serial_chronology => { "preceding_serial_id" => "invalid value" }}, session: valid_session
         # assigns(:serial_chronology).should be_a_new(SerialChronology)
         expect(assigns(:serial_chronology)).to be_a_new(SerialChronology) 
       end
@@ -72,7 +72,7 @@ describe SerialChronologiesController, :type => :controller do
       it "re-renders the :back template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(SerialChronology).to receive(:save).and_return(false)
-        post :create, {:serial_chronology => { "preceding_serial_id" => "invalid value" }}, valid_session
+        post :create, params: {:serial_chronology => { "preceding_serial_id" => "invalid value" }}, session: valid_session
         expect(response).to redirect_to(serial_path(serial1))
       end
     end
@@ -87,18 +87,18 @@ describe SerialChronologiesController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(SerialChronology).to receive(:update).with({ "preceding_serial_id" => "1" })
-        put :update, {:id => serial_chronology.to_param, :serial_chronology => { "preceding_serial_id" => "1" }}, valid_session
+        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => { "preceding_serial_id" => "1" }}, session: valid_session
       end
 
       it "assigns the requested serial_chronology as @serial_chronology" do
         serial_chronology = SerialChronology.create! valid_attributes
-        put :update, {:id => serial_chronology.to_param, :serial_chronology => valid_attributes}, valid_session
+        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => valid_attributes}, session: valid_session
         expect(assigns(:serial_chronology)).to eq(serial_chronology)
       end
 
       it "redirects to :back" do
         serial_chronology = SerialChronology.create! valid_attributes
-        put :update, {:id => serial_chronology.to_param, :serial_chronology => valid_attributes}, valid_session
+        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => valid_attributes}, session: valid_session
         expect(response).to redirect_to(serial_path(serial1))
       end
     end
@@ -108,7 +108,7 @@ describe SerialChronologiesController, :type => :controller do
         serial_chronology = SerialChronology.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(SerialChronology).to receive(:save).and_return(false)
-        put :update, {:id => serial_chronology.to_param, :serial_chronology => { "preceding_serial_id" => "invalid value" }}, valid_session
+        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => { "preceding_serial_id" => "invalid value" }}, session: valid_session
         expect(assigns(:serial_chronology)).to eq(serial_chronology)
       end
 
@@ -116,7 +116,7 @@ describe SerialChronologiesController, :type => :controller do
         serial_chronology = SerialChronology.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(SerialChronology).to receive(:save).and_return(false)
-        put :update, {:id => serial_chronology.to_param, :serial_chronology => { "preceding_serial_id" => "invalid value" }}, valid_session
+        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => { "preceding_serial_id" => "invalid value" }}, session: valid_session
         expect(response).to redirect_to(serial_path(serial1)  )
       end
     end
@@ -126,13 +126,13 @@ describe SerialChronologiesController, :type => :controller do
     it "destroys the requested serial_chronology" do
       serial_chronology = SerialChronology.create! valid_attributes
       expect {
-        delete :destroy, {:id => serial_chronology.to_param}, valid_session
+        delete :destroy, params: {:id => serial_chronology.to_param}, session: valid_session
       }.to change(SerialChronology, :count).by(-1)
     end
 
     it "redirects to :back" do
       serial_chronology = SerialChronology.create! valid_attributes
-      delete :destroy, {:id => serial_chronology.to_param}, valid_session
+      delete :destroy, params: {:id => serial_chronology.to_param}, session: valid_session
       expect(response).to redirect_to(serial_path(serial1))
     end
   end

@@ -39,7 +39,7 @@ describe GeoreferencesController, :type => :controller do
    
     it "assigns projects's recent georeferences as @recent_objects" do
       georeference = Georeference.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, params: {}, session: valid_session
       expect(assigns(:recent_objects)).to eq([georeference])
     end
   end
@@ -48,7 +48,7 @@ describe GeoreferencesController, :type => :controller do
     it "assigns the requested georeference as @georeference" do
       georeference = Georeference.create! valid_attributes
 
-      get :show, {:id => georeference.to_param}, valid_session
+      get :show, params: {:id => georeference.to_param}, session: valid_session
       expect(assigns(:georeference)).to eq(georeference)
     end
   end
@@ -64,7 +64,7 @@ describe GeoreferencesController, :type => :controller do
  describe "GET edit" do
    it "assigns the requested georeference as @georeference" do
      georeference = Georeference.create! valid_attributes
-     get :edit, {:id => georeference.to_param}, valid_session
+     get :edit, params: {:id => georeference.to_param}, session: valid_session
      expect(assigns(:georeference)).to eq(georeference)
    end
  end
@@ -184,13 +184,13 @@ describe GeoreferencesController, :type => :controller do
     it "destroys the requested georeference" do
       georeference = Georeference.create! valid_attributes
       expect {
-        delete :destroy, {:id => georeference.to_param}, valid_session
+        delete :destroy, params: {:id => georeference.to_param}, session: valid_session
       }.to change(Georeference, :count).by(-1)
     end
 
     it "redirects to the georeferences list" do
       georeference = Georeference.create! valid_attributes
-      delete :destroy, {:id => georeference.to_param}, valid_session
+      delete :destroy, params: {:id => georeference.to_param}, session: valid_session
       expect(response).to redirect_to(georeferences_url)
     end
   end

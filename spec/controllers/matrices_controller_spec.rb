@@ -50,7 +50,7 @@ RSpec.describe MatricesController, type: :controller do
   describe "GET #show" do
     it "assigns the requested matrix as @matrix" do
       matrix = Matrix.create! valid_attributes
-      get :show, {id: matrix.to_param}
+      get :show, params: {id: matrix.to_param}
       expect(assigns(:matrix)).to eq(matrix)
     end
   end

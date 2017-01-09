@@ -25,13 +25,13 @@ describe SessionsController, :type => :controller do
         }
             
         it "signs in the user and redirects to root when password is valid" do
-          post :create, { session: { email: email, password: password } }
+          post :create, params: { session: { email: email, password: password } }
           expect(controller.sessions_signed_in?).to be_truthy
           expect(response).to redirect_to root_path
         end
          
         it "does not sign in the user when the password is invalid" do
-          post :create, { session: { email: email, password: 'invalid' } }
+          post :create, params: { session: { email: email, password: 'invalid' } }
           expect(controller.sessions_signed_in?).to be_falsey
         end    
       end
@@ -47,14 +47,14 @@ describe SessionsController, :type => :controller do
         }
                 
         it "renders password reset request and does not sign in the user when password is valid" do
-          post :create, { session: { email: email, password: password } }
+          post :create, params: { session: { email: email, password: password } }
           expect(response).to render_template("request_password_reset")
           expect(assigns(:user)).to eq(user)
           expect(controller.sessions_signed_in?).to be_falsey
         end
         
         it "does not sign in the user when password is invalid" do
-          post :create, { session: { email: email, password: 'invalid' } }
+          post :create, params: { session: { email: email, password: 'invalid' } }
           expect(controller.sessions_signed_in?).to be_falsey
         end
       end
@@ -64,7 +64,7 @@ describe SessionsController, :type => :controller do
     context "invalid user" do
       
       it "does not authorize access to the application" do
-        post :create, { session: {email: 'invalid@example.com', password: 'invalid' } }
+        post :create, params: { session: {email: 'invalid@example.com', password: 'invalid' } }
         expect(controller.sessions_signed_in?).to be_falsey
       end
     end

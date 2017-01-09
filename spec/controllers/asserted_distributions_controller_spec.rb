@@ -39,12 +39,12 @@ describe AssertedDistributionsController, :type => :controller do
   describe "GET list" do
     it "with no other parameters, assigns 20/page asserted_distributions as @controlled_vocabulary_terms" do
       asserted_distribution = AssertedDistribution.create! valid_attributes
-      get :list, {}, valid_session
+      get :list, params: {}, session: valid_session
       expect(assigns(:asserted_distributions)).to include(asserted_distribution)
     end
 
     it "renders the list template" do
-      get :list, {}, valid_session
+      get :list, params: {}, session: valid_session
       expect(response).to render_template("list")
     end
   end
@@ -52,7 +52,7 @@ describe AssertedDistributionsController, :type => :controller do
   describe "GET index" do
     it "assigns all asserted_distributions as @asserted_distributions" do
       asserted_distribution = AssertedDistribution.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, params: {}, session: valid_session
       expect(assigns(:recent_objects)).to include(asserted_distribution)
     end
   end
@@ -60,14 +60,14 @@ describe AssertedDistributionsController, :type => :controller do
   describe "GET show" do
     it "assigns the requested asserted_distribution as @asserted_distribution" do
       asserted_distribution = AssertedDistribution.create! valid_attributes
-      get :show, {:id => asserted_distribution.to_param}, valid_session
+      get :show, params: {:id => asserted_distribution.to_param}, session: valid_session
       expect(assigns(:asserted_distribution)).to eq(asserted_distribution)
     end
   end
 
   describe "GET new" do
     it "assigns a new asserted_distribution as @asserted_distribution" do
-      get :new, {}, valid_session
+      get :new, params: {}, session: valid_session
       expect(assigns(:asserted_distribution)).to be_a_new(AssertedDistribution)
     end
   end
@@ -75,7 +75,7 @@ describe AssertedDistributionsController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested asserted_distribution as @asserted_distribution" do
       asserted_distribution = AssertedDistribution.create! valid_attributes
-      get :edit, {:id => asserted_distribution.to_param}, valid_session
+      get :edit, params: {:id => asserted_distribution.to_param}, session: valid_session
       expect(assigns(:asserted_distribution)).to eq(asserted_distribution)
     end
   end
@@ -84,18 +84,18 @@ describe AssertedDistributionsController, :type => :controller do
     describe "with valid params" do
       it "creates a new AssertedDistribution" do
         expect {
-          post :create, {:asserted_distribution => valid_attributes}, valid_session
+          post :create, params: {:asserted_distribution => valid_attributes}, session: valid_session
         }.to change(AssertedDistribution, :count).by(1)
       end
 
       it "assigns a newly created asserted_distribution as @asserted_distribution" do
-        post :create, {:asserted_distribution => valid_attributes}, valid_session
+        post :create, params: {:asserted_distribution => valid_attributes}, session: valid_session
         expect(assigns(:asserted_distribution)).to be_a(AssertedDistribution)
         expect(assigns(:asserted_distribution)).to be_persisted
       end
 
       it "redirects to the created asserted_distribution" do
-        post :create, {:asserted_distribution => valid_attributes}, valid_session
+        post :create, params: {:asserted_distribution => valid_attributes}, session: valid_session
         expect(response).to redirect_to(AssertedDistribution.last)
       end
     end
@@ -104,14 +104,14 @@ describe AssertedDistributionsController, :type => :controller do
       it "assigns a newly created but unsaved asserted_distribution as @asserted_distribution" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(AssertedDistribution).to receive(:save).and_return(false)
-        post :create, {:asserted_distribution => {"verbatim_label" => "invalid value"}}, valid_session
+        post :create, params: {:asserted_distribution => {"verbatim_label" => "invalid value"}}, session: valid_session
         expect(assigns(:asserted_distribution)).to be_a_new(AssertedDistribution)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(AssertedDistribution).to receive(:save).and_return(false)
-        post :create, {:asserted_distribution => {"verbatim_label" => "invalid value"}}, valid_session
+        post :create, params: {:asserted_distribution => {"verbatim_label" => "invalid value"}}, session: valid_session
         expect(response).to render_template("new")
       end
     end
@@ -126,18 +126,18 @@ describe AssertedDistributionsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(AssertedDistribution).to receive(:update).with({"is_absent" => true})
-        put :update, {:id => asserted_distribution.to_param, :asserted_distribution => {"is_absent" => true}}, valid_session
+        put :update, params: {:id => asserted_distribution.to_param, :asserted_distribution => {"is_absent" => true}}, session: valid_session
       end
 
       it "assigns the requested asserted_distribution as @asserted_distribution" do
         asserted_distribution = AssertedDistribution.create! valid_attributes
-        put :update, {:id => asserted_distribution.to_param, :asserted_distribution => valid_attributes}, valid_session
+        put :update, params: {:id => asserted_distribution.to_param, :asserted_distribution => valid_attributes}, session: valid_session
         expect(assigns(:asserted_distribution)).to eq(asserted_distribution)
       end
 
       it "redirects to the asserted_distribution" do
         asserted_distribution = AssertedDistribution.create! valid_attributes
-        put :update, {:id => asserted_distribution.to_param, :asserted_distribution => valid_attributes}, valid_session
+        put :update, params: {:id => asserted_distribution.to_param, :asserted_distribution => valid_attributes}, session: valid_session
         expect(response).to redirect_to(asserted_distribution)
       end
     end
@@ -147,7 +147,7 @@ describe AssertedDistributionsController, :type => :controller do
         asserted_distribution = AssertedDistribution.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(AssertedDistribution).to receive(:save).and_return(false)
-        put :update, {:id => asserted_distribution.to_param, :asserted_distribution => {"verbatim_label" => "invalid value"}}, valid_session
+        put :update, params: {:id => asserted_distribution.to_param, :asserted_distribution => {"verbatim_label" => "invalid value"}}, session: valid_session
         expect(assigns(:asserted_distribution)).to eq(asserted_distribution)
       end
 
@@ -155,7 +155,7 @@ describe AssertedDistributionsController, :type => :controller do
         asserted_distribution = AssertedDistribution.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(AssertedDistribution).to receive(:save).and_return(false)
-        put :update, {:id => asserted_distribution.to_param, :asserted_distribution => {"verbatim_label" => "invalid value"}}, valid_session
+        put :update, params: {:id => asserted_distribution.to_param, :asserted_distribution => {"verbatim_label" => "invalid value"}}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -165,13 +165,13 @@ describe AssertedDistributionsController, :type => :controller do
     it "destroys the requested asserted_distribution" do
       asserted_distribution = AssertedDistribution.create! valid_attributes
       expect {
-        delete :destroy, {:id => asserted_distribution.to_param}, valid_session
+        delete :destroy, params: {:id => asserted_distribution.to_param}, session: valid_session
       }.to change(AssertedDistribution, :count).by(-1)
     end
 
     it "redirects to the asserted_distributions list" do
       asserted_distribution = AssertedDistribution.create! valid_attributes
-      delete :destroy, {:id => asserted_distribution.to_param}, valid_session
+      delete :destroy, params: {:id => asserted_distribution.to_param}, session: valid_session
       expect(response).to redirect_to(asserted_distributions_url)
     end
   end

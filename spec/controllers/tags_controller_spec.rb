@@ -39,7 +39,7 @@ describe TagsController, :type => :controller do
   describe "GET index" do
     it "assigns recent tags as @recent_objects" do
       tag = Tag.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, params: {}, session: valid_session
       expect(assigns(:recent_objects)).to include(tag)
     end
   end
@@ -80,18 +80,18 @@ describe TagsController, :type => :controller do
     describe "with valid params" do
       it "creates a new Tag" do
         expect {
-          post :create, {:tag => valid_attributes}, valid_session
+          post :create, params: {:tag => valid_attributes}, session: valid_session
         }.to change(Tag, :count).by(1)
       end
 
       it "assigns a newly created tag as @tag" do
-        post :create, {:tag => valid_attributes}, valid_session
+        post :create, params: {:tag => valid_attributes}, session: valid_session
         expect(assigns(:tag)).to be_a(Tag)
         expect(assigns(:tag)).to be_persisted
       end
 
       it "redirects to :back" do
-        post :create, {:tag => valid_attributes}, valid_session
+        post :create, params: {:tag => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
       end
     end
@@ -100,14 +100,14 @@ describe TagsController, :type => :controller do
       it "assigns a newly created but unsaved tag as @tag" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Tag).to receive(:save).and_return(false)
-        post :create, {:tag => {"keyword_id" => "invalid value"}}, valid_session
+        post :create, params: {:tag => {"keyword_id" => "invalid value"}}, session: valid_session
         expect(assigns(:tag)).to be_a_new(Tag)
       end
 
       it "re-renders the :back template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Tag).to receive(:save).and_return(false)
-        post :create, {:tag => {"keyword_id" => "invalid value"}}, valid_session
+        post :create, params: {:tag => {"keyword_id" => "invalid value"}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -141,18 +141,18 @@ describe TagsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(Tag).to receive(:update).with({"keyword_id" => "1"})
-        put :update, {:id => tag.to_param, :tag => {"keyword_id" => "1"}}, valid_session
+        put :update, params: {:id => tag.to_param, :tag => {"keyword_id" => "1"}}, session: valid_session
       end
 
       it "assigns the requested tag as @tag" do
         tag = Tag.create! valid_attributes
-        put :update, {:id => tag.to_param, :tag => valid_attributes}, valid_session
+        put :update, params: {:id => tag.to_param, :tag => valid_attributes}, session: valid_session
         expect(assigns(:tag)).to eq(tag)
       end
 
       it "redirects to :back" do
         tag = Tag.create! valid_attributes
-        put :update, {:id => tag.to_param, :tag => valid_attributes}, valid_session
+        put :update, params: {:id => tag.to_param, :tag => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
       end
     end
@@ -162,7 +162,7 @@ describe TagsController, :type => :controller do
         tag = Tag.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Tag).to receive(:save).and_return(false)
-        put :update, {:id => tag.to_param, :tag => {"keyword_id" => "invalid value"}}, valid_session
+        put :update, params: {:id => tag.to_param, :tag => {"keyword_id" => "invalid value"}}, session: valid_session
         expect(assigns(:tag)).to eq(tag)
       end
 
@@ -170,7 +170,7 @@ describe TagsController, :type => :controller do
         tag = Tag.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Tag).to receive(:save).and_return(false)
-        put :update, {:id => tag.to_param, :tag => {"keyword_id" => "invalid value"}}, valid_session
+        put :update, params: {:id => tag.to_param, :tag => {"keyword_id" => "invalid value"}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -185,13 +185,13 @@ describe TagsController, :type => :controller do
 
     it "destroys the requested tag" do
       expect {
-        delete :destroy, {:id => @tag.to_param}, valid_session
+        delete :destroy, params: {:id => @tag.to_param}, session: valid_session
       }.to change(Tag, :count).by(-1)
     end
 
     it "redirects to :back" do
       #   it "redirects to the tags list if arriving from tag_path" do
-      delete :destroy, {:id => @tag.to_param}, valid_session
+      delete :destroy, params: {:id => @tag.to_param}, session: valid_session
       expect(response).to redirect_to(list_otus_path)
       # end
     end
