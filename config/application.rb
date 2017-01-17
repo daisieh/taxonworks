@@ -7,7 +7,8 @@ require 'rails/all'
 Bundler.require(:default, Rails.env)
 
 module TaxonWorks
-  class Application < Rails::Application
+  class
+  Application < Rails::Application
     # Via https://github.com/matthuhiggins/foreigner/pull/95
     #  config.before_initialize do
     #    Foreigner::Adapter.register 'postgis', 'foreigner/connection_adapters/postgresql_adapter'
@@ -21,7 +22,7 @@ module TaxonWorks
 
     config.autoload_paths += %W(#{config.root}/lib) # #{config.root}/extras
 
-    # Breaks rake/loading becahse of existing Rails.application.eager_load! statements 
+    # Breaks rake/loading becahse of existing Rails.application.eager_load! statements
     # config.eager_load_paths += %W(#{config.root}/lib) # #{config.root}/extras
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
@@ -38,7 +39,7 @@ module TaxonWorks
     config.active_record.schema_format :ruby
 
     # Raise error on `after_rollback`/`after_commit` callbacks
-    config.active_record.raise_in_transactional_callbacks = true
+    # config.active_record.raise_in_transactional_callbacks = true
 
     RGeo::ActiveRecord::SpatialFactoryStore.instance.tap do |config|
       # config.default = RGeo::Geographic.projected_factory(
