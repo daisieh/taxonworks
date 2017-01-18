@@ -20,7 +20,7 @@ class Tasks::CollectionObjects::FilterController < ApplicationController
     @shape_in           = params[:drawn_area_shape]
     set_and_order_dates(params)
 
-    if @shape_in.blank? and @geographic_area_id.blank? 
+    if @shape_in.blank? and @geographic_area_id.blank?
       area_object_ids = CollectionObject.where('false')
       area_set        = false
     else
@@ -32,8 +32,8 @@ class Tasks::CollectionObjects::FilterController < ApplicationController
     descendants = params[:descendants]
     gather_otu_objects(@otu_id, descendants) # sets @@otu_collection_objects
 
-    
-    # TODO: move all this to the logic of the method 
+
+    # TODO: move all this to the logic of the method
     if @start_date.blank? || @end_date.blank? #|| area_object_ids.count == 0
       # TODO: This will never get hit, right?!
       @collection_objects = CollectionObject.where('false')
@@ -130,10 +130,14 @@ class Tasks::CollectionObjects::FilterController < ApplicationController
     )
   end
 
+  # @param [Scope] collection_objects
+  # @param [GeographicArea] geographic_area or nil
+  # @return [Array] of georeferences or a geographic area
   def find_georeferences_for(collection_objects, geographic_area)
-    retval = collection_objects.map(&:collecting_event).uniq.map(&:georeferences).flatten
+    # TODO: Target for JOIN?
+    retval = collection_objects.map(&:collecting_event).distinct.map(&:georeferences).flatten
     if retval.empty?
-      retval.push(geographic_area)
+      retval.push(geographic_area) unless geographic_area.nil?
     end
     retval
   end
