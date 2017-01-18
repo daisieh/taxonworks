@@ -11,12 +11,12 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
     @kingdom = @species.ancestor_at_rank('kingdom')
   end
 
-  after(:all) { 
+  after(:all) {
     TaxonName.delete_all
     TaxonNameRelationship.delete_all
     Source.delete_all
     TaxonNameHierarchy.delete_all
-  } 
+  }
 
   context 'required attributes' do
     specify 'subject (TaxonName)' do
@@ -50,7 +50,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
       TAXON_NAME_RELATIONSHIPS.each do |r|
         r1 = r.disjoint_taxon_name_relationships.collect{|i| i.to_s}
         r1 = ['string'] + r1
-        r1 = r1.collect{|i| i.class.to_s}.uniq
+        r1 = r1.collect { |i| i.class.to_s }.uniq # rl is Array
         expect(r1.first).to eq('String')
         expect(r1.size).to eq(1)
       end
@@ -60,7 +60,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
       TAXON_NAME_RELATIONSHIPS.each do |r|
         r1 = r.disjoint_subject_classes.collect{|i| i.to_s}
         r1 = ['string'] + r1
-        r1 = r1.collect{|i| i.class.to_s}.uniq
+        r1 = r1.collect { |i| i.class.to_s }.uniq # rl is Array
         expect(r1.first).to eq('String')
         expect(r1.size).to eq(1)
       end
@@ -70,7 +70,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
       TAXON_NAME_RELATIONSHIPS.each do |r|
         r1 = r.disjoint_object_classes.collect{|i| i.to_s}
         r1 = ['string'] + r1
-        r1 = r1.collect{|i| i.class.to_s}.uniq
+        r1 = r1.collect { |i| i.class.to_s }.uniq # rl is Array
         expect(r1.first).to eq('String')
         expect(r1.size).to eq(1)
       end
@@ -80,7 +80,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
       TAXON_NAME_RELATIONSHIPS.each do |r|
         r1 = r.valid_object_ranks.collect{|i| i.to_s}
         r1 = ['string'] + r1
-        r1 = r1.collect{|i| i.class.to_s}.uniq
+        r1 = r1.collect { |i| i.class.to_s }.uniq # rl is Array
         expect(r1.first).to eq('String')
         expect(r1.size).to eq(1)
       end
@@ -90,7 +90,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
       TAXON_NAME_RELATIONSHIPS.each do |r|
         r1 = r.valid_subject_ranks.collect{|i| i.to_s}
         r1 = ['string'] + r1
-        r1 = r1.collect{|i| i.class.to_s}.uniq
+        r1 = r1.collect { |i| i.class.to_s }.uniq # rl is Array
         expect(r1.first).to eq('String')
         expect(r1.size).to eq(1)
       end
@@ -100,7 +100,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
   context 'validation' do
     context 'required attributes' do
       before(:each) {
-        taxon_name_relationship.valid? 
+        taxon_name_relationship.valid?
       }
       specify 'subject_taxon_name' do
         expect(taxon_name_relationship.errors.include?(:subject_taxon_name)).to be_truthy
@@ -116,8 +116,8 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
     end
 
     specify 'object_taxon_name != subject_taxon_name' do
-      taxon_name_relationship.object_taxon_name = @species
-      taxon_name_relationship.subject_taxon_name = @species 
+      taxon_name_relationship.object_taxon_name  = @species
+      taxon_name_relationship.subject_taxon_name = @species
       taxon_name_relationship.valid?
       expect(taxon_name_relationship.errors.include?(:object_taxon_name)).to be_truthy
     end
@@ -207,9 +207,9 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
   end
 
   context 'after save' do
- 
-   context 'cached values are set' do  
-    let(:g1) { FactoryGirl.create(:relationship_genus, name: 'Aus', parent: @family) }  
+
+    context 'cached values are set' do
+      let(:g1) { FactoryGirl.create(:relationship_genus, name: 'Aus', parent: @family) }
     let(:g2) { FactoryGirl.create(:relationship_genus, name: 'Bus', parent: @family) }
     let(:s1) { FactoryGirl.create(:relationship_species, name: 'aus', parent: g1) }
     let(:s2) { FactoryGirl.create(:relationship_species, name: 'bus', parent: g2) }
@@ -224,9 +224,9 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
 
     specify 'for cached_misspelling' do
       expect(s1.cached_misspelling).to be_falsey
-    end 
+    end
 
-   # TODO: this can be moved out to the new original_combination specs
+      # TODO: this can be moved out to the new original_combination specs
    specify 'for cached_original_combination' do
      # Use non FactoryGirl to get callbacks
      s1.original_genus = g2
@@ -255,7 +255,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
       expect(s1.cached_author_year).to eq('(McAtee, 1900)')
     end
 
-   # TODO: notice that alone they pass, we need a seperate method for setting cached_classified_as, i.e. decouple it from original combination cache setting 
+      # TODO: notice that alone they pass, we need a seperate method for setting cached_classified_as, i.e. decouple it from original combination cache setting
    specify 'for cached_classified_as with original genus present' do
      s1.original_genus = g2
      s1.save!
@@ -263,7 +263,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
      r2.save
      expect(s1.cached_classified_as).to eq(' (as Erythroneuridae)')
    end
-  
+
    specify 'fixing synonym linked to another synonym' do
       r3 = FactoryGirl.build(:taxon_name_relationship, subject_taxon_name: s1, object_taxon_name: s2, type: 'TaxonNameRelationship::Iczn::Invalidating::Usage::Misspelling')
       r3.soft_validate(:synonym_linked_to_valid_name)
@@ -283,7 +283,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
       r1 = FactoryGirl.build(:taxon_name_relationship, subject_taxon_name: g1, object_taxon_name: s1, type: 'TaxonNameRelationship::OriginalCombination::OriginalGenus')
       r2 = FactoryGirl.build(:taxon_name_relationship, subject_taxon_name: g1, object_taxon_name: s1, type: 'TaxonNameRelationship::OriginalCombination::OriginalSubgenus')
       r3 = FactoryGirl.build(:taxon_name_relationship, subject_taxon_name: s1, object_taxon_name: s1, type: 'TaxonNameRelationship::OriginalCombination::OriginalSpecies')
-    
+
       r1.save
       r2.save
       r3.save
@@ -329,7 +329,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
       g = FactoryGirl.create(:relationship_genus, parent: @family)
       s = FactoryGirl.create(:relationship_species, parent: g)
       FactoryGirl.create(:taxon_name_classification, taxon_name: g, type: 'TaxonNameClassification::Iczn::Unavailable')
-      
+
       r1 = FactoryGirl.build_stubbed(:taxon_name_relationship, subject_taxon_name: s, object_taxon_name: g, type: 'TaxonNameRelationship::Typification::Genus::OriginalDesignation')
       r1.soft_validate(:validate_disjoint_object)
 
@@ -468,10 +468,10 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
         @s2.year_of_publication = 1970
         expect(@s2.save).to be_truthy
         @s2.reload
-        r = FactoryGirl.build_stubbed(:taxon_name_relationship, 
-                                      subject_taxon_name: @s2, 
-                                      object_taxon_name: @s1, 
-                                      type: 'TaxonNameRelationship::Iczn::Invalidating::Homonym::Secondary::Secondary1961'
+        r                  = FactoryGirl.build_stubbed(:taxon_name_relationship,
+                                                       subject_taxon_name: @s2,
+                                                       object_taxon_name:  @s1,
+                                                       type: 'TaxonNameRelationship::Iczn::Invalidating::Homonym::Secondary::Secondary1961'
                                      )
 
         r.soft_validate(:specific_relationship)
@@ -515,11 +515,11 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
         r2.soft_validate('validate_homonym_relationships')
         expect(r2.soft_validations.messages_on(:type).size).to eq(1)
       end
-      
+
       specify 'homonym without nomen novum' do
         r1 = TaxonNameRelationship::Iczn::Invalidating::Homonym.create( subject_taxon_name: @g2, object_taxon_name: @g1)
         r1.soft_validate('validate_homonym_relationships')
-        
+
         expect(r1.soft_validations.messages_on(:type).size).to eq(1)
 
         r2 = FactoryGirl.create(:taxon_name_relationship, subject_taxon_name: @genus, object_taxon_name: @g2, type: 'TaxonNameRelationship::Iczn::PotentiallyValidating::ReplacementName')
@@ -793,7 +793,7 @@ describe TaxonNameRelationship, type: :model, group: [:nomenclature] do
       s2 = FactoryGirl.create(:valid_source_bibtex, title: 'article 2')
       r1 = TaxonNameRelationship::Iczn::Invalidating::Synonym.create(subject_taxon_name: g1, object_taxon_name: g2, source: s2)
       r2 = TaxonNameRelationship::Iczn::Invalidating::Synonym.create(subject_taxon_name: g1, object_taxon_name: g3, source: s1)
-    
+
       expect(TaxonNameRelationship.order_by_oldest_source_first.to_a).to eq([r2, r1])
     end
   end

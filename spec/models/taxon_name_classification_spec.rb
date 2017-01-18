@@ -1,8 +1,8 @@
 require 'rails_helper'
-      
+
 Dir[Rails.root.to_s + '/app/models/taxon_name_classification/**/*.rb'].each {
-  |file| require_dependency(file) 
-} 
+  |file| require_dependency(file)
+}
 
 describe TaxonNameClassification, type: :model do
 
@@ -40,7 +40,7 @@ describe TaxonNameClassification, type: :model do
 
   context "validation" do
     context "requires" do
-      before { taxon_name_classification.valid? } 
+      before { taxon_name_classification.valid? }
 
       specify "taxon_name" do
         expect(taxon_name_classification.errors.include?(:taxon_name)).to be_truthy
@@ -54,7 +54,7 @@ describe TaxonNameClassification, type: :model do
         TAXON_NAME_CLASSIFICATION_CLASSES.each do |r|
           r1 = r.disjoint_taxon_name_classes.collect{|i| i.to_s}
           r1 = ['a'] + r1
-          r1 = r1.collect{|i| i.class.to_s}.uniq
+          r1 = r1.collect { |i| i.class.to_s }.uniq # rl is Array
           expect(r1.first).to eq('String')
           expect(r1.size).to eq(1)
         end
@@ -64,7 +64,7 @@ describe TaxonNameClassification, type: :model do
         TAXON_NAME_CLASSIFICATION_CLASSES.each do |r|
           r1 = r.applicable_ranks.collect{|i| i.to_s}
           r1 = ['a'] + r1
-          r1 = r1.collect{|i| i.class.to_s}.uniq
+          r1 = r1.collect { |i| i.class.to_s }.uniq # rl is Array
           expect(r1.first).to eq('String')
           expect(r1.size).to eq(1)
         end
@@ -195,5 +195,5 @@ describe TaxonNameClassification, type: :model do
   end
 
 end
- 
+
 
