@@ -232,7 +232,7 @@ class CollectingEvent < ApplicationRecord
 
   validates :start_date_year, date_year: { min_year: 1000, max_year: Time.now.year + 5}
   validates :end_date_year, date_year: { min_year: 1000, max_year: Time.now.year + 5}
-  
+
   validates :start_date_month, date_month: true
   validates :end_date_month, date_month: true
 
@@ -424,7 +424,7 @@ class CollectingEvent < ApplicationRecord
       if sql_string.blank?
         collecting_events = CollectingEvent.where('false')
       else
-        collecting_events = CollectingEvent.where(sql_string).uniq
+        collecting_events = CollectingEvent.where(sql_string).distinct
       end
 
       collecting_events
