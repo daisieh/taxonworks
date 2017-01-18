@@ -116,16 +116,17 @@ describe CollectingEventsController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested collecting_event" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'verbatim_label' => 'MyText'}).permit(:verbatim_label) }
+      it 'updates the requested collecting_event' do
         collecting_event = CollectingEvent.create! valid_attributes
         # Assuming there are no other collecting_events in the database, this
         # specifies that the CollectingEvent created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(CollectingEvent).to receive(:update).with({"verbatim_label" => "MyText"})
-        put :update, params: {:id => collecting_event.to_param, :collecting_event => {"verbatim_label" => "MyText"}}, session: valid_session
+        expect_any_instance_of(CollectingEvent).to receive(:update).with(update_params)
+        put :update, params: {:id => collecting_event.to_param, :collecting_event => {'verbatim_label' => 'MyText'}}, session: valid_session
       end
 
       it "assigns the requested collecting_event as @collecting_event" do
