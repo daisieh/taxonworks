@@ -1410,7 +1410,7 @@ describe Source::Bibtex, type: :model, group: :sources do
     #       # array.push(LaTeX.decode %q{" \`{o} \"{o} \.{o} \H{o} \d{o} {\OE} \aa \O \ss "})
 
     #       # array.push(LaTeX.decode %q{ '{o} \~{o} \u{o} \H{o} \t{oo} \b{o} \ae \AA \l  ?'})
-    #       # 
+    #       #
     #       # array.push(LaTeX.decode %q{" \^{o} \={o} \V{o} \c{o} \oe \ae \o \L !' "})
 
     #       # array.push(LaTeX.decode %q{" \`{e} \"{a} \.{a} \c{c} {\oe}  \\{oe}a"})

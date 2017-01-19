@@ -175,7 +175,8 @@ module Tasks::Gis::ReportHelper
   end
 
   def report_georeferences(collection_objects, geographic_area)
-    retval = collection_objects.map(&:collecting_event).uniq.map(&:georeferences).flatten
+    # TODO: Target for JOIN?
+    retval = collection_objects.map(&:collecting_event).distinct.map(&:georeferences).flatten
     if retval.empty?
       retval.push(geographic_area)
     end

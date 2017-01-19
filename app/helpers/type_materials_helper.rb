@@ -15,6 +15,7 @@ module TypeMaterialsHelper
   end
 
   def options_for_type_type_select
+    # uniq is an Array reference
     options_for_select((TypeMaterial::ICZN_TYPES.keys + TypeMaterial::ICN_TYPES.keys).uniq.sort, selected: 'holotype')
   end
 

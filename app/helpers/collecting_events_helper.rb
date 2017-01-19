@@ -26,7 +26,7 @@ module CollectingEventsHelper
   # @return [String]
   #   short string of use in autocomplete selects
   def collecting_event_namespace_select_tag
-    select_tag(:ce_namespace, options_for_select(Namespace.pluck(:short_name).uniq), prompt: 'Select a namespace')
+    select_tag(:ce_namespace, options_for_select(Namespace.pluck(:short_name).distinct), prompt: 'Select a namespace')
   end
 
   # @return [String, nil]
@@ -34,7 +34,7 @@ module CollectingEventsHelper
   def elevation_tag(collecting_event)
     return nil if collecting_event.nil?
     [
-      nil_wrap(nil, [collecting_event.minimum_elevation, collecting_event.maximum_elevation].compact.join('-'), 'm'), 
+      nil_wrap(nil, [collecting_event.minimum_elevation, collecting_event.maximum_elevation].compact.join('-'), 'm'),
       nil_wrap(' +/-', collecting_event.elevation_precision, nil)
     ].compact.join.html_safe
   end
@@ -50,7 +50,7 @@ module CollectingEventsHelper
   #   summary of verbatim gis related data
   def verbatim_gis_tag(collecting_event)
     return if collecting_event.nil?
-    [collecting_event.verbatim_latitude, 
+    [collecting_event.verbatim_latitude,
      collecting_event.verbatim_longitude,
      nil_wrap(' (+/-', collecting_event.verbatim_geolocation_uncertainty, ')'),
      nil_wrap(' [via ', collecting_event.verbatim_datum, ']'),

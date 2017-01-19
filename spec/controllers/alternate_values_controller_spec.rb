@@ -59,13 +59,15 @@ describe AlternateValuesController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'value' => 'Smorf'}).permit(:value) }
+
       it 'updates the requested alternate_value' do
         alternate_value = AlternateValue.create! valid_attributes
         # Assuming there are no other alternate_values in the database, this
         # specifies that the AlternateValue created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(AlternateValue).to receive(:update).with({'value' => 'Smorf'})
+        expect_any_instance_of(AlternateValue).to receive(:update).with(update_params)
         put :update, params: {:id => alternate_value.to_param, :alternate_value => {value: 'Smorf'}}, session: valid_session
       end
 
