@@ -103,14 +103,16 @@ describe CollectionProfilesController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
-      let(:otu) {FactoryGirl.create(:valid_otu) } 
+      let(:otu) { FactoryGirl.create(:valid_otu) }
+      let(:update_params) { ActionController::Parameters.new({'otu_id' => otu.id.to_s}).permit(:otu_id) }
+
       it 'updates the requested collection_profile' do
         collection_profile = CollectionProfile.create! valid_attributes
         # Assuming there are no other collection_profiles in the database, this
         # specifies that the CollectionProfile created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(CollectionProfile).to receive(:update).with({'otu_id' => otu.id.to_s})
+        expect_any_instance_of(CollectionProfile).to receive(:update).with(update_params)
         put :update, params: {:id => collection_profile.to_param, :collection_profile => {otu_id: otu.id}}, session: valid_session
       end
 

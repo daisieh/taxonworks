@@ -87,12 +87,14 @@ describe ContainerItemsController, :type => :controller do
       #   skip("Add a hash of attributes valid for your model")
       # }
 
+      let(:update_params) { ActionController::Parameters.new({'container_id' => '1'}).permit(:container_id) }
+
       it "updates the requested container_item" do
         container_item = ContainerItem.create! valid_attributes
         # put :update, {:id => container_item.to_param, :container_item => new_attributes}, valid_session
         # container_item.reload
         # skip("Add assertions for updated state")
-        expect_any_instance_of(ContainerItem).to receive(:update).with({'container_id' => '1'})
+        expect_any_instance_of(ContainerItem).to receive(:update).with(update_params)
         put :update, params: {:id => container_item.to_param, :container_item => {'container_id' => '1'}}, session: valid_session
       end
 

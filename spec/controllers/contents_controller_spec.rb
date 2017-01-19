@@ -116,13 +116,15 @@ describe ContentsController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'text' => 'params'}).permit(:text) }
+
       it 'updates the requested content' do
         content = Content.create! valid_attributes
         # Assuming there are no other contents in the database, this
         # specifies that the Content created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Content).to receive(:update).with({'text' => 'params'})
+        expect_any_instance_of(Content).to receive(:update).with(update_params)
         put :update, params: {:id => content.to_param, :content => {:text => 'params'}}, session: valid_session
       end
 

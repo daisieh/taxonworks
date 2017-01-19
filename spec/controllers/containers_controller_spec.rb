@@ -80,29 +80,31 @@ before(:each) {
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested container" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'name' => 'Smorf'}).permit(:name) }
+
+      it 'updates the requested container' do
         container = Container.create! valid_attributes
         # Assuming there are no other containers in the database, this
         # specifies that the Container created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        # Container.any_instance.should_receive(:update).with({ "name" => "1" })
-        # put :update, {:id => container.to_param, :container => { "name" => "1" }}, valid_session
-        # todo @mjy Why don't next two lines work with "value" instead of "name"? AlternateValues (random example) uses 'value' => 'Smorf' for first expect, then value: 'Smorf' for second. Those fail here but name seems to work???
-        expect_any_instance_of(Container).to receive(:update).with({"name" => 'Smorf'})
-        put :update, params: {:id => container.to_param, :container => {"name" => 'Smorf'}}, session: valid_session
+        # Container.any_instance.should_receive(:update).with({ 'name' => '1' })
+        # put :update, {:id => container.to_param, :container => { 'name' => '1' }}, valid_session
+        # todo @mjy Why don't next two lines work with 'value' instead of 'name'? AlternateValues (random example) uses 'value' => 'Smorf' for first expect, then value: 'Smorf' for second. Those fail here but name seems to work???
+        expect_any_instance_of(Container).to receive(:update).with(update_params)
+        put :update, params: {:id => container.to_param, :container => {'name' => 'Smorf'}}, session: valid_session
       end
 
-      it "assigns the requested container as @container" do
+      it 'assigns the requested container as @container' do
         container = Container.create! valid_attributes
         put :update, params: {:id => container.to_param, :container => valid_attributes}, session: valid_session
         # assigns(:container).should eq(container)
         expect(assigns(:container)).to eq(container)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         container = Container.create! valid_attributes
         put :update, params: {:id => container.to_param, :container => valid_attributes}, session: valid_session
         # response.should redirect_to(list_otus_path)
