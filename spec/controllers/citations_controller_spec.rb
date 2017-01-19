@@ -94,20 +94,26 @@ describe CitationsController, :type => :controller do
 
   describe "PUT update" do
 
-     before {
+    before {
       request.env['HTTP_REFERER'] = citation_path(1)
     }
 
     describe "with valid params" do
+      let(:o) { Otu.create(name: 'bar') }
+      let(:update_params) { ActionController::Parameters.new({'citation_object_type' => 'Otu',
+                                                              'citation_object_id'   => o.id.to_s})
+                              .permit(:citation_object_type, :citation_object_id) }
+
       it "updates the requested citation" do
         citation = Citation.create! valid_attributes
         # Assuming there are no other citations in the database, this
         # specifies that the Citation created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        o = Otu.create(name: 'bar')
-        expect_any_instance_of(Citation).to receive(:update).with({'citation_object_type' => 'Otu', 'citation_object_id' => o.id.to_s})
-        put :update, params: {:id => citation.to_param, :citation => {citation_object_type: 'Otu', citation_object_id: o.id}}, session: valid_session
+        expect_any_instance_of(Citation).to receive(:update).with(update_params)
+        put :update, params: {:id => citation.to_param, :citation => {citation_object_type: 'Otu',
+                                                                      citation_object_id:   o.id}},
+            session:         valid_session
       end
 
       it "assigns the requested citation as @citation" do
