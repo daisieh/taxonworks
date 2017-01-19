@@ -26,7 +26,7 @@ describe CitationTopicsController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # CitationTopic. As you add validations to CitationTopic, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { strip_housekeeping_attributes( FactoryGirl.build(:valid_citation_topic).attributes) }
+  let(:valid_attributes) { strip_housekeeping_attributes(FactoryGirl.build(:valid_citation_topic).attributes) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -61,39 +61,41 @@ describe CitationTopicsController, :type => :controller do
       it "assigns a newly created but unsaved citation_topic as @citation_topic" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CitationTopic).to receive(:save).and_return(false)
-        post :create, params: {:citation_topic => {bar: 'Foo'  }}, session: valid_session
+        post :create, params: {:citation_topic => {bar: 'Foo'}}, session: valid_session
         expect(assigns(:citation_topic)).to be_a_new(CitationTopic)
       end
 
       it "re-renders the :back template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CitationTopic).to receive(:save).and_return(false)
-        post :create, params: {:citation_topic => {bar: 'Foo'  }}, session: valid_session
+        post :create, params: {:citation_topic => {bar: 'Foo'}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested citation_topic" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:t) { Topic.create!(name: 'Space Ghosts', definition: 'Coast to coast.') }
+      let(:update_params) { ActionController::Parameters.new({'topic_id' => t.id.to_s}).permit(:topic_id) }
+
+      it 'updates the requested citation_topic' do
         citation_topic = CitationTopic.create! valid_attributes
         # Assuming there are no other citation_topics in the database, this
         # specifies that the CitationTopic created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        t = Topic.create!(name: 'Space Ghosts', definition: 'Coast to coast.')
-        expect_any_instance_of(CitationTopic).to receive(:update).with({ 'topic_id' => t.id.to_s})
-        put :update, params: {:id => citation_topic.to_param, :citation_topic => { topic_id: t.id }}, session: valid_session
+        expect_any_instance_of(CitationTopic).to receive(:update).with(update_params)
+        put :update, params: {:id => citation_topic.to_param, :citation_topic => {topic_id: t.id}}, session: valid_session
       end
 
-      it "assigns the requested citation_topic as @citation_topic" do
+      it 'assigns the requested citation_topic as @citation_topic' do
         citation_topic = CitationTopic.create! valid_attributes
         put :update, params: {:id => citation_topic.to_param, :citation_topic => valid_attributes}, session: valid_session
         expect(assigns(:citation_topic)).to eq(citation_topic)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         citation_topic = CitationTopic.create! valid_attributes
         put :update, params: {:id => citation_topic.to_param, :citation_topic => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
@@ -105,7 +107,7 @@ describe CitationTopicsController, :type => :controller do
         citation_topic = CitationTopic.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CitationTopic).to receive(:save).and_return(false)
-        put :update, params: {:id => citation_topic.to_param, :citation_topic => { foo: 'bar'  }}, session: valid_session
+        put :update, params: {:id => citation_topic.to_param, :citation_topic => {foo: 'bar'}}, session: valid_session
         expect(assigns(:citation_topic)).to eq(citation_topic)
       end
 
@@ -113,7 +115,7 @@ describe CitationTopicsController, :type => :controller do
         citation_topic = CitationTopic.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CitationTopic).to receive(:save).and_return(false)
-        put :update, params: {:id => citation_topic.to_param, :citation_topic => { foo: 'bar'  }}, session: valid_session
+        put :update, params: {:id => citation_topic.to_param, :citation_topic => {foo: 'bar'}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end

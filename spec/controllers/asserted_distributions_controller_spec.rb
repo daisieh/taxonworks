@@ -118,28 +118,28 @@ describe AssertedDistributionsController, :type => :controller do
   end
 
   describe "PUT update" do
-    describe "with valid params" do
+    describe 'with valid params' do
 
       # This is what the controller should emulate
-      let(:update_params) { ActionController::Parameters.new({"is_absent" => 'true'} ).permit(:is_absent) }
+      let(:update_params) { ActionController::Parameters.new({'is_absent' => 'true'}).permit(:is_absent) }
 
-      it "updates the requested asserted_distribution" do
+      it 'updates the requested asserted_distribution' do
         asserted_distribution = AssertedDistribution.create! valid_attributes
         # Assuming there are no other asserted_distributions in the database, this
         # specifies that the AssertedDistribution created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(AssertedDistribution).to receive(:update).with(update_params)
-        put :update, params: {:id => asserted_distribution.to_param, :asserted_distribution => {"is_absent" => true}}, session: valid_session
+        put :update, params: {:id => asserted_distribution.to_param, :asserted_distribution => {'is_absent' => true}}, session: valid_session
       end
 
-      it "assigns the requested asserted_distribution as @asserted_distribution" do
+      it 'assigns the requested asserted_distribution as @asserted_distribution' do
         asserted_distribution = AssertedDistribution.create! valid_attributes
         put :update, params: {:id => asserted_distribution.to_param, :asserted_distribution => valid_attributes}, session: valid_session
         expect(assigns(:asserted_distribution)).to eq(asserted_distribution)
       end
 
-      it "redirects to the asserted_distribution" do
+      it 'redirects to the asserted_distribution' do
         asserted_distribution = AssertedDistribution.create! valid_attributes
         put :update, params: {:id => asserted_distribution.to_param, :asserted_distribution => valid_attributes}, session: valid_session
         expect(response).to redirect_to(asserted_distribution)
@@ -179,7 +179,7 @@ describe AssertedDistributionsController, :type => :controller do
       expect(response).to redirect_to(asserted_distributions_url)
     end
   end
-  
+
 end
 
 
