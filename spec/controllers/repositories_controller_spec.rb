@@ -20,16 +20,16 @@ require 'rails_helper'
 
 describe RepositoriesController, :type => :controller do
   before(:each) {
-    sign_in 
+    sign_in
   }
 
   # This should return the minimal set of attributes required to create a valid
   # Georeference. As you add validations to Georeference be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { 
+  let(:valid_attributes) {
     strip_housekeeping_attributes( FactoryGirl.build(:valid_repository).attributes )
-  }  
- 
+  }
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # RepositoriesController. Be sure to keep this updated too.
@@ -103,25 +103,28 @@ describe RepositoriesController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested repository" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'name' => 'MyString'})
+                              .permit(:name) }
+
+      it 'updates the requested repository' do
         repository = Repository.create! valid_attributes
         # Assuming there are no other repositories in the database, this
         # specifies that the Repository created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Repository).to receive(:update).with({ "name" => "MyString" })
-        put :update, params: {:id => repository.to_param, :repository => { "name" => "MyString" }}, session: valid_session
+        expect_any_instance_of(Repository).to receive(:update).with(update_params)
+        put :update, params: {:id => repository.to_param, :repository => {'name' => 'MyString'}}, session: valid_session
       end
 
-      it "assigns the requested repository as @repository" do
+      it 'assigns the requested repository as @repository' do
         repository = Repository.create! valid_attributes
         put :update, params: {:id => repository.to_param, :repository => valid_attributes}, session: valid_session
         expect(assigns(:repository)).to eq(repository)
       end
 
-      it "redirects to the repository" do
+      it 'redirects to the repository' do
         repository = Repository.create! valid_attributes
         put :update, params: {:id => repository.to_param, :repository => valid_attributes}, session: valid_session
         expect(response).to redirect_to(repository)

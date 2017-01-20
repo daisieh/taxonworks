@@ -26,10 +26,10 @@ describe PublicContentsController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # PublicContent. As you add validations to PublicContent, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { 
-    t = FactoryGirl.create(:valid_topic)   
+  let(:valid_attributes) {
+    t = FactoryGirl.create(:valid_topic)
     c = FactoryGirl.create(:valid_content, topic: t)
-    FactoryGirl.build(:valid_public_content, topic: t, content: c).attributes 
+    FactoryGirl.build(:valid_public_content, topic: t, content: c).attributes
   }
 
   # This should return the minimal set of values that should be in the session
@@ -78,25 +78,28 @@ describe PublicContentsController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested public_content" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'text' => 'New text'})
+                              .permit(:text) }
+
+      it 'updates the requested public_content' do
         public_content = PublicContent.create! valid_attributes
         # Assuming there are no other public_contents in the database, this
         # specifies that the PublicContent created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(PublicContent).to receive(:update).with({"text" => "New text"})
+        expect_any_instance_of(PublicContent).to receive(:update).with(update_params)
         put :update, params: {:id => public_content.to_param, :public_content => { text: 'New text'}}, session: valid_session
       end
 
-      it "assigns the requested public_content as @public_content" do
+      it 'assigns the requested public_content as @public_content' do
         public_content = PublicContent.create! valid_attributes
         put :update, params: {:id => public_content.to_param, :public_content => valid_attributes}, session: valid_session
         expect(assigns(:public_content)).to eq(public_content)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         public_content = PublicContent.create! valid_attributes
         put :update, params: {:id => public_content.to_param, :public_content => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)

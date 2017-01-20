@@ -103,13 +103,16 @@ describe RangedLotCategoriesController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'name' => 'params'})
+                              .permit(:name) }
+
       it 'updates the requested ranged_lot_category' do
         ranged_lot_category = RangedLotCategory.create! valid_attributes
         # Assuming there are no other ranged_lot_categories in the database, this
         # specifies that the RangedLotCategory created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(RangedLotCategory).to receive(:update).with({'name' => 'params'})
+        expect_any_instance_of(RangedLotCategory).to receive(:update).with(update_params)
         put :update, params: {:id => ranged_lot_category.to_param, :ranged_lot_category => {:name => "params"}}, session: valid_session
       end
 

@@ -103,7 +103,8 @@ describe ProjectsController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
-      let(:update_params) { ActionController::Parameters.new({'name' => 'MyString'}).permit(:name) }
+      let(:update_params) { ActionController::Parameters.new({'name' => 'MyString'})
+                              .permit(:name) }
 
       it 'updates the requested project' do
         project = Project.create! valid_attributes
