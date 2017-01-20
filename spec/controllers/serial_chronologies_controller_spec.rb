@@ -36,7 +36,7 @@ describe SerialChronologiesController, :type => :controller do
   let(:valid_session) { {} }
 
   before {
-    request.env['HTTP_REFERER'] = serial_path(serial1) 
+    request.env['HTTP_REFERER'] = serial_path(serial1)
   }
 
   describe "POST create" do
@@ -66,7 +66,7 @@ describe SerialChronologiesController, :type => :controller do
         allow_any_instance_of(SerialChronology).to receive(:save).and_return(false)
         post :create, params: {:serial_chronology => { "preceding_serial_id" => "invalid value" }}, session: valid_session
         # assigns(:serial_chronology).should be_a_new(SerialChronology)
-        expect(assigns(:serial_chronology)).to be_a_new(SerialChronology) 
+        expect(assigns(:serial_chronology)).to be_a_new(SerialChronology)
       end
 
       it "re-renders the :back template" do
@@ -78,25 +78,28 @@ describe SerialChronologiesController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested serial_chronology" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'preceding_serial_id' => '1'})
+                              .permit(:preceding_serial_id) }
+
+      it 'updates the requested serial_chronology' do
         serial_chronology = SerialChronology.create! valid_attributes
         # Assuming there are no other serial_chronologies in the database, this
         # specifies that the SerialChronology created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(SerialChronology).to receive(:update).with({ "preceding_serial_id" => "1" })
-        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => { "preceding_serial_id" => "1" }}, session: valid_session
+        expect_any_instance_of(SerialChronology).to receive(:update).with(update_params)
+        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => {'preceding_serial_id' => '1'}}, session: valid_session
       end
 
-      it "assigns the requested serial_chronology as @serial_chronology" do
+      it 'assigns the requested serial_chronology as @serial_chronology' do
         serial_chronology = SerialChronology.create! valid_attributes
         put :update, params: {:id => serial_chronology.to_param, :serial_chronology => valid_attributes}, session: valid_session
         expect(assigns(:serial_chronology)).to eq(serial_chronology)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         serial_chronology = SerialChronology.create! valid_attributes
         put :update, params: {:id => serial_chronology.to_param, :serial_chronology => valid_attributes}, session: valid_session
         expect(response).to redirect_to(serial_path(serial1))

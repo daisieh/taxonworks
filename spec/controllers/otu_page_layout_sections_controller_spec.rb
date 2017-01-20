@@ -77,6 +77,7 @@ describe OtuPageLayoutSectionsController, type: :controller do
   describe "PUT update" do
 
     describe 'with valid params' do
+      # TODO: This does NOT work in the way one might wish it to work! FAIL!
       let(:t) { FactoryGirl.create(:random_controlled_vocabulary_term, type: 'Topic') }
       let(:update_params) { ActionController::Parameters.new({'topic_id' => t.id.to_s}).permit(:topic_id) }
 

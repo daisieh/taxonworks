@@ -27,8 +27,8 @@ describe SourcesController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Source. As you add validations to Source, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { 
-   strip_housekeeping_attributes( FactoryGirl.build(:valid_source).attributes )
+  let(:valid_attributes) {
+    strip_housekeeping_attributes(FactoryGirl.build(:valid_source).attributes)
   }
 
   # This should return the minimal set of values that should be in the session
@@ -91,38 +91,44 @@ describe SourcesController, :type => :controller do
       it "assigns a newly created but unsaved source as @source" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Source).to receive(:save).and_return(false)
-        post :create, params: {:source => { "serial_id" => "invalid value" }}, session: valid_session
+        post :create, params: {:source => {"serial_id" => "invalid value"}}, session: valid_session
         expect(assigns(:source)).to be_a_new(Source)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Source).to receive(:save).and_return(false)
-        post :create, params: {:source => { "serial_id" => "invalid value" }}, session: valid_session
+        post :create, params: {:source => {"serial_id" => "invalid value"}}, session: valid_session
         expect(response).to render_template("new")
       end
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested source" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:p_s_a) { ActionController::Parameters.new({'project_id' => '1'}).permit(:project_id) }
+      let(:update_params) { ActionController::Parameters.new({'serial_id'                  => '1',
+                                                              'project_sources_attributes' => [p_s_a]})
+                              .permit(:project_sources_attributes,
+                                      :serial_id) }
+
+      it 'updates the requested source' do
         source = Source.create! valid_attributes
         # Assuming there are no other sources in the database, this
         # specifies that the Source created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Source).to receive(:update).with( {"serial_id"=>"1", "project_sources_attributes"=>[{"project_id"=>"1"}]}   )
-        put :update, params: {:id => source.to_param, :source => { "serial_id" => "1" }}, session: valid_session
+        expect_any_instance_of(Source).to receive(:update).with(update_params)
+        put :update, params: {:id => source.to_param, :source => {'serial_id' => '1'}}, session: valid_session
       end
 
-      it "assigns the requested source as @source" do
+      it 'assigns the requested source as @source' do
         source = Source.create! valid_attributes
         put :update, params: {:id => source.to_param, :source => valid_attributes}, session: valid_session
         expect(assigns(:source)).to eq(source)
       end
 
-      it "redirects to the source" do
+      it 'redirects to the source' do
         source = Source.create! valid_attributes
         put :update, params: {:id => source.to_param, :source => valid_attributes}, session: valid_session
         expect(response).to redirect_to(source.becomes(Source))
@@ -134,7 +140,7 @@ describe SourcesController, :type => :controller do
         source = Source.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Source).to receive(:save).and_return(false)
-        put :update, params: {:id => source.to_param, :source => { "serial_id" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => source.to_param, :source => {"serial_id" => "invalid value"}}, session: valid_session
         expect(assigns(:source)).to eq(source)
       end
 
@@ -142,7 +148,7 @@ describe SourcesController, :type => :controller do
         source = Source.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Source).to receive(:save).and_return(false)
-        put :update, params: {:id => source.to_param, :source => { "serial_id" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => source.to_param, :source => {"serial_id" => "invalid value"}}, session: valid_session
         expect(response).to render_template("edit")
       end
     end

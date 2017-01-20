@@ -99,6 +99,7 @@ describe CitationsController, :type => :controller do
     }
 
     describe "with valid params" do
+      # TODO: This does NOT work in the way one might wish it to work! FAIL!
       let(:o) { Otu.create(name: 'bar') }
       let(:update_params) { ActionController::Parameters.new({'citation_object_type' => 'Otu',
                                                               'citation_object_id'   => o.id.to_s})

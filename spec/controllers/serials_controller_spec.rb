@@ -102,25 +102,28 @@ describe SerialsController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested serial" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'name' => 'MyString'})
+                              .permit(:name) }
+
+      it 'updates the requested serial' do
         serial = Serial.create! valid_attributes
         # Assuming there are no other serials in the database, this
         # specifies that the Serial created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Serial).to receive(:update).with({ "name" => "MyString" })
-        put :update, params: {:id => serial.to_param, :serial => { "name" => "MyString" }}, session: valid_session
+        expect_any_instance_of(Serial).to receive(:update).with(update_params)
+        put :update, params: {:id => serial.to_param, :serial => {'name' => 'MyString'}}, session: valid_session
       end
 
-      it "assigns the requested serial as @serial" do
+      it 'assigns the requested serial as @serial' do
         serial = Serial.create! valid_attributes
         put :update, params: {:id => serial.to_param, :serial => valid_attributes}, session: valid_session
         expect(assigns(:serial)).to eq(serial)
       end
 
-      it "redirects to the serial" do
+      it 'redirects to the serial' do
         serial = Serial.create! valid_attributes
         put :update, params: {:id => serial.to_param, :serial => valid_attributes}, session: valid_session
         expect(response).to redirect_to(serial)

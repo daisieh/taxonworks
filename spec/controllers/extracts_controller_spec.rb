@@ -114,6 +114,7 @@ RSpec.describe ExtractsController, type: :controller, group: :extract do
 
   describe "PUT #update" do
     context "with valid params" do
+      # TODO: This *MAY* NOT work in the way one might wish it to work! FAIL!
       let(:new_attributes) {
         attributes = valid_attributes
         attributes[:quantity_value] = 1000
