@@ -115,25 +115,28 @@ describe OtusController, type: :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested otu" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'name' => 'MyString'})
+                              .permit(:name) }
+
+      it 'updates the requested otu' do
         otu = Otu.create! valid_attributes
         # Assuming there are no other otus in the database, this
         # specifies that the Otu created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Otu).to receive(:update).with(ActionController::Parameters.new({'name' => "MyString"}).permit(:name))
-        put :update, params: {:id => otu.to_param, :otu => {"name" => "MyString"}}, session: valid_session
+        expect_any_instance_of(Otu).to receive(:update).with(update_params)
+        put :update, params: {:id => otu.to_param, :otu => {'name' => 'MyString'}}, session: valid_session
       end
 
-      it "assigns the requested otu as @otu" do
+      it 'assigns the requested otu as @otu' do
         otu = Otu.create! valid_attributes
         put :update, params: {:id => otu.to_param, :otu => valid_attributes}, session: valid_session
         expect(assigns(:otu)).to eq(otu)
       end
 
-      it "redirects to the otu" do
+      it 'redirects to the otu' do
         otu = Otu.create! valid_attributes
         put :update, params: {:id => otu.to_param, :otu => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu)
