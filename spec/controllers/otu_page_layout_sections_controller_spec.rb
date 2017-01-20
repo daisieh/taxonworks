@@ -86,8 +86,8 @@ describe OtuPageLayoutSectionsController, type: :controller do
         # specifies that the OtuPageLayoutSection created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        t1 = ControlledVocabularyTerm.first
         expect_any_instance_of(OtuPageLayoutSection).to receive(:update).with(update_params)
+        t1 = ControlledVocabularyTerm.last
         put :update, params: {:id                      => otu_page_layout_section.to_param,
                               :otu_page_layout_section => {:topic_id => t1.id.to_s}},
             session:         valid_session
