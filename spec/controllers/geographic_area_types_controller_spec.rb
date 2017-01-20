@@ -103,25 +103,27 @@ describe GeographicAreaTypesController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested geographic_area_type" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'name' => 'MyString'}).permit(:name) }
+
+      it 'updates the requested geographic_area_type' do
         geographic_area_type = GeographicAreaType.create! valid_attributes
         # Assuming there are no other geographic_area_types in the database, this
         # specifies that the GeographicAreaType created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(GeographicAreaType).to receive(:update).with({"name" => "MyString"})
-        put :update, params: {:id => geographic_area_type.to_param, :geographic_area_type => {"name" => "MyString"}}, session: valid_session
+        expect_any_instance_of(GeographicAreaType).to receive(:update).with(update_params)
+        put :update, params: {:id => geographic_area_type.to_param, :geographic_area_type => {'name' => 'MyString'}}, session: valid_session
       end
 
-      it "assigns the requested geographic_area_type as @geographic_area_type" do
+      it 'assigns the requested geographic_area_type as @geographic_area_type' do
         geographic_area_type = GeographicAreaType.create! valid_attributes
         put :update, params: {:id => geographic_area_type.to_param, :geographic_area_type => valid_attributes}, session: valid_session
         expect(assigns(:geographic_area_type)).to eq(geographic_area_type)
       end
 
-      it "redirects to the geographic_area_type" do
+      it 'redirects to the geographic_area_type' do
         geographic_area_type = GeographicAreaType.create! valid_attributes
         put :update, params: {:id => geographic_area_type.to_param, :geographic_area_type => valid_attributes}, session: valid_session
         expect(response).to redirect_to(geographic_area_type)

@@ -113,25 +113,28 @@ describe IdentifiersController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested identifier" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'identifier_object_id' => '1'})
+                              .permit(:identifier_object_id) }
+
+      it 'updates the requested identifier' do
         identifier = Identifier.create! valid_attributes
         # Assuming there are no other identifiers in the database, this
         # specifies that the Identifier created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Identifier).to receive(:update).with({"identifier_object_id" => "1"})
-        put :update, params: {:id => identifier.to_param, :identifier => {"identifier_object_id" => "1"}}, session: valid_session
+        expect_any_instance_of(Identifier).to receive(:update).with(update_params)
+        put :update, params: {:id => identifier.to_param, :identifier => {'identifier_object_id' => '1'}}, session: valid_session
       end
 
-      it "assigns the requested identifier as @identifier" do
+      it 'assigns the requested identifier as @identifier' do
         identifier = Identifier.create! valid_attributes
         put :update, params: {:id => identifier.to_param, :identifier => valid_attributes}, session: valid_session
         expect(assigns(:identifier)).to eq(identifier)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         identifier = Identifier.create! valid_attributes
         put :update, params: {:id => identifier.to_param, :identifier => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))

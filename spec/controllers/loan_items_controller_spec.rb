@@ -78,23 +78,26 @@ describe LoanItemsController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'collection_object_status' => 'confused'})
+                              .permit(:collection_object_status) }
+
       it 'updates the requested loan_item' do
         loan_item = LoanItem.create! valid_attributes
         # Assuming there are no other loan_items in the database, this
         # specifies that the LoanItem created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(LoanItem).to receive(:update).with({'collection_object_status' => 'confused'})
+        expect_any_instance_of(LoanItem).to receive(:update).with(update_params)
         put :update, params: {:id => loan_item.to_param, :loan_item => {collection_object_status: 'confused'}}, session: valid_session
       end
 
-      it "assigns the requested loan_item as @loan_item" do
+      it 'assigns the requested loan_item as @loan_item' do
         loan_item = LoanItem.create! valid_attributes
         put :update, params: {:id => loan_item.to_param, :loan_item => valid_attributes}, session: valid_session
         expect(assigns(:loan_item)).to eq(loan_item)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         loan_item = LoanItem.create! valid_attributes
         put :update, params: {:id => loan_item.to_param, :loan_item => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
