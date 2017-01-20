@@ -123,7 +123,7 @@ describe OtusController, type: :controller do
         # specifies that the Otu created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Otu).to receive(:update).with({"name" => "MyString"})
+        expect_any_instance_of(Otu).to receive(:update).with(ActionController::Parameters.new({'name' => "MyString"}).permit(:name))
         put :update, params: {:id => otu.to_param, :otu => {"name" => "MyString"}}, session: valid_session
       end
 
