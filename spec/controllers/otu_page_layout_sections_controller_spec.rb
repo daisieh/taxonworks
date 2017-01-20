@@ -76,25 +76,30 @@ describe OtuPageLayoutSectionsController, type: :controller do
 
   describe "PUT update" do
 
-    describe "with valid params" do
-      it "updates the requested otu_page_layout_section" do
+    describe 'with valid params' do
+      let(:t) { FactoryGirl.create(:random_controlled_vocabulary_term, type: 'Topic') }
+      let(:update_params) { ActionController::Parameters.new({'topic_id' => t.id.to_s}).permit(:topic_id) }
+
+      it 'updates the requested otu_page_layout_section' do
         otu_page_layout_section = OtuPageLayoutSection.create! valid_attributes
         # Assuming there are no other otu_page_layout_sections in the database, this
         # specifies that the OtuPageLayoutSection created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        t = FactoryGirl.create(:random_controlled_vocabulary_term, type: 'Topic')
-        expect_any_instance_of(OtuPageLayoutSection).to receive(:update).with({"topic_id" => t.id.to_s})
-        put :update, params: {:id => otu_page_layout_section.to_param, :otu_page_layout_section => {:topic_id => t.id.to_s}}, session: valid_session
+        t1 = ControlledVocabularyTerm.first
+        expect_any_instance_of(OtuPageLayoutSection).to receive(:update).with(update_params)
+        put :update, params: {:id                      => otu_page_layout_section.to_param,
+                              :otu_page_layout_section => {:topic_id => t1.id.to_s}},
+            session:         valid_session
       end
 
-      it "assigns the requested otu_page_layout_section as @otu_page_layout_section" do
+      it 'assigns the requested otu_page_layout_section as @otu_page_layout_section' do
         otu_page_layout_section = OtuPageLayoutSection.create! valid_attributes
         put :update, params: {:id => otu_page_layout_section.to_param, :otu_page_layout_section => valid_attributes}, session: valid_session
         expect(assigns(:otu_page_layout_section)).to eq(otu_page_layout_section)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         otu_page_layout_section = OtuPageLayoutSection.create! valid_attributes
         put :update, params: {:id => otu_page_layout_section.to_param, :otu_page_layout_section => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
