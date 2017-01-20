@@ -103,7 +103,6 @@ describe CollectionProfilesController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
-      # TODO: This does NOT work the way one would wish it to work! FAIL!
       let(:otu) { FactoryGirl.create(:valid_otu) }
       let(:update_params) { ActionController::Parameters.new({'otu_id' => otu.id.to_s}).permit(:otu_id) }
 
@@ -114,7 +113,10 @@ describe CollectionProfilesController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(CollectionProfile).to receive(:update).with(update_params)
-        put :update, params: {:id => collection_profile.to_param, :collection_profile => {otu_id: otu.id}}, session: valid_session
+        o2 = Otu.last
+        put :update, params: {:id                 => collection_profile.to_param,
+                              :collection_profile => {otu_id: o2.id}},
+            session:         valid_session
       end
 
       it "assigns the requested collection_profile as @collection_profile" do

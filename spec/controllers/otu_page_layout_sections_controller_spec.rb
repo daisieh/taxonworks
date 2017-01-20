@@ -26,7 +26,7 @@ describe OtuPageLayoutSectionsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # OtuPageLayoutSection. As you add validations to OtuPageLayoutSection, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { strip_housekeeping_attributes( FactoryGirl.build(:valid_otu_page_layout_section).attributes) }
+  let(:valid_attributes) { strip_housekeeping_attributes(FactoryGirl.build(:valid_otu_page_layout_section).attributes) }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -87,9 +87,9 @@ describe OtuPageLayoutSectionsController, type: :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(OtuPageLayoutSection).to receive(:update).with(update_params)
-        t1 = ControlledVocabularyTerm.last
+        t2 = ControlledVocabularyTerm.last
         put :update, params: {:id                      => otu_page_layout_section.to_param,
-                              :otu_page_layout_section => {:topic_id => t1.id.to_s}},
+                              :otu_page_layout_section => {:topic_id => t2.id.to_s}},
             session:         valid_session
       end
 
