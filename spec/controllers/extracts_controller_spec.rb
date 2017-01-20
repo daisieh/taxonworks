@@ -121,8 +121,9 @@ RSpec.describe ExtractsController, type: :controller, group: :extract do
       }
 
       it "updates the requested extract" do
-        extract = Extract.create! valid_attributes
-        put :update, params: {id: extract.to_param, extract: new_attributes}, session: valid_session
+        extract    = Extract.create!(valid_attributes)
+        new_params = ActionController::Parameters.new({id: extract.to_param, extract: new_attributes})
+        put :update, params: new_params, session: valid_session
         extract.reload
         expect(extract.quantity_value == new_attributes[:quantity_value]).to be true
       end

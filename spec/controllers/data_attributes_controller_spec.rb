@@ -28,13 +28,13 @@ describe DataAttributesController, :type => :controller do
   # adjust the attributes here as well.
   let(:o) {FactoryGirl.create(:valid_otu) }
   let(:p) {FactoryGirl.create(:valid_controlled_vocabulary_term_predicate) }
-  let(:valid_attributes) { 
+  let(:valid_attributes) {
     { type: 'InternalAttribute',
       attribute_subject_id: o.id,
       attribute_subject_type: o.class.name,
       controlled_vocabulary_term_id: p.id,
       value: "ABCD" }
-  } 
+  }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -99,24 +99,26 @@ describe DataAttributesController, :type => :controller do
       request.env['HTTP_REFERER'] = data_attribute_path(1)
     }
 
-    describe "with valid params" do
-      it "updates the requested data_attribute" do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'value' => 'black'}).permit(:value) }
+
+      it 'updates the requested data_attribute' do
         data_attribute = DataAttribute.create! valid_attributes
         # Assuming there are no other data_attributes in the database, this
         # specifies that the DataAttribute created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(DataAttribute).to receive(:update).with({'value'  => 'black'})
+        expect_any_instance_of(DataAttribute).to receive(:update).with(update_params)
         put :update, params: {:id => data_attribute.to_param, :data_attribute => {:value  => 'black'}}, session: valid_session
       end
 
-      it "assigns the requested data_attribute as @data_attribute" do
+      it 'assigns the requested data_attribute as @data_attribute' do
         data_attribute = DataAttribute.create! valid_attributes
         put :update, params: {:id => data_attribute.to_param, :data_attribute => valid_attributes}, session: valid_session
         expect(assigns(:data_attribute)).to eq(data_attribute)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         data_attribute = DataAttribute.create! valid_attributes
         put :update, params: {:id => data_attribute.to_param, :data_attribute => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
