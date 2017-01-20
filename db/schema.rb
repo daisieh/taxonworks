@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161221193429) do
+ActiveRecord::Schema.define(version: 20170111034039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -340,7 +340,7 @@ ActiveRecord::Schema.define(version: 20161221193429) do
 
   create_table "confidences", force: :cascade do |t|
     t.integer  "confidence_object_id",   null: false
-    t.string "confidence_object_type", null: false
+    t.string   "confidence_object_type", null: false
     t.integer  "position",               null: false
     t.integer  "created_by_id",          null: false
     t.integer  "updated_by_id",          null: false
@@ -472,6 +472,21 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.index ["updated_by_id"], name: "index_data_attributes_on_updated_by_id", using: :btree
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  end
+
   create_table "depictions", force: :cascade do |t|
     t.string   "depiction_object_type", null: false
     t.integer  "depiction_object_id",   null: false
@@ -522,7 +537,7 @@ ActiveRecord::Schema.define(version: 20161221193429) do
 
   create_table "documentation", force: :cascade do |t|
     t.integer  "documentation_object_id",   null: false
-    t.string "documentation_object_type", null: false
+    t.string   "documentation_object_type", null: false
     t.integer  "document_id",               null: false
     t.json     "page_map"
     t.integer  "project_id",                null: false
@@ -551,6 +566,186 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.index ["document_file_file_name"], name: "index_documents_on_document_file_file_name", using: :btree
     t.index ["document_file_file_size"], name: "index_documents_on_document_file_file_size", using: :btree
     t.index ["document_file_updated_at"], name: "index_documents_on_document_file_updated_at", using: :btree
+  end
+
+  create_table "dwc_occurrences", force: :cascade do |t|
+    t.string   "acceptedNameUsage"
+    t.string   "acceptedNameUsageID"
+    t.string   "accessRights"
+    t.string   "associatedMedia"
+    t.string   "associatedOccurrences"
+    t.string   "associatedOrganisms"
+    t.string   "associatedReferences"
+    t.string   "associatedSequences"
+    t.string   "associatedTaxa"
+    t.string   "basisOfRecord"
+    t.string   "bed"
+    t.string   "behavior"
+    t.string   "bibliographicCitation"
+    t.string   "catalogNumber"
+    t.string   "dwcClass"
+    t.string   "collectionCode"
+    t.string   "collectionID"
+    t.string   "continent"
+    t.string   "coordinatePrecision"
+    t.string   "coordinateUncertaintyInMeters"
+    t.string   "country"
+    t.string   "countryCode"
+    t.string   "county"
+    t.string   "dataGeneralizations"
+    t.string   "datasetID"
+    t.string   "datasetName"
+    t.string   "dateIdentified"
+    t.string   "day"
+    t.string   "decimalLatitude"
+    t.string   "decimalLongitude"
+    t.string   "disposition"
+    t.string   "dynamicProperties"
+    t.string   "earliestAgeOrLowestStage"
+    t.string   "earliestEonOrLowestEonothem"
+    t.string   "earliestEpochOrLowestSeries"
+    t.string   "earliestEraOrLowestErathem"
+    t.string   "earliestPeriodOrLowestSystem"
+    t.string   "endDayOfYear"
+    t.string   "establishmentMeans"
+    t.string   "eventDate"
+    t.string   "eventID"
+    t.string   "eventRemarks"
+    t.string   "eventTime"
+    t.string   "family"
+    t.string   "fieldNotes"
+    t.string   "fieldNumber"
+    t.string   "footprintSRS"
+    t.string   "footprintSpatialFit"
+    t.string   "footprintWKT"
+    t.string   "formation"
+    t.string   "genus"
+    t.string   "geodeticDatum"
+    t.string   "geologicalContextID"
+    t.string   "georeferenceProtocol"
+    t.string   "georeferenceRemarks"
+    t.string   "georeferenceSources"
+    t.string   "georeferenceVerificationStatus"
+    t.string   "georeferencedBy"
+    t.string   "georeferencedDate"
+    t.string   "group"
+    t.string   "habitat"
+    t.string   "higherClassification"
+    t.string   "higherGeography"
+    t.string   "higherGeographyID"
+    t.string   "highestBiostratigraphicZone"
+    t.string   "identificationID"
+    t.string   "identificationQualifier"
+    t.string   "identificationReferences"
+    t.string   "identificationRemarks"
+    t.string   "identificationVerificationStatus"
+    t.string   "identifiedBy"
+    t.string   "individualCount"
+    t.string   "informationWithheld"
+    t.string   "infraspecificEpithet"
+    t.string   "institutionCode"
+    t.string   "institutionID"
+    t.string   "island"
+    t.string   "islandGroup"
+    t.string   "kingdom"
+    t.string   "language"
+    t.string   "latestAgeOrHighestStage"
+    t.string   "latestEonOrHighestEonothem"
+    t.string   "latestEpochOrHighestSeries"
+    t.string   "latestEraOrHighestErathem"
+    t.string   "latestPeriodOrHighestSystem"
+    t.string   "license"
+    t.string   "lifeStage"
+    t.string   "lithostratigraphicTerms"
+    t.string   "locality"
+    t.string   "locationAccordingTo"
+    t.string   "locationID"
+    t.string   "locationRemarks"
+    t.string   "lowestBiostratigraphicZone"
+    t.string   "materialSampleID"
+    t.string   "maximumDepthInMeters"
+    t.string   "maximumDistanceAboveSurfaceInMeters"
+    t.string   "maximumElevationInMeters"
+    t.string   "member"
+    t.string   "minimumDepthInMeters"
+    t.string   "minimumDistanceAboveSurfaceInMeters"
+    t.string   "minimumElevationInMeters"
+    t.string   "modified"
+    t.string   "month"
+    t.string   "municipality"
+    t.string   "nameAccordingTo"
+    t.string   "nameAccordingToID"
+    t.string   "namePublishedIn"
+    t.string   "namePublishedInID"
+    t.string   "namePublishedInYear"
+    t.string   "nomenclaturalCode"
+    t.string   "nomenclaturalStatus"
+    t.string   "occurrenceID"
+    t.string   "occurrenceRemarks"
+    t.string   "occurrenceStatus"
+    t.string   "order"
+    t.string   "organismID"
+    t.string   "organismName"
+    t.string   "organismQuantity"
+    t.string   "organismQuantityType"
+    t.string   "organismRemarks"
+    t.string   "organismScope"
+    t.string   "originalNameUsage"
+    t.string   "originalNameUsageID"
+    t.string   "otherCatalogNumbers"
+    t.string   "ownerInstitutionCode"
+    t.string   "parentEventID"
+    t.string   "parentNameUsage"
+    t.string   "parentNameUsageID"
+    t.string   "phylum"
+    t.string   "pointRadiusSpatialFit"
+    t.string   "preparations"
+    t.string   "previousIdentifications"
+    t.string   "recordNumber"
+    t.string   "recordedBy"
+    t.string   "references"
+    t.string   "reproductiveCondition"
+    t.string   "rightsHolder"
+    t.string   "sampleSizeUnit"
+    t.string   "sampleSizeValue"
+    t.string   "samplingEffort"
+    t.string   "samplingProtocol"
+    t.string   "scientificName"
+    t.string   "scientificNameAuthorship"
+    t.string   "scientificNameID"
+    t.string   "sex"
+    t.string   "specificEpithet"
+    t.string   "startDayOfYear"
+    t.string   "stateProvince"
+    t.string   "subgenus"
+    t.string   "taxonConceptID"
+    t.string   "taxonID"
+    t.string   "taxonRank"
+    t.string   "taxonRemarks"
+    t.string   "taxonomicStatus"
+    t.string   "type"
+    t.string   "typeStatus"
+    t.string   "verbatimCoordinateSystem"
+    t.string   "verbatimCoordinates"
+    t.string   "verbatimDepth"
+    t.string   "verbatimElevation"
+    t.string   "verbatimEventDate"
+    t.string   "verbatimLatitude"
+    t.string   "verbatimLocality"
+    t.string   "verbatimLongitude"
+    t.string   "verbatimSRS"
+    t.string   "verbatimTaxonRank"
+    t.string   "vernacularName"
+    t.string   "waterBody"
+    t.string   "year"
+    t.integer  "dwc_occurrence_object_id"
+    t.string   "dwc_occurrence_object_type"
+    t.integer  "created_by_id",                       null: false
+    t.integer  "updated_by_id",                       null: false
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["project_id"], name: "index_dwc_occurrences_on_project_id", using: :btree
   end
 
   create_table "extracts", force: :cascade do |t|
@@ -770,7 +965,7 @@ ActiveRecord::Schema.define(version: 20161221193429) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "loan_item_object_id"
-    t.string "loan_item_object_type"
+    t.string   "loan_item_object_type"
     t.integer  "total"
     t.string   "disposition"
     t.index ["created_by_id"], name: "index_loan_items_on_created_by_id", using: :btree
@@ -958,9 +1153,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
 
   create_table "origin_relationships", force: :cascade do |t|
     t.integer  "old_object_id",   null: false
-    t.string "old_object_type", null: false
+    t.string   "old_object_type", null: false
     t.integer  "new_object_id",   null: false
-    t.string "new_object_type", null: false
+    t.string   "new_object_type", null: false
     t.integer  "position"
     t.integer  "created_by_id",   null: false
     t.integer  "updated_by_id",   null: false
@@ -1038,7 +1233,7 @@ ActiveRecord::Schema.define(version: 20161221193429) do
 
   create_table "pinboard_items", force: :cascade do |t|
     t.integer  "pinned_object_id",   null: false
-    t.string "pinned_object_type", null: false
+    t.string   "pinned_object_type", null: false
     t.integer  "user_id",            null: false
     t.integer  "project_id",         null: false
     t.integer  "position",           null: false
@@ -1109,7 +1304,7 @@ ActiveRecord::Schema.define(version: 20161221193429) do
   create_table "protocol_relationships", force: :cascade do |t|
     t.integer  "protocol_id",                       null: false
     t.integer  "protocol_relationship_object_id",   null: false
-    t.string "protocol_relationship_object_type", null: false
+    t.string   "protocol_relationship_object_type", null: false
     t.integer  "position",                          null: false
     t.integer  "created_by_id",                     null: false
     t.integer  "updated_by_id",                     null: false
@@ -1650,6 +1845,9 @@ ActiveRecord::Schema.define(version: 20161221193429) do
   add_foreign_key "documentation", "users", column: "updated_by_id"
   add_foreign_key "documents", "users", column: "created_by_id"
   add_foreign_key "documents", "users", column: "updated_by_id"
+  add_foreign_key "dwc_occurrences", "projects"
+  add_foreign_key "dwc_occurrences", "users", column: "created_by_id"
+  add_foreign_key "dwc_occurrences", "users", column: "updated_by_id"
   add_foreign_key "extracts", "projects"
   add_foreign_key "extracts", "users", column: "created_by_id"
   add_foreign_key "extracts", "users", column: "updated_by_id"

@@ -81,7 +81,7 @@ gem 'latex-decode', '~> 0.2.2'
 gem 'indefinite_article'
 
 # Pagination
-gem 'kaminari', '~> 0.17.0'
+gem 'kaminari', '~> 1.0.1'
 
 # File upload manager & image processor
 gem 'paperclip', '~> 4.3.6'
