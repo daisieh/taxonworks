@@ -116,23 +116,26 @@ describe LoansController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'supervisor_email' => 'ugly'})
+                              .permit(:supervisor_email) }
+
       it 'updates the requested loan' do
         loan = Loan.create! valid_attributes
         # Assuming there are no other loans in the database, this
         # specifies that the Loan created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Loan).to receive(:update).with({'supervisor_email' => 'ugly'})
+        expect_any_instance_of(Loan).to receive(:update).with(update_params)
         put :update, params: {:id => loan.to_param, :loan => {:supervisor_email => 'ugly'}}, session: valid_session
       end
 
-      it "assigns the requested loan as @loan" do
+      it 'assigns the requested loan as @loan' do
         loan = Loan.create! valid_attributes
         put :update, params: {:id => loan.to_param, :loan => valid_attributes}, session: valid_session
         expect(assigns(:loan)).to eq(loan)
       end
 
-      it "redirects to the loan" do
+      it 'redirects to the loan' do
         loan = Loan.create! valid_attributes
         put :update, params: {:id => loan.to_param, :loan => valid_attributes}, session: valid_session
         expect(response).to redirect_to(loan)

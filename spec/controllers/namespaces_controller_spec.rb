@@ -26,9 +26,9 @@ describe NamespacesController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Georeference. As you add validations to Georeference be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { 
+  let(:valid_attributes) {
     strip_housekeeping_attributes( FactoryGirl.build(:valid_namespace).attributes )
-  } 
+  }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -103,25 +103,27 @@ describe NamespacesController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested namespace" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'institution' => 'MyString'}).permit(:institution) }
+
+      it 'updates the requested namespace' do
         namespace = Namespace.create! valid_attributes
         # Assuming there are no other namespaces in the database, this
         # specifies that the Namespace created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Namespace).to receive(:update).with({ "institution" => "MyString" })
-        put :update, params: {:id => namespace.to_param, :namespace => { "institution" => "MyString" }}, session: valid_session
+        expect_any_instance_of(Namespace).to receive(:update).with(update_params)
+        put :update, params: {:id => namespace.to_param, :namespace => {'institution' => 'MyString'}}, session: valid_session
       end
 
-      it "assigns the requested namespace as @namespace" do
+      it 'assigns the requested namespace as @namespace' do
         namespace = Namespace.create! valid_attributes
         put :update, params: {:id => namespace.to_param, :namespace => valid_attributes}, session: valid_session
         expect(assigns(:namespace)).to eq(namespace)
       end
 
-      it "redirects to the namespace" do
+      it 'redirects to the namespace' do
         namespace = Namespace.create! valid_attributes
         put :update, params: {:id => namespace.to_param, :namespace => valid_attributes}, session: valid_session
         expect(response).to redirect_to(namespace)
