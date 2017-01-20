@@ -103,23 +103,25 @@ describe OtuPageLayoutsController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'name' => 'sunshine'}).permit(:name) }
+
       it 'updates the requested otu_page_layout' do
         otu_page_layout = OtuPageLayout.create! valid_attributes
         # Assuming there are no other otu_page_layouts in the database, this
         # specifies that the OtuPageLayout created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(OtuPageLayout).to receive(:update).with({'name' => 'sunshine'})
+        expect_any_instance_of(OtuPageLayout).to receive(:update).with(update_params)
         put :update, params: {:id => otu_page_layout.to_param, :otu_page_layout => {name: 'sunshine'}}, session: valid_session
       end
 
-      it "assigns the requested otu_page_layout as @otu_page_layout" do
+      it 'assigns the requested otu_page_layout as @otu_page_layout' do
         otu_page_layout = OtuPageLayout.create! valid_attributes
         put :update, params: {:id => otu_page_layout.to_param, :otu_page_layout => valid_attributes}, session: valid_session
         expect(assigns(:otu_page_layout)).to eq(otu_page_layout)
       end
 
-      it "redirects to the otu_page_layout" do
+      it 'redirects to the otu_page_layout' do
         otu_page_layout = OtuPageLayout.create! valid_attributes
         put :update, params: {:id => otu_page_layout.to_param, :otu_page_layout => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_page_layout)

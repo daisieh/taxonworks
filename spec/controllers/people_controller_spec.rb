@@ -103,25 +103,27 @@ describe PeopleController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested person" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'type' => ""}).permit(:type) }
+
+      it 'updates the requested person' do
         person = Person.create! valid_attributes
         # Assuming there are no other people in the database, this
         # specifies that the Person created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Person).to receive(:update).with({"type" => ""})
-        put :update, params: {:id => person.to_param, :person => {"type" => ""}}, session: valid_session
+        expect_any_instance_of(Person).to receive(:update).with(update_params)
+        put :update, params: {:id => person.to_param, :person => {'type' => ""}}, session: valid_session
       end
 
-      it "assigns the requested person as @person" do
+      it 'assigns the requested person as @person' do
         person = Person.create! valid_attributes
         put :update, params: {:id => person.to_param, :person => valid_attributes}, session: valid_session
         expect(assigns(:person)).to eq(person.becomes(Person::Unvetted))
       end
 
-      it "redirects to the person" do
+      it 'redirects to the person' do
         person = Person.create! valid_attributes
         put :update, params: {:id => person.to_param, :person => valid_attributes}, session: valid_session
         expect(response).to redirect_to(person.becomes(Person))
