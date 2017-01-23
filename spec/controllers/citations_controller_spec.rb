@@ -92,20 +92,21 @@ describe CitationsController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
+  describe 'PUT update' do
 
     before {
       request.env['HTTP_REFERER'] = citation_path(1)
     }
 
-    describe "with valid params" do
+    describe 'with valid params' do
       # TODO: This does NOT work in the way one might wish it to work! FAIL!
-      let(:o) { Otu.create(name: 'bar') }
+      let(:o1) { Otu.create(name: 'bar') }
       let(:update_params) { ActionController::Parameters.new({'citation_object_type' => 'Otu',
-                                                              'citation_object_id'   => o.id.to_s})
+                                                              'citation_object_id'   => o1.id.to_s})
                               .permit(:citation_object_type, :citation_object_id) }
+      let(:o2) { Otu.last }
 
-      it "updates the requested citation" do
+      it 'updates the requested citation' do
         citation = Citation.create! valid_attributes
         # Assuming there are no other citations in the database, this
         # specifies that the Citation created on the previous line
@@ -113,17 +114,18 @@ describe CitationsController, :type => :controller do
         # submitted in the request.
         expect_any_instance_of(Citation).to receive(:update).with(update_params)
         put :update, params: {:id => citation.to_param, :citation => {citation_object_type: 'Otu',
-                                                                      citation_object_id:   o.id}},
+                                                                      citation_object_id:   o2.id}},
             session:         valid_session
+        o2.id
       end
 
-      it "assigns the requested citation as @citation" do
+      it 'assigns the requested citation as @citation' do
         citation = Citation.create! valid_attributes
         put :update, params: {:id => citation.to_param, :citation => valid_attributes}, session: valid_session
         expect(assigns(:citation)).to eq(citation)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         citation = Citation.create! valid_attributes
         put :update, params: {:id => citation.to_param, :citation => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
