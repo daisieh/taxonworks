@@ -103,7 +103,6 @@ describe CollectionProfilesController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
-      # TODO: This does NOT work in the way one might wish it to work! FAIL!
       let(:otu) { FactoryGirl.create(:valid_otu) }
       let(:update_params) { ActionController::Parameters.new({'otu_id' => otu.id.to_s}).permit(:otu_id) }
 

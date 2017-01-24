@@ -112,16 +112,15 @@ RSpec.describe ExtractsController, type: :controller, group: :extract do
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      # TODO: This *MAY* NOT work in the way one might wish it to work! FAIL!
+  describe 'PUT #update' do
+    context 'with valid params' do
       let(:new_attributes) {
         attributes = valid_attributes
         attributes[:quantity_value] = 1000
         attributes
       }
 
-      it "updates the requested extract" do
+      it 'updates the requested extract' do
         extract    = Extract.create!(valid_attributes)
         new_params = ActionController::Parameters.new({id: extract.to_param, extract: new_attributes})
         put :update, params: new_params, session: valid_session
@@ -129,13 +128,13 @@ RSpec.describe ExtractsController, type: :controller, group: :extract do
         expect(extract.quantity_value == new_attributes[:quantity_value]).to be true
       end
 
-      it "assigns the requested extract as @extract" do
+      it 'assigns the requested extract as @extract' do
         extract = Extract.create! valid_attributes
         put :update, params: {id: extract.to_param, extract: valid_attributes}, session: valid_session
         expect(assigns(:extract)).to eq(extract)
       end
 
-      it "redirects to the extract" do
+      it 'redirects to the extract' do
         extract = Extract.create! valid_attributes
         put :update, params: {id: extract.to_param, extract: valid_attributes}, session: valid_session
         expect(response).to redirect_to(extract)
