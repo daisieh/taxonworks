@@ -117,25 +117,27 @@ describe TaxonNamesController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested taxon_name" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'name' => 'MyString'})
+                              .permit(:name) }
+      it 'updates the requested taxon_name' do
         taxon_name = TaxonName.create! valid_attributes
         # Assuming there are no other taxon_names in the database, this
         # specifies that the TaxonName created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(TaxonName).to receive(:update).with({"name" => "MyString"})
-        put :update, params: {:id => taxon_name.to_param, :taxon_name => {"name" => "MyString"}}, session: valid_session
+        expect_any_instance_of(TaxonName).to receive(:update).with(update_params)
+        put :update, params: {:id => taxon_name.to_param, :taxon_name => {'name' => 'MyString'}}, session: valid_session
       end
 
-      it "assigns the requested taxon_name as @taxon_name" do
+      it 'assigns the requested taxon_name as @taxon_name' do
         taxon_name = TaxonName.create! valid_attributes
         put :update, params: {:id => taxon_name.to_param, :taxon_name => valid_attributes}, session: valid_session
         expect(assigns(:taxon_name)).to eq(taxon_name.becomes(taxon_name.type.constantize))
       end
 
-      it "redirects to the taxon_name" do
+      it 'redirects to the taxon_name' do
         taxon_name = TaxonName.create! valid_attributes
         put :update, params: {:id => taxon_name.to_param, :taxon_name => valid_attributes}, session: valid_session
         expect(response).to redirect_to(taxon_name.becomes(TaxonName))

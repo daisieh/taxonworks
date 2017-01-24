@@ -78,23 +78,25 @@ describe TaggedSectionKeywordsController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({keyword_id: other_keyword.to_param})
+                              .permit(:keyword_id) }
       it 'updates the requested tagged_section_keyword' do
         tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
         # Assuming there are no other tagged_section_keywords in the database, this
         # specifies that the TaggedSectionKeyword created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(TaggedSectionKeyword).to receive(:update).with({ keyword_id: other_keyword.to_param  })
+        expect_any_instance_of(TaggedSectionKeyword).to receive(:update).with(update_params)
         put :update, params: {:id => tagged_section_keyword.to_param, :tagged_section_keyword => {keyword_id: other_keyword.to_param}}, session: valid_session
       end
 
-      it "assigns the requested tagged_section_keyword as @tagged_section_keyword" do
+      it 'assigns the requested tagged_section_keyword as @tagged_section_keyword' do
         tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
         put :update, params: {:id => tagged_section_keyword.to_param, :tagged_section_keyword => valid_attributes}, session: valid_session
         expect(assigns(:tagged_section_keyword)).to eq(tagged_section_keyword)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
         put :update, params: {:id => tagged_section_keyword.to_param, :tagged_section_keyword => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)

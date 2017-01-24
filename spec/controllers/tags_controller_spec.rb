@@ -132,25 +132,27 @@ describe TagsController, :type => :controller do
 
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested tag" do
+  describe 'PUT update' do
+    describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'keyword_id' => '1'})
+                              .permit(:keyword_id) }
+      it 'updates the requested tag' do
         tag = Tag.create! valid_attributes
         # Assuming there are no other tags in the database, this
         # specifies that the Tag created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Tag).to receive(:update).with({"keyword_id" => "1"})
-        put :update, params: {:id => tag.to_param, :tag => {"keyword_id" => "1"}}, session: valid_session
+        expect_any_instance_of(Tag).to receive(:update).with(update_params)
+        put :update, params: {:id => tag.to_param, :tag => {'keyword_id' => '1'}}, session: valid_session
       end
 
-      it "assigns the requested tag as @tag" do
+      it 'assigns the requested tag as @tag' do
         tag = Tag.create! valid_attributes
         put :update, params: {:id => tag.to_param, :tag => valid_attributes}, session: valid_session
         expect(assigns(:tag)).to eq(tag)
       end
 
-      it "redirects to :back" do
+      it 'redirects to :back' do
         tag = Tag.create! valid_attributes
         put :update, params: {:id => tag.to_param, :tag => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
