@@ -48,7 +48,7 @@ class AlternateValuesController < ApplicationController
         format.html { redirect_to @alternate_value.alternate_value_object.metamorphosize, notice: 'Alternate value was successfully updated.' }
         format.json { render json: @alternate_value, status: :created, location: @alternate_value }
       else
-        format.html { redirect_to :back, notice: 'Alternate value was NOT successfully updated.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Alternate value was NOT successfully updated.' }
         format.json { render json: @alternate_value.errors, status: :unprocessable_entity }
       end
     end
@@ -59,7 +59,7 @@ class AlternateValuesController < ApplicationController
   def destroy
     @alternate_value.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Alternate value was successfully destroyed.' }
+      format.html { redirect_back fallback_location: hub_url, notice: 'Alternate value was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -51,7 +51,7 @@ class ControlledVocabularyTermsController < ApplicationController
         format.html {
           flash[:notice] = 'Controlled vocabulary term NOT successfully created.'
           if redirect_url == :back
-            redirect_to :back
+            redirect_back fallback_location: hub_url
           else
             render action: 'new'
           end
@@ -122,7 +122,7 @@ class ControlledVocabularyTermsController < ApplicationController
   # GET /controlled_vocabulary_terms/1/tagged_objects
   def tagged_objects
     set_controlled_vocabulary_term
-  end 
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.

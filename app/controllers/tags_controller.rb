@@ -30,7 +30,7 @@ class TagsController < ApplicationController
       else
         format.html {
           # if redirect_url == :back
-          redirect_to :back, notice: 'Tag was NOT successfully created.'
+          redirect_back fallback_location: hub_url, notice: 'Tag was NOT successfully created.'
           # else
           #   render :new
           # end
@@ -48,7 +48,7 @@ class TagsController < ApplicationController
         format.html { redirect_to @tag.tag_object.metamorphosize, notice: 'Tag was successfully created.' }
         format.json { render json: @tag, status: :created, location: @tag }
       else
-        format.html { redirect_to :back, notice: 'Tag was NOT successfully updated.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Tag was NOT successfully updated.' }
         format.json { render json: @tag.errors, status: :unprocessable_entity }
       end
     end
@@ -60,7 +60,7 @@ class TagsController < ApplicationController
     # redirect_url = (request.env['HTTP_REFERER'].include?("tags/#{@tag.id}") ? tags_url : :back)
     @tag.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Tag was successfully destroyed.' }
+      format.html { redirect_back fallback_location: hub_url, notice: 'Tag was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

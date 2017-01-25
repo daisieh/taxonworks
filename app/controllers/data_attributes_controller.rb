@@ -30,7 +30,7 @@ class DataAttributesController < ApplicationController
         format.html { redirect_to @data_attribute.attribute_subject.metamorphosize, notice: 'Data attribute was successfully created.' }
         format.json { render json: @data_attribute, status: :created, location: @data_attribute }
       else
-        format.html { redirect_to :back, notice: 'Data attribute was NOT successfully created.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Data attribute was NOT successfully created.' }
         format.json { render json: @data_attribute.errors, status: :unprocessable_entity }
       end
     end
@@ -44,7 +44,7 @@ class DataAttributesController < ApplicationController
         format.html { redirect_to @data_attribute.attribute_subject.metamorphosize, notice: 'Data attribute was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to :back, notice: 'Data attribute was NOT successfully updated.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Data attribute was NOT successfully updated.' }
         format.json { render json: @data_attribute.errors, status: :unprocessable_entity }
       end
     end
@@ -55,7 +55,7 @@ class DataAttributesController < ApplicationController
   def destroy
     @data_attribute.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Data attribute was successfully destroyed.' }
+      format.html { redirect_back fallback_location: hub_url, notice: 'Data attribute was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -95,7 +95,7 @@ class DataAttributesController < ApplicationController
   end
 
   private
-  
+
   # Use callbacks to share common setup or constraints between actions.
   def set_data_attribute
     @data_attribute = DataAttribute.find(params[:id])

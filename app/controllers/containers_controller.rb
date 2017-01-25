@@ -35,10 +35,10 @@ class ContainersController < ApplicationController
 
     respond_to do |format|
       if @container.save
-        format.html { redirect_to :back, notice: 'Container was successfully created.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Container was successfully created.' }
         format.json { render json: @container, status: :created, location: @container }
       else
-        format.html { redirect_to :back, notice: 'Container was NOT successfully created.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Container was NOT successfully created.' }
         format.json { render json: @container.errors, status: :unprocessable_entity }
       end
     end
@@ -49,10 +49,10 @@ class ContainersController < ApplicationController
   def update
     respond_to do |format|
       if @container.update(container_params)
-        format.html { redirect_to :back, notice: 'Container was successfully updated.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Container was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to :back, notice: 'Container was NOT successfully updated.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Container was NOT successfully updated.' }
         format.json { render json: @container.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +63,7 @@ class ContainersController < ApplicationController
   def destroy
     @container.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Container was successfully destroyed.' }
+      format.html { redirect_back fallback_location: hub_url, notice: 'Container was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -80,13 +80,13 @@ class ContainersController < ApplicationController
     @containers = Container.find_for_autocomplete(params.merge(project_id: sessions_current_project_id))
 
     data = @containers.collect do |t|
-      {id: t.id,
-       label: t.id, #  ApplicationController.helpers.container_tag(t),
-       gid: t.to_global_id.to_s,
+      {id:              t.id,
+       label:           t.id, #  ApplicationController.helpers.container_tag(t),
+       gid:             t.to_global_id.to_s,
        response_values: {
            params[:method] => t.id
        },
-       label_html: t.id #  ApplicationController.helpers.container_tag(t)  
+       label_html:      t.id #  ApplicationController.helpers.container_tag(t)
       }
     end
     render :json => data

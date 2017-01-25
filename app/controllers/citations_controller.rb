@@ -35,7 +35,7 @@ class CitationsController < ApplicationController
         format.html { redirect_to @citation.citation_object.metamorphosize, notice: 'Citation was successfully created.' }
         format.json { render json: @citation, status: :created, location: @citation }
       else
-        format.html { redirect_to :back, notice: 'Citation was NOT successfully created.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Citation was NOT successfully created.' }
         format.json { render json: @citation.errors, status: :unprocessable_entity }
       end
     end
@@ -49,7 +49,7 @@ class CitationsController < ApplicationController
         format.html { redirect_to @citation.citation_object.metamorphosize, notice: 'Citation was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to :back, notice: 'Citation was NOT successfully updated.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Citation was NOT successfully updated.' }
         format.json { render json: @citation.errors, status: :unprocessable_entity }
       end
     end
@@ -60,7 +60,7 @@ class CitationsController < ApplicationController
   def destroy
     @citation.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Citation was successfully destroyed.' }
+      format.html { redirect_back fallback_location: hub_url, notice: 'Citation was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

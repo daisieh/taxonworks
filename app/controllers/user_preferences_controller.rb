@@ -5,7 +5,7 @@ class UserPreferencesController < ApplicationController
     sessions_current_user.add_page_to_favorites(valid_params)
     respond_to do |format|
       format.html {
-        redirect_to :back, notice: 'Added page to favorites.'
+        redirect_back fallback_location: hub_url, notice: 'Added page to favorites.'
       }
       format.js {
          }
@@ -16,9 +16,9 @@ class UserPreferencesController < ApplicationController
     sessions_current_user.remove_page_from_favorites(valid_params)
     respond_to do |format|
       format.html {
-        redirect_to :back, notice: 'Removed page from favorites.'
+        redirect_back fallback_location: hub_url, notice: 'Removed page from favorites.'
       }
-      format.js { 
+      format.js {
           }
     end
   end

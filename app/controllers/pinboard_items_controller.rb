@@ -1,5 +1,5 @@
 class PinboardItemsController < ApplicationController
-  before_action :require_sign_in 
+  before_action :require_sign_in
   before_action :set_pinboard_item, only: [:destroy]
 
   # POST /pinboard_items
@@ -8,10 +8,10 @@ class PinboardItemsController < ApplicationController
     @pinboard_item = PinboardItem.new(pinboard_item_params.merge(user_id: sessions_current_user_id))
     respond_to do |format|
       if @pinboard_item.save
-        format.html { redirect_to :back, notice: 'Pinboard item was successfully created.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Pinboard item was successfully created.' }
         format.json { render json: @pinboard_item, status: :created, location: @pinboard_item }
       else
-        format.html { redirect_to :back, notice: "Couldn't pin this item! Is it already there?" }
+        format.html { redirect_back fallback_location: hub_url, notice: "Couldn't pin this item! Is it already there?" }
         format.json { render json: @pinboard_item.errors, status: :unprocessable_entity }
       end
     end
@@ -28,7 +28,7 @@ class PinboardItemsController < ApplicationController
   def destroy
     @pinboard_item.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Pinboard item was successfully destroyed.' }
+      format.html { redirect_back fallback_location: hub_url, notice: 'Pinboard item was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

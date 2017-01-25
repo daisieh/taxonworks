@@ -28,7 +28,7 @@ class NotesController < ApplicationController
         format.html { redirect_to @note.note_object.metamorphosize, notice: 'Note was successfully created.' }
         format.json { render json: @note, status: :created, location: @note }
       else
-        format.html { redirect_to :back, notice: 'Note was NOT successfully created.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Note was NOT successfully created.' }
         format.json { render json: @note.errors, status: :unprocessable_entity }
       end
     end
@@ -42,7 +42,7 @@ class NotesController < ApplicationController
         format.html { redirect_to @note.note_object.metamorphosize, notice: 'Note was successfully created.' }
         format.json { render json: @note, status: :created, location: @note }
       else
-        format.html { redirect_to :back, notice: 'Note was NOT successfully updated.' }
+        format.html { redirect_back fallback_location: hub_url, notice: 'Note was NOT successfully updated.' }
         format.json { render json: @note.errors, status: :unprocessable_entity }
       end
     end
@@ -53,7 +53,7 @@ class NotesController < ApplicationController
   def destroy
     @note.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Note was successfully destroyed.' }
+      format.html { redirect_back fallback_location: hub_url, notice: 'Note was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -43,8 +43,8 @@ class ConfidencesController < ApplicationController
         format.html { redirect_to @confidence.confidence_object.metamorphosize, notice: 'Confidence was successfully created.' }
         format.json { render :show, status: :created, location: @confidence }
       else
-        format.html { 
-          redirect_to :back, notice: 'Confidence was NOT successfully created.'
+        format.html {
+          redirect_back fallback_location: hub_url, notice: 'Confidence was NOT successfully created.'
         }
         format.json { render json: @confidence.errors, status: :unprocessable_entity }
       end
