@@ -106,14 +106,16 @@ describe SourcesController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
+      let(:update_params) { ActionController::Parameters.new({'serial_id'                  => '1',
+                                                              'project_sources_attributes' => [{'project_id' => '1'}]})
+                              .permit(:serial_id, :project_sources_attributes) }
       it 'updates the requested source' do
         source = Source.create! valid_attributes
         # Assuming there are no other sources in the database, this
         # specifies that the Source created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        expect_any_instance_of(Source).to receive(:update).with({'serial_id'                  => '1',
-                                                                 'project_sources_attributes' => [{'project_id' => '1'}]})
+        expect_any_instance_of(Source).to receive(:update).with(update_params)
         put :update, params: {:id => source.to_param, :source => {'serial_id' => '1'}}, session: valid_session
       end
 
