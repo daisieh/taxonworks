@@ -123,7 +123,7 @@ class GeographicItem < ApplicationRecord
         # get the shape from the geographic area, if possible
         if geographic_area_id.blank?
           finding = search_object_class.constantize
-          found = finding.where('false')
+          found   = finding.none
         else
           shape_in = GeographicArea.joins(:geographic_items)
                          .find(geographic_area_id)
@@ -699,7 +699,7 @@ class GeographicItem < ApplicationRecord
       if true # check_geo_params(column_name, geographic_item)
         select_distance_with_geo_object(column_name, geographic_item).where_distance_greater_than_zero(column_name, geographic_item).order('distance')
       else
-        where('false')
+        none
       end
     end
 
@@ -712,7 +712,7 @@ class GeographicItem < ApplicationRecord
                 .order('distance desc')
         q
       else
-        where('false')
+        none
       end
     end
 
@@ -955,12 +955,12 @@ class GeographicItem < ApplicationRecord
     (containing_geographic_areas
       .joins(:geographic_areas_geographic_items)
       .merge(GeographicAreasGeographicItem.ordered_by_data_origin)
-      .order('geographic_areas.name') + 
+       .order('geographic_areas.name') +
     geographic_areas
       .joins(:geographic_areas_geographic_items)
       .merge(GeographicAreasGeographicItem
       .ordered_by_data_origin)
-      .order('geographic_areas.name').limit(1)).each do |a| 
+      .order('geographic_areas.name').limit(1)).each do |a|
       v.merge!(a.categorize)
     end
     v

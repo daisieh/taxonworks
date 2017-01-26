@@ -4,7 +4,7 @@ class Tasks::Gis::ReportController < ApplicationController
   # before_action :disable_turbolinks, only: [:new, :generate_choices]
 
   def new
-    @list_collection_objects = [] # CollectionObject.where('false')
+    @list_collection_objects = [] # CollectionObject.none
     session.delete('co_selected_headers')
   end
 
@@ -112,7 +112,7 @@ class Tasks::Gis::ReportController < ApplicationController
       end
     else
       @all_collection_objects_count = 0
-      @list_collection_objects      = CollectionObject.where('false')
+      @list_collection_objects      = CollectionObject.none
     end
     @list_collection_objects
   end
@@ -121,7 +121,7 @@ class Tasks::Gis::ReportController < ApplicationController
     if shape_in.blank?
       #   case finding
       #     when 'collection_object'
-      @list_collection_objects = CollectionObject.where('false')
+      @list_collection_objects = CollectionObject.none
       #     else
       #   end
     else

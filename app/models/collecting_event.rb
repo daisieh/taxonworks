@@ -422,7 +422,7 @@ class CollectingEvent < ApplicationRecord
       end
       # find the records
       if sql_string.blank?
-        collecting_events = CollectingEvent.where('false')
+        collecting_events = CollectingEvent.none
       else
         collecting_events = CollectingEvent.where(sql_string).distinct
       end

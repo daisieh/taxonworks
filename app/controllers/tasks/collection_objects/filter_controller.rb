@@ -3,11 +3,11 @@ class Tasks::CollectionObjects::FilterController < ApplicationController
 
   # GET
   def index
-    @geographic_areas         = GeographicArea.where('false')
-    @collection_objects       = CollectionObject.where('false')
+    @geographic_areas         = GeographicArea.none
+    @collection_objects       = CollectionObject.none
     @collection_objects_count = 0
-    @earliest_date = CollectionObject.earliest_date(sessions_current_project_id)
-    @latest_date = CollectionObject.latest_date(sessions_current_project_id)
+    @earliest_date            = CollectionObject.earliest_date(sessions_current_project_id)
+    @latest_date              = CollectionObject.latest_date(sessions_current_project_id)
   end
 
   # POST
@@ -21,7 +21,7 @@ class Tasks::CollectionObjects::FilterController < ApplicationController
     set_and_order_dates(params)
 
     if @shape_in.blank? and @geographic_area_id.blank?
-      area_object_ids = CollectionObject.where('false')
+      area_object_ids = CollectionObject.none
       area_set        = false
     else
       area_object_ids = GeographicItem.gather_selected_data(@geographic_area_id, @shape_in, 'CollectionObject').map(&:id)
@@ -36,7 +36,7 @@ class Tasks::CollectionObjects::FilterController < ApplicationController
     # TODO: move all this to the logic of the method
     if @start_date.blank? || @end_date.blank? #|| area_object_ids.count == 0
       # TODO: This will never get hit, right?!
-      @collection_objects = CollectionObject.where('false')
+      @collection_objects = CollectionObject.none
     else
       # TODO: this makes no sense if no date is provided!
       collecting_event_ids = CollectingEvent.in_date_range(date_range_params).pluck(:id)
@@ -99,7 +99,7 @@ class Tasks::CollectionObjects::FilterController < ApplicationController
   def gather_otu_objects(otu_id, descendants)
     @otu = Otu.joins(:collecting_events).where(id: otu_id).first
     if @otu.nil?
-      @otu_collection_objects = CollectionObject.where('false')
+      @otu_collection_objects = CollectionObject.none
     else
       if descendants.downcase == 'off' or @otu.taxon_name.blank?
         @otu_collection_objects = @otu.collection_objects
@@ -135,7 +135,7 @@ class Tasks::CollectionObjects::FilterController < ApplicationController
   # @return [Array] of georeferences or a geographic area
   def find_georeferences_for(collection_objects, geographic_area)
     # TODO: Target for JOIN?
-    retval = collection_objects.map(&:collecting_event).distinct.map(&:georeferences).flatten
+    retval = collection_objects.map(&:collecting_event).uniq.map(&:georeferences).flatten
     if retval.empty?
       retval.push(geographic_area) unless geographic_area.nil?
     end

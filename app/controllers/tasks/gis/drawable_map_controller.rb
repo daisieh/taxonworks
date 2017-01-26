@@ -8,7 +8,7 @@ class Tasks::Gis::DrawableMapController < ApplicationController
     if value.blank?
       case finding
         when 'collection_object'
-          @collection_objects = CollectionObject.where('false')
+          @collection_objects = CollectionObject.none
         else
       end
     else

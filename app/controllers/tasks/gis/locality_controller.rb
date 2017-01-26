@@ -20,7 +20,7 @@ class Tasks::Gis::LocalityController < ApplicationController
 
   # @return [Scope] Preload an  empty set of collecting events
   def new_list
-    @collecting_events = CollectingEvent.where('false')
+    @collecting_events = CollectingEvent.none
     @drawing_modes     = 'active: polygon, circle'
   end
 

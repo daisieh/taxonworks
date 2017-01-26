@@ -108,7 +108,7 @@ class Loan < ApplicationRecord
   def collection_objects
     list = collection_object_ids
     if list.empty?
-      CollectionObject.where('false')
+      CollectionObject.none
     else
       CollectionObject.find(list)
     end

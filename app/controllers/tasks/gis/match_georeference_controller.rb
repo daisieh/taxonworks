@@ -34,7 +34,7 @@ class Tasks::Gis::MatchGeoreferenceController < ApplicationController
     message = ''
     if params[:keyword_id].blank?
       # Bad search request; return not a list but back to the form
-      @collecting_events = CollectingEvent.where('false')
+      @collecting_events = CollectingEvent.none
     else
       keyword = Keyword.find(params[:keyword_id])
       @collecting_events = CollectingEvent.where(project_id: $project_id).order(updated_at: :desc).tagged_with_keyword(keyword)
@@ -51,7 +51,7 @@ class Tasks::Gis::MatchGeoreferenceController < ApplicationController
     message = ''
     value = params['ce_geographic_item_attributes_shape']
     if value.blank?
-      @collecting_events = CollectingEvent.where('false')
+      @collecting_events = CollectingEvent.none
     else
       feature = RGeo::GeoJSON.decode(value, :json_parser => :json)
       # isolate the WKT
@@ -99,7 +99,7 @@ class Tasks::Gis::MatchGeoreferenceController < ApplicationController
     # todo: this needs to be rationalized, but works, after a fashion.
     if params[:keyword_id].blank?
       # render json: {html: 'Empty set'} #and return
-      @georeferences = Georeference.where('false')
+      @georeferences = Georeference.none
     else
       keyword = Keyword.find(params[:keyword_id])
       @georeferences = Georeference.where(project_id: $project_id).order(updated_at: :desc).tagged_with_keyword(keyword)
@@ -114,7 +114,7 @@ class Tasks::Gis::MatchGeoreferenceController < ApplicationController
     message = ''
     value = params['gr_geographic_item_attributes_shape']
     if value.blank?
-      @georeferences = Georeference.where('false')
+      @georeferences = Georeference.none
     else
       feature = RGeo::GeoJSON.decode(value, :json_parser => :json)
       # isolate the WKT
