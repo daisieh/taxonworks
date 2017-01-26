@@ -110,20 +110,20 @@ describe CitationsController, :type => :controller do
                                                           'citation_object_id'   => o.id.to_s})
                           .permit(:citation_object_type, :citation_object_id)
         expect_any_instance_of(Citation).to receive(:update).with(update_params)
-        put :update, {:id => citation.to_param, :citation => {citation_object_type: 'Otu',
-                                                              citation_object_id:   o.id}},
-            valid_session
+        put :update, params: {:id => citation.to_param, :citation => {citation_object_type: 'Otu',
+                                                                      citation_object_id:   o.id}},
+            session:         valid_session
       end
 
       it 'assigns the requested citation as @citation' do
         citation = Citation.create! valid_attributes
-        put :update, {:id => citation.to_param, :citation => valid_attributes}, valid_session
+        put :update, params: {:id => citation.to_param, :citation => valid_attributes}, session: valid_session
         expect(assigns(:citation)).to eq(citation)
       end
 
       it 'redirects to :back' do
         citation = Citation.create! valid_attributes
-        put :update, {:id => citation.to_param, :citation => valid_attributes}, valid_session
+        put :update, params: {:id => citation.to_param, :citation => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
       end
     end
