@@ -24,11 +24,11 @@ RSpec.describe DocumentsController, type: :controller do
   }
 
   let(:valid_attributes) {
-       {document_file:  fixture_file_upload((Rails.root + 'spec/files/documents/tiny.pdf'), 'application/pdf') }
+    {document_file: fixture_file_upload((Rails.root + 'spec/files/documents/tiny.pdf'), 'application/pdf')}
   }
 
   let(:invalid_attributes) {
-    {document_file: nil} 
+    {document_file: nil}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -36,122 +36,124 @@ RSpec.describe DocumentsController, type: :controller do
   # DocumentsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns all documents as @recent_objects" do
+  describe 'GET #index' do
+    it 'assigns all documents as @recent_objects' do
       document = Document.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(assigns(:recent_objects)).to eq([document])
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested document as @document" do
+  describe 'GET #show' do
+    it 'assigns the requested document as @document' do
       document = Document.create! valid_attributes
-      get :show, params: {:id => document.to_param}, session: valid_session
+      get :show, params: {:id => document.id}, session: valid_session
       expect(assigns(:document)).to eq(document)
     end
   end
 
-  describe "GET #new" do
-    it "assigns a new document as @document" do
+  describe 'GET #new' do
+    it 'assigns a new document as @document' do
       get :new, params: {}, session: valid_session
       expect(assigns(:document)).to be_a_new(Document)
     end
   end
 
-  describe "GET #edit" do
-    it "assigns the requested document as @document" do
+  describe 'GET #edit' do
+    it 'assigns the requested document as @document' do
       document = Document.create! valid_attributes
-      get :edit, params: {:id => document.to_param}, session: valid_session
+      get :edit, params: {:id => document.id}, session: valid_session
       expect(assigns(:document)).to eq(document)
     end
   end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new Document" do
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new Document' do
         expect {
           post :create, params: {:document => valid_attributes}, session: valid_session
         }.to change(Document, :count).by(1)
       end
 
-      it "assigns a newly created document as @document" do
+      it 'assigns a newly created document as @document' do
         post :create, params: {:document => valid_attributes}, session: valid_session
         expect(assigns(:document)).to be_a(Document)
         expect(assigns(:document)).to be_persisted
       end
 
-      it "redirects to the created document" do
+      it 'redirects to the created document' do
         post :create, params: {:document => valid_attributes}, session: valid_session
         expect(response).to redirect_to(Document.last)
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved document as @document" do
+    context 'with invalid params' do
+      it 'assigns a newly created but unsaved document as @document' do
         post :create, params: {:document => invalid_attributes}, session: valid_session
         expect(assigns(:document)).to be_a_new(Document)
       end
 
-      it "re-renders the 'new' template" do
+      it 're-renders the \'new\' template' do
         post :create, params: {:document => invalid_attributes}, session: valid_session
-        expect(response).to render_template("new")
+        expect(response).to render_template('new')
       end
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
+  describe 'PUT #update' do
+    context 'with valid params' do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        skip('Add a hash of attributes valid for your model')
       }
 
-      it "updates the requested document" do
+      it 'updates the requested document' do
         document = Document.create! valid_attributes
-        put :update, params: {:id => document.to_param, :document => { document_file: fixture_file_upload((Rails.root + 'spec/files/documents/tiny.txt'), 'text/plain')} }, session: valid_session
+        put :update, params: {:id => document.id, :document => {document_file: fixture_file_upload((Rails.root + 'spec/files/documents/tiny.txt'), 'text/plain')}}, session: valid_session
         document.reload
         expect(document.document_file_file_name).to eq('tiny.txt')
       end
 
-      it "assigns the requested document as @document" do
+      it 'assigns the requested document as @document' do
         document = Document.create! valid_attributes
-        put :update, params: {:id => document.to_param, :document => valid_attributes}, session: valid_session
+        put :update, params: {:id => document.id, :document => valid_attributes}, session: valid_session
         expect(assigns(:document)).to eq(document)
       end
 
-      it "redirects to the document" do
+      it 'redirects to the document' do
         document = Document.create! valid_attributes
-        put :update, params: {:id => document.to_param, :document => valid_attributes}, session: valid_session
+        put :update, params: {:id => document.id, :document => valid_attributes}, session: valid_session
         expect(response).to redirect_to(document)
       end
     end
 
-    context "with invalid params" do
-      it "assigns the document as @document" do
+    context 'with invalid params' do
+      it 'assigns the document as @document' do
         document = Document.create! valid_attributes
-        put :update, params: {:id => document.to_param, :document => invalid_attributes}, session: valid_session
+        put :update, params: {:id => document.id, :document => invalid_attributes}, session: valid_session
         expect(assigns(:document)).to eq(document)
       end
 
-      it "re-renders the 'edit' template" do
-        document = Document.create! valid_attributes
-        put :update, params: {:id => document.to_param, :document => invalid_attributes}, session: valid_session
-        expect(response).to render_template("edit")
+      it 're-renders the \'edit\' template' do
+        invalid_params = ActionController::Parameters.new(invalid_attributes)
+        document       = Document.create!(ActionController::Parameters.new(valid_attributes).permit!)
+        update_params  = ActionController::Parameters.new({id: document.id, document: invalid_params})
+        put :update, params: update_params, session: valid_session
+        expect(response).to render_template('edit')
       end
     end
   end
 
-  describe "DELETE #destroy" do
-    it "destroys the requested document" do
+  describe 'DELETE #destroy' do
+    it 'destroys the requested document' do
       document = Document.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => document.to_param}, session: valid_session
+        delete :destroy, params: {:id => document.id}, session: valid_session
       }.to change(Document, :count).by(-1)
     end
 
-    it "redirects to the documents list" do
+    it 'redirects to the documents list' do
       document = Document.create! valid_attributes
-      delete :destroy, params: {:id => document.to_param}, session: valid_session
+      delete :destroy, params: {:id => document.id}, session: valid_session
       expect(response).to redirect_to(documents_url)
     end
   end
