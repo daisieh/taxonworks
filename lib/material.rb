@@ -1,17 +1,18 @@
 # Methods for handling the "bulk" accession of collection objects
 module Material
-   
+
   # @return [ QuickVerbatimResponse instance ]
   #   the data are not yet saved
-  def self.create_quick_verbatim(options  = {}) 
-    # We could refactor this to use nested attributes, but it's not that much cleaner 
-    opts = {
-      'collection_objects' => {},
-      'note' => nil,
-      'biocuration_classes' => [],
-      'repository' => {'id' => nil},
-      'collection_object' => {}
-    }.merge!(options)
+  def self.create_quick_verbatim(options = {})
+    # We could refactor this to use nested attributes, but it's not that much cleaner
+    # TODO: portions of this may not work as intended until all cases of (model).new are using
+    # ActionController::Parameters.new() for its options
+    opts = ActionController::Parameters.new({'collection_objects'  => {},
+                                             'note'                => nil,
+                                             'biocuration_classes' => [],
+                                             'repository'          => {'id' => nil},
+                                             'collection_object'   => {}
+                                            }).merge!(options).permit!
 
     response = QuickVerbatimResponse.new(opts)
 
@@ -25,29 +26,29 @@ module Material
     if opts['identifier'] && !opts['identifier']['namespace_id'].blank? && !opts['identifier']['identifier'].blank?
       identifier = Identifier::Local::CatalogNumber.new(
         namespace_id: opts['identifier']['namespace_id'],
-        identifier: opts['identifier']['identifier']) 
+        identifier:   opts['identifier']['identifier'])
     end
 
-    container = Container::Virtual.new if objects.keys.count > 1 
+    container = Container::Virtual.new if objects.keys.count > 1
     container.identifiers << identifier if container && identifier
-    
-    note = Note.new(opts['note']) if opts['note'] && !opts['note']['text'].blank? 
+
+    note      = Note.new(opts['note']) if opts['note'] && !opts['note']['text'].blank?
     repository = Repository.find(opts['repository']['id']) if opts['repository'] && !opts['repository']['id'].blank?
 
     objects.keys.each do |o|
       object = stub_object_attributes.dup
       object.total = objects[o]['total']
 
-      if objects[o]['biocuration_classes'] 
+      if objects[o]['biocuration_classes']
         objects[o]['biocuration_classes'].keys.each do |k|
-          object.biocuration_classifications.build(biocuration_class: BiocurationClass.find(k)) 
+          object.biocuration_classifications.build(biocuration_class: BiocurationClass.find(k))
         end
       end
 
       object.notes << note.dup if note
 
       object.contained_in = container if container # = container if container
-      object.identifiers << identifier if identifier && !container 
+      object.identifiers << identifier if identifier && !container
       response.collection_objects.push(object)
       object = nil
     end
@@ -57,7 +58,7 @@ module Material
     response.identifier = identifier if identifier
     response.repository = repository if repository
 
-    response 
+    response
   end
 
   # A Container to store results of create_quick_verbatim
@@ -76,7 +77,7 @@ module Material
     attr_accessor :note
 
     def initialize(options = {})
-      @form_params = options 
+      @form_params = options
       build_models
       @collection_objects = []
     end
@@ -84,12 +85,12 @@ module Material
     def build_models
       @quick_verbatim_object = QuickVerbatimObject.new(form_params['collection_object'])
 
-      @locks = Forms::FieldLocks.new(form_params['locks']) 
+      @locks                 = Forms::FieldLocks.new(form_params['locks'])
 
       @note       = Note.new(form_params['note'])
       @repository = Repository.find(form_params['repository']['id']) if (form_params['repository'] && !form_params['repository']['id'].blank?)
       @identifier = Identifier::Local::CatalogNumber.new(form_params['identifier'])
-      @namespace  = identifier.namespace 
+      @namespace             = identifier.namespace
     end
 
     def locks=(value)
@@ -122,7 +123,7 @@ module Material
       @namespace = value
     end
 
-    def namespace 
+    def namespace
       @namespace ||= Namespace.new
     end
 
@@ -130,13 +131,13 @@ module Material
       @note = value
     end
 
-    def note 
+    def note
       @note ||= Note.new
     end
 
     def save
       if collection_objects.size == 0
-        errors = ActiveModel::Errors.new('base')  
+        errors = ActiveModel::Errors.new('base')
         errors.add(:total, 'No totals provided!')
         return false, errors
       end
@@ -152,10 +153,10 @@ module Material
             o.save!
           end
         end
-        
+
         return true
       rescue ActiveRecord::RecordInvalid => invalid
-        return false, invalid.record.errors 
+        return false, invalid.record.errors
       end
     end
 
@@ -164,22 +165,22 @@ module Material
     end
 
     def duplicate_with_locks
-      n = QuickVerbatimResponse.new(form_params)
+      n                                             = QuickVerbatimResponse.new(form_params)
       # nullify if not locked
       #
-      n.repository = nil if !locked?('repository')
-      n.namespace  = nil if !locked?('namespace')
-      n.note       = nil if !locked?('note')
-      
+      n.repository                                  = nil if !locked?('repository')
+      n.namespace                                   = nil if !locked?('namespace')
+      n.note                                        = nil if !locked?('note')
+
       n.collection_object.buffered_collecting_event = nil if !locked?('collecting_event')
       n.collection_object.buffered_determinations   = nil if !locked?('determinations')
       n.collection_object.buffered_other_labels     = nil if !locked?('other_labels')
-      n.identifier.identifier = next_identifier
+      n.identifier.identifier                       = next_identifier
       n
     end
 
     def next_identifier
-      return nil if !locked?('increment') 
+      return nil if !locked?('increment')
       Utilities::Strings.increment_contained_integer(identifier.identifier)
     end
 
