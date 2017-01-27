@@ -4,8 +4,8 @@ source 'https://rubygems.org'
 # https://rvm.io/support/fixing-broken-ssl-certificates
 #
 # if above doesn't work, try:
-  # brew update # then
-  # brew upgrade openssl
+# brew update # then
+# brew upgrade openssl
 
 ruby '2.3.1'
 
@@ -55,9 +55,9 @@ gem 'best_in_place', '~> 3.1.0'
 # Turbolinks makes following links in your web application faster.
 # Read more: https://github.com/rails/turbolinks
 #
-# See: https://gorails.com/episodes/upgrade-to-turbolinks-5 for notes 
+# See: https://gorails.com/episodes/upgrade-to-turbolinks-5 for notes
 # on updating.
-# 
+#
 gem 'turbolinks', '~> 2.5.3'
 gem 'jquery-turbolinks', '~> 2.1'
 
@@ -84,6 +84,8 @@ gem 'indefinite_article'
 gem 'kaminari', '~> 1.0.1'
 
 # File upload manager & image processor
+# cantidates for paperclip 5.1.0
+# candidates dor paperclip-meta 3.0.0
 gem 'paperclip', '~> 4.3.6'
 gem 'paperclip-meta', '~> 2.0'
 
