@@ -24,11 +24,19 @@ RSpec.describe MatrixColumnItemsController, type: :controller do
   # MatrixColumnItem. As you add validations to MatrixColumnItem, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    strip_housekeeping_attributes(FactoryGirl.build(:valid_matrix_column_item).attributes) 
+    (FactoryGirl.build(:valid_matrix_column_item).attributes)
+  }
+
+  let(:valid_params) {
+    ActionController::Parameters.new(valid_attributes)
   }
 
   let(:invalid_attributes) {
     valid_attributes.merge(matrix_id: nil)
+  }
+
+  let(:invalid_params) {
+    ActionController::Parameters.new({matrix_column_item: invalid_attributes})
   }
 
   # This should return the minimal set of values that should be in the session
@@ -89,12 +97,12 @@ RSpec.describe MatrixColumnItemsController, type: :controller do
 
     context "with invalid params" do
       it "assigns a newly created but unsaved matrix_column_item as @matrix_column_item" do
-        post :create, params: {matrix_column_item: invalid_attributes}, session: valid_session
+        post :create, params: invalid_params, session: valid_session
         expect(assigns(:matrix_column_item).metamorphosize).to be_a_new(MatrixColumnItem)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {matrix_column_item: invalid_attributes}, session: valid_session
+        post :create, params: invalid_params, session: valid_session
         expect(response).to render_template("new")
       end
     end
@@ -108,7 +116,7 @@ RSpec.describe MatrixColumnItemsController, type: :controller do
 
       it "updates the requested matrix_column_item" do
         matrix_column_item = MatrixColumnItem.create! valid_attributes
-        m = FactoryGirl.create(:valid_matrix)
+        m                  = FactoryGirl.create(:valid_matrix)
         put :update, params: {id: matrix_column_item.to_param, matrix_column_item: {matrix_id: m.id}}, session: valid_session
         matrix_column_item.reload
         expect(matrix_column_item.matrix_id).to eq(m.id)
@@ -135,8 +143,10 @@ RSpec.describe MatrixColumnItemsController, type: :controller do
       end
 
       it "re-renders the 'edit' template" do
-        matrix_column_item = MatrixColumnItem.create! valid_attributes
-        put :update, params: {id: matrix_column_item.to_param, matrix_column_item: invalid_attributes}, session: valid_session
+        matrix_column_item = MatrixColumnItem.create!(ActionController::Parameters.new(valid_attributes).permit!)
+        local_params       = ActionController::Parameters.new({id:                 matrix_column_item.id,
+                                                               matrix_column_item: invalid_attributes})
+        put :update, params: local_params, session: valid_session
         expect(response).to render_template("edit")
       end
     end
