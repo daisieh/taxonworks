@@ -17,7 +17,7 @@ gem 'responders', '~> 2.0'
 gem 'pg', '~> 0.18.4'
 
 # Postgis
-gem 'activerecord-postgis-adapter', '~> 4.0', '>= 4.0.2'
+gem 'activerecord-postgis-adapter', '>= 4.0.2'
 
 # rgeo support
 gem 'ffi-geos'
@@ -88,7 +88,7 @@ gem 'paperclip', '~> 4.3.6'
 gem 'paperclip-meta', '~> 2.0'
 
 # Ordering records
-gem 'acts_as_list', '~> 0.8.0'
+gem 'acts_as_list', '~> 0.9.1'
 
 # Versioning
 gem 'paper_trail', '~> 4.0.0.rc'
