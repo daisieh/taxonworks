@@ -20,7 +20,7 @@ require 'rails_helper'
 
 RSpec.describe MatrixColumnsController, type: :controller do
   before(:each) {
-    sign_in 
+    sign_in
   }
 
 
@@ -40,123 +40,125 @@ RSpec.describe MatrixColumnsController, type: :controller do
   # MatrixColumnsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns recent matrix_columns as @recent_objects" do
+  describe 'GET #index' do
+    it 'assigns recent matrix_columns as @recent_objects' do
       matrix_column = MatrixColumn.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(assigns(:recent_objects)).to eq([matrix_column])
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested matrix_column as @matrix_column" do
+  describe 'GET #show' do
+    it 'assigns the requested matrix_column as @matrix_column' do
       matrix_column = MatrixColumn.create! valid_attributes
-      get :show, params: {id: matrix_column.to_param}, session: valid_session
+      get :show, params: {id: matrix_column.id}, session: valid_session
       expect(assigns(:matrix_column)).to eq(matrix_column)
     end
   end
 
-  describe "GET #new" do
-    it "assigns a new matrix_column as @matrix_column" do
+  describe 'GET #new' do
+    it 'assigns a new matrix_column as @matrix_column' do
       get :new, params: {}, session: valid_session
       expect(assigns(:matrix_column)).to be_a_new(MatrixColumn)
     end
   end
 
-  describe "GET #edit" do
-    it "assigns the requested matrix_column as @matrix_column" do
+  describe 'GET #edit' do
+    it 'assigns the requested matrix_column as @matrix_column' do
       matrix_column = MatrixColumn.create! valid_attributes
-      get :edit, params: {id: matrix_column.to_param}, session: valid_session
+      get :edit, params: {id: matrix_column.id}, session: valid_session
       expect(assigns(:matrix_column)).to eq(matrix_column)
     end
   end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new MatrixColumn" do
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new MatrixColumn' do
         expect {
           post :create, params: {matrix_column: valid_attributes}, session: valid_session
         }.to change(MatrixColumn, :count).by(1)
       end
 
-      it "assigns a newly created matrix_column as @matrix_column" do
+      it 'assigns a newly created matrix_column as @matrix_column' do
         post :create, params: {matrix_column: valid_attributes}, session: valid_session
         expect(assigns(:matrix_column)).to be_a(MatrixColumn)
         expect(assigns(:matrix_column)).to be_persisted
       end
 
-      it "redirects to the created matrix_column" do
+      it 'redirects to the created matrix_column' do
         post :create, params: {matrix_column: valid_attributes}, session: valid_session
         expect(response).to redirect_to(MatrixColumn.last)
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved matrix_column as @matrix_column" do
-        post :create, params: {matrix_column: invalid_attributes}, session: valid_session
+    context 'with invalid params' do
+      let(:update_params) { ActionController::Parameters.new({matrix_column: invalid_attributes}) }
+      it 'assigns a newly created but unsaved matrix_column as @matrix_column' do
+        post :create, params: update_params, session: valid_session
         expect(assigns(:matrix_column)).to be_a_new(MatrixColumn)
       end
 
-      it "re-renders the 'new' template" do
-        post :create, params: {matrix_column: invalid_attributes}, session: valid_session
-        expect(response).to render_template("new")
+      it 're-renders the \'new\' template' do
+        post :create, params: update_params, session: valid_session
+        expect(response).to render_template('new')
       end
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
+  describe 'PUT #update' do
+    context 'with valid params' do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        skip('Add a hash of attributes valid for your model')
       }
 
-      it "updates the requested matrix_column" do
+      it 'updates the requested matrix_column' do
         matrix_column = MatrixColumn.create! valid_attributes
         m = Matrix.create!(name: 'foo')
-        put :update, params: {id: matrix_column.to_param, matrix_column: {matrix_id: m.to_param}}, session: valid_session
+        put :update, params: {id: matrix_column.id, matrix_column: {matrix_id: m.id}}, session: valid_session
         matrix_column.reload
-        expect(matrix_column.matrix_id).to eq(m.id) 
+        expect(matrix_column.matrix_id).to eq(m.id)
       end
 
-      it "assigns the requested matrix_column as @matrix_column" do
+      it 'assigns the requested matrix_column as @matrix_column' do
         matrix_column = MatrixColumn.create! valid_attributes
-        put :update, params: {id: matrix_column.to_param, matrix_column: valid_attributes}, session: valid_session
+        put :update, params: {id: matrix_column.id, matrix_column: valid_attributes}, session: valid_session
         expect(assigns(:matrix_column)).to eq(matrix_column)
       end
 
-      it "redirects to the matrix_column" do
+      it 'redirects to the matrix_column' do
         matrix_column = MatrixColumn.create! valid_attributes
-        put :update, params: {id: matrix_column.to_param, matrix_column: valid_attributes}, session: valid_session
+        put :update, params: {id: matrix_column.id, matrix_column: valid_attributes}, session: valid_session
         expect(response).to redirect_to(matrix_column)
       end
     end
 
-    context "with invalid params" do
-      it "assigns the matrix_column as @matrix_column" do
+    context 'with invalid params' do
+      it 'assigns the matrix_column as @matrix_column' do
         matrix_column = MatrixColumn.create! valid_attributes
-        put :update, params: {id: matrix_column.to_param, matrix_column: invalid_attributes}, session: valid_session
+        put :update, params: {id: matrix_column.id, matrix_column: invalid_attributes}, session: valid_session
         expect(assigns(:matrix_column)).to eq(matrix_column)
       end
 
-      it "re-renders the 'edit' template" do
-        matrix_column = MatrixColumn.create! valid_attributes
-        put :update, params: {id: matrix_column.to_param, matrix_column: invalid_attributes}, session: valid_session
-        expect(response).to render_template("edit")
+      it 're-renders the \'edit\' template' do
+        matrix_column = MatrixColumn.create!(ActionController::Parameters.new(valid_attributes).permit!)
+        update_params = ActionController::Parameters.new({id: matrix_column.id, matrix_column: invalid_attributes})
+        put :update, params: update_params, session: valid_session
+        expect(response).to render_template('edit')
       end
     end
   end
 
-  describe "DELETE #destroy" do
-    it "destroys the requested matrix_column" do
+  describe 'DELETE #destroy' do
+    it 'destroys the requested matrix_column' do
       matrix_column = MatrixColumn.create! valid_attributes
       expect {
-        delete :destroy, params: {id: matrix_column.to_param}, session: valid_session
+        delete :destroy, params: {id: matrix_column.id}, session: valid_session
       }.to change(MatrixColumn, :count).by(-1)
     end
 
-    it "redirects to the matrix_columns list" do
+    it 'redirects to the matrix_columns list' do
       matrix_column = MatrixColumn.create! valid_attributes
-      delete :destroy, params: {id: matrix_column.to_param}, session: valid_session
+      delete :destroy, params: {id: matrix_column.id}, session: valid_session
       expect(response).to redirect_to(matrix_columns_url)
     end
   end
