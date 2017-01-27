@@ -18,7 +18,7 @@ class HubController < ApplicationController
   end
 
   def update_tab_order
-    @sessions_current_user.update_attribute(:hub_tab_order, params[:order])
+    sessions_current_user.update_attribute(:hub_tab_order, params[:order])
     render nothing: true
   end
 
@@ -27,15 +27,15 @@ class HubController < ApplicationController
   def handle_bad_tab_order
   # This is preventative only, it should never happen in real data, and may only occur when 
     # we reset tab performance.
-    if @sessions_current_user.hub_tab_order.empty?
-      @sessions_current_user.update_attribute(:hub_tab_order, DEFAULT_HUB_TAB_ORDER)
+    if sessions_current_user.hub_tab_order.empty?
+      sessions_current_user.update_attribute(:hub_tab_order, DEFAULT_HUB_TAB_ORDER)
     end
     true
   end
 
   def set_links_to_render
     @links_to_render = params[:list]
-    @links_to_render ||= @sessions_current_user.hub_tab_order.first
+    @links_to_render ||= sessions_current_user.hub_tab_order.first
   end
 
 end

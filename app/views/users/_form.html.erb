@@ -23,7 +23,7 @@
       <%= f.password_field :password_confirmation %>
     </div>
 
-    <% if is_administrator? -%>
+    <% if @user.is_administrator? -%>
         <div class="field">
           <%= f.label :is_administrator %>
           <br>

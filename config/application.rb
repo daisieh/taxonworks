@@ -7,8 +7,7 @@ require 'rails/all'
 Bundler.require(:default, Rails.env)
 
 module TaxonWorks
-  class
-  Application < Rails::Application
+  class Application < Rails::Application
     # Via https://github.com/matthuhiggins/foreigner/pull/95
     #  config.before_initialize do
     #    Foreigner::Adapter.register 'postgis', 'foreigner/connection_adapters/postgresql_adapter'
