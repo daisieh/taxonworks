@@ -100,8 +100,6 @@ describe 'tasks/gis/collection_objects/filter', type: :feature, group: [:geo, :c
             execute_script("document.getElementById('search_start_date').value = '1971/01/01'")
             execute_script("document.getElementById('search_end_date').value = '1980/12/31'")            
             find('#search_start_date').set '1971/01/01'
-            #find('#search_end_date').set '1980/12/31'
-            #find('#search_start_date').click
             find('#label_toggle_slide_area').click
             execute_script("document.getElementById('drawn_area_shape').type = 'text'")
             this_xpath = find(:xpath, "//input[@id='drawn_area_shape']")

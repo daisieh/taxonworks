@@ -14,7 +14,7 @@ gem 'psych', '~> 2.0.16'
 gem 'responders', '~> 2.0'
 
 # PostgreSQL
-gem 'pg', '~> 0.18.4'
+gem 'pg', '~> 0.19.0'
 
 # Postgis
 gem 'activerecord-postgis-adapter', '>= 4.0.2'
@@ -169,6 +169,6 @@ end
 
 group :production do
   gem 'execjs'
-  gem 'passenger', '~> 5.0.30'
+  gem 'passenger', '~> 5.1.0'
 end
 
