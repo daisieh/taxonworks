@@ -46,8 +46,8 @@ gem 'uglifier', '~> 3.0.02'
 # gem 'coffee-rails', '~> 4.0'
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 4.1.1'
-gem 'jquery-ui-rails', '~> 5.0.5'
+gem 'jquery-rails', '~> 4.2.2'
+gem 'jquery-ui-rails', '~> 6.0.1'
 
 gem 'rails-jquery-autocomplete'
 gem 'best_in_place', '~> 3.1.0'
