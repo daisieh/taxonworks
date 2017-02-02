@@ -498,7 +498,7 @@ DEPENDENCIES
   rgeo-geojson (~> 0.4.3)
   rgeo-shapefile (~> 0.4.1)
   rmagick (~> 2.16)
-  rspec (~> 3.4)
+  rspec (~> 3.5)
   rspec-activemodel-mocks (~> 1.0.2)
   rspec-rails (~> 3.5)
   rubocop (~> 0.46.0)
@@ -526,4 +526,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.7
+   1.14.3
