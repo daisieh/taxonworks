@@ -86,8 +86,8 @@ gem 'kaminari', '~> 1.0.1'
 # File upload manager & image processor
 # cantidates for paperclip 5.1.0
 # candidates dor paperclip-meta 3.0.0
-gem 'paperclip', '~> 4.3.6'
-gem 'paperclip-meta', '~> 2.0'
+gem 'paperclip', '~> 5.1' # 4.3.6'
+gem 'paperclip-meta', '~> 3.0' # 2.0'
 
 # Ordering records
 gem 'acts_as_list', '~> 0.9.1'
@@ -158,7 +158,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec', '~> 3.5'
   gem 'coveralls', '~> 0.8.13', require: false
-  gem 'capybara', '~> 2.10.2'
+  gem 'capybara', '~> 2.12.0'
   gem 'timecop', '~> 0.8.1'
   gem 'webmock', '~> 2.1.0'
   gem 'vcr', '~> 3.0.0'
