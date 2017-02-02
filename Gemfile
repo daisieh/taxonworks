@@ -128,11 +128,9 @@ gem 'redcarpet', '~> 3.3'
 gem 'taxonifi', '0.4.0'
 gem 'sqed', '0.2.4'
 
-
-
 group :test, :development do
   gem 'faker', '~> 1.6.1'
-  gem 'rspec-rails', '~> 3.4'
+  gem 'rspec-rails', '~> 3.5'
   gem 'rspec-activemodel-mocks', '~> 1.0.2'
   gem 'inch', '~> 0.7'
   gem 'byebug', '~> 9.0.5', {}.merge(ENV['RM_INFO'] ? {require: false} : {})
