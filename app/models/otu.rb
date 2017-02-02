@@ -58,6 +58,16 @@ class Otu < ApplicationRecord
   scope :with_taxon_name_id, -> (taxon_name_id) { where(taxon_name_id: taxon_name_id) }
   scope :with_name, -> (name) { where(name: name) }
 
+  # @return scope
+  def self.self_and_descendants_of(otu_id)
+    o = Otu.includes(:taxon_name).find(otu_id)
+    if o && o.taxon_name
+      with_taxon_name_id(Otu.find(otu_id).taxon_name.self_and_descendants)
+    else
+      Otu.where(id: otu_id)
+    end
+  end
+
   validate :check_required_fields
 
   soft_validate(:sv_taxon_name, set: :taxon_name)
@@ -67,10 +77,6 @@ class Otu < ApplicationRecord
 
   #region class methods
 
-  def self.find_for_autocomplete(params)
-    Queries::OtuAutocompleteQuery.new(params[:term]).all.where(project_id: params[:project_id])
-  end
-
   # return [Scope] the otus bound to that taxon name and its descendants
   def self.for_taxon_name(taxon_name)
     if taxon_name.kind_of?(String) || taxon_name.kind_of?(Integer) 
@@ -79,20 +85,6 @@ class Otu < ApplicationRecord
       tn = taxon_name
     end
     Otu.joins(taxon_name: [:ancestor_hierarchies]).where(taxon_name_hierarchies: {ancestor_id: tn.id} )
-  end
-
-  # @return [CSV]
-  # Generate a CSV version of the raw Otus table for the given scope
-  # Ripped from http://railscasts.com/episodes/362-exporting-csv-and-excel
-  def self.generate_download(scope)
-    CSV.generate do |csv|
-      csv << column_names
-      scope.order(id: :asc).find_each do |o|
-        csv << o.attributes.values_at(*column_names).collect { |i|
-          i.to_s.gsub(/\n/, '\n').gsub(/\t/, '\t')
-        }
-      end
-    end
   end
 
   # TODO: This need to be renamed to reflect "simple" association
@@ -131,6 +123,7 @@ class Otu < ApplicationRecord
   # add logic for has_many handling (e.g. identifiers) etc.
   # ultmately, each key maps to a proc that returns a value
   #
+  # deprecated for new approach in CollectionObject, AssertedDistribution
   def dwca_core
     core = Dwca::GbifProfile::CoreTaxon.new
 
@@ -146,10 +139,10 @@ class Otu < ApplicationRecord
   end
 
   def otu_name
-    if !self.name.blank?
-      self.name
+    if !name.blank?
+      name
     elsif !self.taxon_name_id.nil?
-      self.taxon_name.cached_name_and_author_year
+      self.taxon_name.cached_html_name_and_author_year
     else
       nil
     end

@@ -465,8 +465,10 @@ TaxonWorks::Application.routes.draw do
 
     scope :accessions do
       scope :report do
-        scope :dwca, controller: 'tasks/accessions/report/dwca' do
-          get '', action: :index, as: 'report_dwca_task'
+        scope :dwc, controller: 'tasks/accessions/report/dwc' do
+          get '', action: :index, as: 'report_dwc_task'
+          get 'row/:id', action: :row
+          get :download, as: 'download_report_dwc_task'
         end
       end
 
@@ -597,9 +599,6 @@ TaxonWorks::Application.routes.draw do
       post 'add_determination/:id', as: 'loan_add_determination', action: :add_determination
       post 'return_items/:id', as: 'loan_return_items', action: :return_items
       post 'update_status/:id', as: 'loan_update_status', action: :update_status
-
-      get 'act_on_items', as: 'loan_items_action'
-      get 'loan_items_list', as: 'loan_items_list'
     end
 
     scope :nomenclature do
