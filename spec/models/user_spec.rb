@@ -216,7 +216,7 @@ describe User, :type => :model do
       user.save
     }
     let(:otu) { Otu.create(name: 'for footprints testing') }
-    let(:object_route) { "/otus/#{otu.to_param}" }
+    let(:object_route) { "/otus/#{otu.id.to_s}" }
 
     context 'add_recently_visited_to_footprint' do
 

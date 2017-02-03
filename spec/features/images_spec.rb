@@ -41,7 +41,7 @@ describe "Images", :type => :feature do
     #   let(:image) { factory_girl_create_for_user_and_project(:valid_image, @user, @project) }
     #
     #   it 'Returns a downloadable link to the image' do
-    #     visit "/api/v1/images/#{image.to_param}?project_id=#{@project.to_param}&token=#{@user.api_access_token}"
+    #     visit "/api/v1/images/#{image.id.to_s}?project_id=#{@project.id.to_s}&token=#{@user.api_access_token}"
     #     visit JSON.parse(page.body)['result']['url']
     #     expect(page.status_code).to eq(200)
     #   end

@@ -427,7 +427,7 @@ describe GeographicItem, type: :model, group: :geo do
 
       specify '::containing_sql' do
         test1 = 'ST_Contains(polygon::geometry, (select geom_alias_tbl.point::geometry from geographic_items geom_alias_tbl where geom_alias_tbl.id = 2))'
-        expect(GeographicItem.containing_sql('polygon', @p1.to_param, @p1.geo_object_type)).to eq(test1)
+        expect(GeographicItem.containing_sql('polygon', @p1.id.to_s, @p1.geo_object_type)).to eq(test1)
       end
 
       specify '::eval_for_type' do

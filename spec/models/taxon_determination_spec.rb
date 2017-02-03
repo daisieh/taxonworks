@@ -6,11 +6,11 @@ describe TaxonDetermination, type: :model do
   let(:otu) { FactoryGirl.create(:valid_otu) }
   let(:specimen) { Specimen.new()  }
 
-  let(:nested_attributes) { 
+  let(:nested_attributes) {
     {
       "taxon_determinations_attributes" => [ {
-        "otu_id" => otu.to_param, 
-        "otu_attributes" => {
+                                               "otu_id"         => otu.id.to_s,
+                                               "otu_attributes" => {
           "name" => "",
           "taxon_name_id" => ""
         }
@@ -49,19 +49,19 @@ describe TaxonDetermination, type: :model do
     let(:otu1) { FactoryGirl.create(:valid_otu) }
     let(:otu2) { FactoryGirl.create(:valid_otu) }
 
-    before { 
+    before {
       specimen.save!
       specimen.taxon_determinations << TaxonDetermination.new(otu: otu)
     }
 
     specify 'terminations are added to the bottom of the stack' do
-      t = TaxonDetermination.new(otu: otu1) 
+      t = TaxonDetermination.new(otu: otu1)
       specimen.taxon_determinations << t
       expect(specimen.taxon_determinations.last.otu).to eq(otu1)
     end
 
     specify 'move a determination to the preferred slot with #move_to_top' do
-      t = TaxonDetermination.new(otu: otu1) 
+      t = TaxonDetermination.new(otu: otu1)
       specimen.taxon_determinations << t
       specimen.taxon_determinations.last.move_to_top
       expect(specimen.current_taxon_determination.otu).to eq(otu1)

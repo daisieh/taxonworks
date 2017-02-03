@@ -335,7 +335,7 @@ describe Georeference, type: :model, group: :geo do
 
     specify '.within_radius_of(geographic_item_id, distance)' do
       expect(Georeference).to respond_to :within_radius_of_item
-      expect(Georeference.within_radius_of_item(@gr_point.geographic_item.to_param, 112000).to_a).to contain_exactly(@gr_poly, @gr_point)
+      expect(Georeference.within_radius_of_item(@gr_point.geographic_item.id.to_s, 112000).to_a).to contain_exactly(@gr_poly, @gr_point)
       # but specifically *not* @gr1
     end
 

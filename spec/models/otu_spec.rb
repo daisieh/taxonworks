@@ -207,11 +207,11 @@ describe Otu, :type => :model do
   end
 
   context 'scopes' do
-    let!(:t) { FactoryGirl.create(:relationship_species) } 
+    let!(:t) { FactoryGirl.create(:relationship_species) }
     let!(:o) { Otu.create(taxon_name: t) }
 
     specify '.for_taxon_name(taxon_name) handles integers' do
-      expect(Otu.for_taxon_name(t.to_param)).to contain_exactly(o)
+      expect(Otu.for_taxon_name(t.id.to_s)).to contain_exactly(o)
     end
 
     specify '.for_taxon_name(taxon_name) handles taxon name instance' do
@@ -222,8 +222,6 @@ describe Otu, :type => :model do
      expect(Otu.for_taxon_name(t.parent)).to contain_exactly(o)
     end
   end
-
-                    
 
 
   context 'concerns' do

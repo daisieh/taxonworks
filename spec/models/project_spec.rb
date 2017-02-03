@@ -176,7 +176,7 @@ describe Project, type: :model do
 
   context 'destroying (nuking) a project' do
     let(:u) { FactoryGirl.create(:valid_user, email: 'tester@example.com', name: 'Dr. Strangeglove') }
-    let(:p) { Project.create!(name: 'a little bit of everything', created_by_id: u.to_param, updated_by_id: u.to_param) }
+    let(:p) { Project.create!(name: 'a little bit of everything', created_by_id: u.id.to_s, updated_by_id: u.id.to_s) }
 
     after(:all) {
       $user_id    = 1
