@@ -230,23 +230,21 @@ class CollectingEvent < ApplicationRecord
   validates_presence_of :time_end_minute, if: '!self.time_end_second.blank?'
   validates_presence_of :time_end_hour, if: '!self.time_end_minute.blank?'
 
-  validates :start_date_year, date_year: { min_year: 1000, max_year: Time.now.year + 5}
-  validates :end_date_year, date_year: { min_year: 1000, max_year: Time.now.year + 5}
+  validates :start_date_year, date_year: {min_year: 1000, max_year: Time.now.year + 5}
+  validates :end_date_year, date_year: {min_year: 1000, max_year: Time.now.year + 5}
 
   validates :start_date_month, date_month: true
   validates :end_date_month, date_month: true
 
-  validates_presence_of :start_date_month,
-                        if: '!start_date_day.nil?'
+  validates_presence_of :start_date_month, if: '!start_date_day.nil?'
 
-  validates_presence_of :end_date_month,
-                        if: '!end_date_day.nil?'
+  validates_presence_of :end_date_month, if: '!end_date_day.nil?'
 
-  validates :end_date_day, date_day: { year_sym: :end_date_year, month_sym: :end_date_month },
-            unless: 'end_date_year.nil? || end_date_month.nil?'
+  validates :end_date_day, date_day: {year_sym: :end_date_year, month_sym: :end_date_month},
+            unless:                  'end_date_year.nil? || end_date_month.nil?'
 
-  validates :start_date_day, date_day: { year_sym: :start_date_year, month_sym: :start_date_month },
-            unless: 'start_date_year.nil? || start_date_month.nil?'
+  validates :start_date_day, date_day: {year_sym: :start_date_year, month_sym: :start_date_month},
+            unless:                    'start_date_year.nil? || start_date_month.nil?'
 
 
   soft_validate(:sv_minimally_check_for_a_label)
@@ -296,7 +294,7 @@ class CollectingEvent < ApplicationRecord
     # @return [String] sql for records between the two specific dates
     def date_sql_from_dates(search_start_date, search_end_date, allow_partial = true)
       start_year, start_month, start_day = search_start_date.split('/').map(&:to_i)
-      end_year, end_month, end_day = search_end_date.split('/').map(&:to_i)
+      end_year, end_month, end_day       = search_end_date.split('/').map(&:to_i)
 
       t = 'collecting_events'
 
@@ -590,9 +588,9 @@ class CollectingEvent < ApplicationRecord
   #   all geographic_items associated with this collecting_event through georeferences only
   def all_geographic_items
     GeographicItem.
-        joins('LEFT JOIN georeferences g2 ON geographic_items.id = g2.error_geographic_item_id').
-        joins('LEFT JOIN georeferences g1 ON geographic_items.id = g1.geographic_item_id').
-        where(['(g1.collecting_event_id = ? OR g2.collecting_event_id = ?) AND (g1.geographic_item_id IS NOT NULL OR g2.error_geographic_item_id IS NOT NULL)', self.id, self.id])
+      joins('LEFT JOIN georeferences g2 ON geographic_items.id = g2.error_geographic_item_id').
+      joins('LEFT JOIN georeferences g1 ON geographic_items.id = g1.geographic_item_id').
+      where(['(g1.collecting_event_id = ? OR g2.collecting_event_id = ?) AND (g1.geographic_item_id IS NOT NULL OR g2.error_geographic_item_id IS NOT NULL)', self.id, self.id])
   end
 
   # @return [GeographicItem, nil]
@@ -614,8 +612,8 @@ class CollectingEvent < ApplicationRecord
     return CollectingEvent.where(id: -1) if !preferred_georeference
     geographic_item_id = preferred_georeference.geographic_item_id
     CollectingEvent.not_self(self)
-        .joins(:geographic_items)
-        .where(GeographicItem.within_radius_of_item_sql(geographic_item_id, distance))
+      .joins(:geographic_items)
+      .where(GeographicItem.within_radius_of_item_sql(geographic_item_id, distance))
   end
 
   # @return [Scope]
@@ -666,8 +664,8 @@ class CollectingEvent < ApplicationRecord
     return CollectingEvent.none if compared_string.nil?
     order_str = CollectingEvent.send(:sanitize_sql_for_conditions, ["levenshtein(collecting_events.#{column}, ?)", compared_string])
     CollectingEvent.where('id <> ?', self.to_param).
-        order(order_str).
-        limit(limit)
+      order(order_str).
+      limit(limit)
   end
 
   # @param [String]
@@ -914,11 +912,11 @@ class CollectingEvent < ApplicationRecord
   #   parameters from collecting event that are of use to geolocate
   def geolocate_attributes
     parameters = {
-        'country'   => country_name,
-        'state'     => state_or_province_name,
-        'county'    => county_or_equivalent_name,
-        'locality'  => verbatim_locality,
-        'Placename' => verbatim_locality,
+      'country'   => country_name,
+      'state'     => state_or_province_name,
+      'county'    => county_or_equivalent_name,
+      'locality'  => verbatim_locality,
+      'Placename' => verbatim_locality,
     }
 
     focus = case lat_long_source
@@ -931,8 +929,8 @@ class CollectingEvent < ApplicationRecord
             end
 
     parameters.merge!(
-        'Longitude' => focus.point.x,
-        'Latitude'  => focus.point.y
+      'Longitude' => focus.point.x,
+      'Latitude'  => focus.point.y
     ) unless focus.nil?
     parameters
   end
@@ -962,12 +960,12 @@ class CollectingEvent < ApplicationRecord
     # !! avoid loading the whole geographic item, just grab the bits we need:
     # self.georeferences(true)  # do this to
     to_simple_json_feature.merge({
-                                     'properties' => {
-                                         'collecting_event' => {
-                                             'id'  => self.id,
-                                             'tag' => "Collecting event #{self.id}."
-                                         }
+                                   'properties' => {
+                                     'collecting_event' => {
+                                       'id'  => self.id,
+                                       'tag' => "Collecting event #{self.id}."
                                      }
+                                   }
                                  })
   end
 
@@ -975,8 +973,8 @@ class CollectingEvent < ApplicationRecord
   #   i.e. geographic_areas_geogrpahic_items.where( gaz = 'some string')
   def to_simple_json_feature
     base = {
-        'type'       => 'Feature',
-        'properties' => {}
+      'type'       => 'Feature',
+      'properties' => {}
     }
 
     if geographic_items.any?
@@ -995,10 +993,10 @@ class CollectingEvent < ApplicationRecord
   #   5.  id
   def next_without_georeference
     CollectingEvent.excluding(self).
-        includes(:georeferences).
-        where(project_id: self.project_id, georeferences: {collecting_event_id: nil}).
-        order(:verbatim_locality, :geographic_area_id, :start_date_year, :updated_at, :id).
-        first
+      includes(:georeferences).
+      where(project_id: self.project_id, georeferences: {collecting_event_id: nil}).
+      order(:verbatim_locality, :geographic_area_id, :start_date_year, :updated_at, :id).
+      first
   end
 
   # @param [Float] delta_z, will be used to fill in the z coordinate of the point
