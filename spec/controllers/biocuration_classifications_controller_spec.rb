@@ -86,18 +86,18 @@ describe BiocurationClassificationsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(BiocurationClassification).to receive(:update).with(update_params)
-        put :update, params: {:id => biocuration_classification.to_param, :biocuration_classification => {'biocuration_class_id' => 'true'}}, session: valid_session
+        put :update, params: {:id => biocuration_classification.id.to_s, :biocuration_classification => {'biocuration_class_id' => 'true'}}, session: valid_session
       end
 
       it 'assigns the requested biocuration_classification as @biocuration_classification' do
         biocuration_classification = BiocurationClassification.create! valid_attributes
-        put :update, params: {:id => biocuration_classification.to_param, :biocuration_classification => valid_attributes}, session: valid_session
+        put :update, params: {:id => biocuration_classification.id.to_s, :biocuration_classification => valid_attributes}, session: valid_session
         expect(assigns(:biocuration_classification)).to eq(biocuration_classification)
       end
 
       it 'redirects to :back' do
         biocuration_classification = BiocurationClassification.create! valid_attributes
-        put :update, params: {:id => biocuration_classification.to_param, :biocuration_classification => valid_attributes}, session: valid_session
+        put :update, params: {:id => biocuration_classification.id.to_s, :biocuration_classification => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -107,7 +107,7 @@ describe BiocurationClassificationsController, :type => :controller do
         biocuration_classification = BiocurationClassification.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(BiocurationClassification).to receive(:save).and_return(false)
-        put :update, params: {:id => biocuration_classification.to_param, :biocuration_classification => { "biocuration_class_id" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => biocuration_classification.id.to_s, :biocuration_classification => {"biocuration_class_id" => "invalid value"}}, session: valid_session
         expect(assigns(:biocuration_classification)).to eq(biocuration_classification)
       end
 
@@ -115,7 +115,7 @@ describe BiocurationClassificationsController, :type => :controller do
         biocuration_classification = BiocurationClassification.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(BiocurationClassification).to receive(:save).and_return(false)
-        put :update, params: {:id => biocuration_classification.to_param, :biocuration_classification => { "biocuration_class_id" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => biocuration_classification.id.to_s, :biocuration_classification => {"biocuration_class_id" => "invalid value"}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -125,13 +125,13 @@ describe BiocurationClassificationsController, :type => :controller do
     it "destroys the requested biocuration_classification" do
       biocuration_classification = BiocurationClassification.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => biocuration_classification.to_param}, session: valid_session
+        delete :destroy, params: {:id => biocuration_classification.id.to_s}, session: valid_session
       }.to change(BiocurationClassification, :count).by(-1)
     end
 
     it "redirects to :back" do
       biocuration_classification = BiocurationClassification.create! valid_attributes
-      delete :destroy, params: {:id => biocuration_classification.to_param}, session: valid_session
+      delete :destroy, params: {:id => biocuration_classification.id.to_s}, session: valid_session
       expect(response).to redirect_to(list_otus_path)
     end
   end

@@ -50,7 +50,7 @@ RSpec.describe GeneAttributesController, type: :controller do
   describe "GET #show" do
     it "assigns the requested gene_attribute as @gene_attribute" do
       gene_attribute = GeneAttribute.create! valid_attributes
-      get :show, params: {id: gene_attribute.to_param}, session: valid_session
+      get :show, params: {id: gene_attribute.id.to_s}, session: valid_session
       expect(assigns(:gene_attribute)).to eq(gene_attribute)
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe GeneAttributesController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested gene_attribute as @gene_attribute" do
       gene_attribute = GeneAttribute.create! valid_attributes
-      get :edit, params: {id: gene_attribute.to_param}, session: valid_session
+      get :edit, params: {id: gene_attribute.id.to_s}, session: valid_session
       expect(assigns(:gene_attribute)).to eq(gene_attribute)
     end
   end
@@ -111,20 +111,20 @@ RSpec.describe GeneAttributesController, type: :controller do
 
       it "updates the requested gene_attribute" do
         gene_attribute = GeneAttribute.create! valid_attributes
-        put :update, params: {id: gene_attribute.to_param, gene_attribute: new_attributes}, session: valid_session
+        put :update, params: {id: gene_attribute.id.to_s, gene_attribute: new_attributes}, session: valid_session
         gene_attribute.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested gene_attribute as @gene_attribute" do
         gene_attribute = GeneAttribute.create! valid_attributes
-        put :update, params: {id: gene_attribute.to_param, gene_attribute: valid_attributes}, session: valid_session
+        put :update, params: {id: gene_attribute.id.to_s, gene_attribute: valid_attributes}, session: valid_session
         expect(assigns(:gene_attribute)).to eq(gene_attribute)
       end
 
       it "redirects to the gene_attribute" do
         gene_attribute = GeneAttribute.create! valid_attributes
-        put :update, params: {id: gene_attribute.to_param, gene_attribute: valid_attributes}, session: valid_session
+        put :update, params: {id: gene_attribute.id.to_s, gene_attribute: valid_attributes}, session: valid_session
         expect(response).to redirect_to(gene_attribute)
       end
     end
@@ -132,13 +132,13 @@ RSpec.describe GeneAttributesController, type: :controller do
     context "with invalid params" do
       it "assigns the gene_attribute as @gene_attribute" do
         gene_attribute = GeneAttribute.create! valid_attributes
-        put :update, params: {id: gene_attribute.to_param, gene_attribute: invalid_attributes}, session: valid_session
+        put :update, params: {id: gene_attribute.id.to_s, gene_attribute: invalid_attributes}, session: valid_session
         expect(assigns(:gene_attribute)).to eq(gene_attribute)
       end
 
       it "re-renders the 'edit' template" do
         gene_attribute = GeneAttribute.create! valid_attributes
-        put :update, params: {id: gene_attribute.to_param, gene_attribute: invalid_attributes}, session: valid_session
+        put :update, params: {id: gene_attribute.id.to_s, gene_attribute: invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -148,13 +148,13 @@ RSpec.describe GeneAttributesController, type: :controller do
     it "destroys the requested gene_attribute" do
       gene_attribute = GeneAttribute.create! valid_attributes
       expect {
-        delete :destroy, params: {id: gene_attribute.to_param}, session: valid_session
+        delete :destroy, params: {id: gene_attribute.id.to_s}, session: valid_session
       }.to change(GeneAttribute, :count).by(-1)
     end
 
     it "redirects to the gene_attributes list" do
       gene_attribute = GeneAttribute.create! valid_attributes
-      delete :destroy, params: {id: gene_attribute.to_param}, session: valid_session
+      delete :destroy, params: {id: gene_attribute.id.to_s}, session: valid_session
       expect(response).to redirect_to(gene_attributes_url)
     end
   end

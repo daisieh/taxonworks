@@ -44,7 +44,7 @@ describe ProjectsController, :type => :controller do
   describe "GET show" do
     it "assigns the requested project as @project" do
       project = Project.create! valid_attributes
-      get :show, params: {:id => project.to_param}, session: valid_session
+      get :show, params: {:id => project.id.to_s}, session: valid_session
       expect(assigns(:project)).to eq(project)
     end
   end
@@ -59,7 +59,7 @@ describe ProjectsController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested project as @project" do
       project = Project.create! valid_attributes
-      get :edit, params: {:id => project.to_param}, session: valid_session
+      get :edit, params: {:id => project.id.to_s}, session: valid_session
       expect(assigns(:project)).to eq(project)
     end
   end
@@ -113,18 +113,18 @@ describe ProjectsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(Project).to receive(:update).with(update_params)
-        put :update, params: {:id => project.to_param, :project => {'name' => 'MyString'}}, session: valid_session
+        put :update, params: {:id => project.id.to_s, :project => {'name' => 'MyString'}}, session: valid_session
       end
 
       it 'assigns the requested project as @project' do
         project = Project.create! valid_attributes
-        put :update, params: {:id => project.to_param, :project => valid_attributes}, session: valid_session
+        put :update, params: {:id => project.id.to_s, :project => valid_attributes}, session: valid_session
         expect(assigns(:project)).to eq(project)
       end
 
       it 'redirects to the project' do
         project = Project.create! valid_attributes
-        put :update, params: {:id => project.to_param, :project => valid_attributes}, session: valid_session
+        put :update, params: {:id => project.id.to_s, :project => valid_attributes}, session: valid_session
         expect(response).to redirect_to(project)
       end
     end
@@ -134,7 +134,7 @@ describe ProjectsController, :type => :controller do
         project = Project.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Project).to receive(:save).and_return(false)
-        put :update, params: {:id => project.to_param, :project => {"name" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => project.id.to_s, :project => {"name" => "invalid value"}}, session: valid_session
         expect(assigns(:project)).to eq(project)
       end
 
@@ -142,23 +142,23 @@ describe ProjectsController, :type => :controller do
         project = Project.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Project).to receive(:save).and_return(false)
-        put :update, params: {:id => project.to_param, :project => {"name" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => project.id.to_s, :project => {"name" => "invalid value"}}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
- #  it "destroys the requested project" do
- #    project = Project.create! valid_attributes
- #    expect {
- #      delete :destroy, {:id => project.to_param}, valid_session
- #    }.to change(Project, :count).by(-1)
- #  end
+    #  it "destroys the requested project" do
+    #    project = Project.create! valid_attributes
+    #    expect {
+    #      delete :destroy, {:id => project.id.to_s}, valid_session
+    #    }.to change(Project, :count).by(-1)
+    #  end
 
     it "redirects to the projects list" do
       project = Project.create! valid_attributes
-      delete :destroy, params: {:id => project.to_param}, session: valid_session
+      delete :destroy, params: {:id => project.id.to_s}, session: valid_session
       expect(response).to redirect_to(projects_url)
     end
   end

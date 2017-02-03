@@ -30,7 +30,7 @@ RSpec.describe CollectionObjectObservationsController, type: :controller do
   }
 
   let(:invalid_attributes) {
-    {data: nil} 
+    {data: nil}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -49,7 +49,7 @@ RSpec.describe CollectionObjectObservationsController, type: :controller do
   describe "GET #show" do
     it "assigns the requested collection_object_observation as @collection_object_observation" do
       collection_object_observation = CollectionObjectObservation.create! valid_attributes
-      get :show, params: {:id => collection_object_observation.to_param}, session: valid_session
+      get :show, params: {:id => collection_object_observation.id.to_s}, session: valid_session
       expect(assigns(:collection_object_observation)).to eq(collection_object_observation)
     end
   end
@@ -64,7 +64,7 @@ RSpec.describe CollectionObjectObservationsController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested collection_object_observation as @collection_object_observation" do
       collection_object_observation = CollectionObjectObservation.create! valid_attributes
-      get :edit, params: {:id => collection_object_observation.to_param}, session: valid_session
+      get :edit, params: {:id => collection_object_observation.id.to_s}, session: valid_session
       expect(assigns(:collection_object_observation)).to eq(collection_object_observation)
     end
   end
@@ -111,20 +111,20 @@ RSpec.describe CollectionObjectObservationsController, type: :controller do
 
       it "updates the requested collection_object_observation" do
         collection_object_observation = CollectionObjectObservation.create! valid_attributes
-        put :update, params: {:id => collection_object_observation.to_param, :collection_object_observation => new_attributes}, session: valid_session
+        put :update, params: {:id => collection_object_observation.id.to_s, :collection_object_observation => new_attributes}, session: valid_session
         collection_object_observation.reload
         expect(collection_object_observation.data).to eq(data)
       end
 
       it "assigns the requested collection_object_observation as @collection_object_observation" do
         collection_object_observation = CollectionObjectObservation.create! valid_attributes
-        put :update, params: {:id => collection_object_observation.to_param, :collection_object_observation => valid_attributes}, session: valid_session
+        put :update, params: {:id => collection_object_observation.id.to_s, :collection_object_observation => valid_attributes}, session: valid_session
         expect(assigns(:collection_object_observation)).to eq(collection_object_observation)
       end
 
       it "redirects to the collection_object_observation" do
         collection_object_observation = CollectionObjectObservation.create! valid_attributes
-        put :update, params: {:id => collection_object_observation.to_param, :collection_object_observation => valid_attributes}, session: valid_session
+        put :update, params: {:id => collection_object_observation.id.to_s, :collection_object_observation => valid_attributes}, session: valid_session
         expect(response).to redirect_to(collection_object_observation)
       end
     end
@@ -132,13 +132,13 @@ RSpec.describe CollectionObjectObservationsController, type: :controller do
     context "with invalid params" do
       it "assigns the collection_object_observation as @collection_object_observation" do
         collection_object_observation = CollectionObjectObservation.create! valid_attributes
-        put :update, params: {:id => collection_object_observation.to_param, :collection_object_observation => invalid_attributes}, session: valid_session
+        put :update, params: {:id => collection_object_observation.id.to_s, :collection_object_observation => invalid_attributes}, session: valid_session
         expect(assigns(:collection_object_observation)).to eq(collection_object_observation)
       end
 
       it "re-renders the 'edit' template" do
         collection_object_observation = CollectionObjectObservation.create! valid_attributes
-        put :update, params: {:id => collection_object_observation.to_param, :collection_object_observation => invalid_attributes}, session: valid_session
+        put :update, params: {:id => collection_object_observation.id.to_s, :collection_object_observation => invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -148,13 +148,13 @@ RSpec.describe CollectionObjectObservationsController, type: :controller do
     it "destroys the requested collection_object_observation" do
       collection_object_observation = CollectionObjectObservation.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => collection_object_observation.to_param}, session: valid_session
+        delete :destroy, params: {:id => collection_object_observation.id.to_s}, session: valid_session
       }.to change(CollectionObjectObservation, :count).by(-1)
     end
 
     it "redirects to the collection_object_observations list" do
       collection_object_observation = CollectionObjectObservation.create! valid_attributes
-      delete :destroy, params: {:id => collection_object_observation.to_param}, session: valid_session
+      delete :destroy, params: {:id => collection_object_observation.id.to_s}, session: valid_session
       expect(response).to redirect_to(collection_object_observations_url)
     end
   end

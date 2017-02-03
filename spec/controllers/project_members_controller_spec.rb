@@ -20,7 +20,7 @@ require 'rails_helper'
 
 RSpec.describe ProjectMembersController, :type => :controller do
   before {
-    sign_in_administrator 
+    sign_in_administrator
     @unplaced_user = FactoryGirl.create(:valid_user)
   }
 
@@ -46,7 +46,7 @@ RSpec.describe ProjectMembersController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested project_member as @project_member" do
       project_member = ProjectMember.create! valid_attributes
-      get :edit, params: {:id => project_member.to_param}, session: valid_session
+      get :edit, params: {:id => project_member.id.to_s}, session: valid_session
       expect(assigns(:project_member)).to eq(project_member)
     end
   end
@@ -105,10 +105,10 @@ RSpec.describe ProjectMembersController, :type => :controller do
     describe "with invalid params (invalid user_id)" do
       it "assigns a stubbed project_member as @project_member" do
         post :create_many, params: {:project_member => invalid_attributes.merge(project_id: 1, user_ids: [12312, 123321])}, session: valid_session
-        expect(response).to redirect_to( many_new_project_members_path) 
+        expect(response).to redirect_to(many_new_project_members_path)
       end
     end
-  end 
+  end
 
   describe "PUT update" do
     describe "with valid params" do
@@ -118,20 +118,20 @@ RSpec.describe ProjectMembersController, :type => :controller do
 
       it "updates the requested project_member" do
         project_member = ProjectMember.create! valid_attributes
-        put :update, params: {id: project_member.to_param, project_member: new_attributes }, session: valid_session
+        put :update, params: {id: project_member.id.to_s, project_member: new_attributes}, session: valid_session
         project_member.reload
         expect(assigns(:project_member)).to eq(project_member)
       end
 
       it "assigns the requested project_member as @project_member" do
         project_member = ProjectMember.create! valid_attributes
-        put :update, params: {:id => project_member.to_param, :project_member => valid_attributes}, session: valid_session
+        put :update, params: {:id => project_member.id.to_s, :project_member => valid_attributes}, session: valid_session
         expect(assigns(:project_member)).to eq(project_member)
       end
 
       it "redirects to the project_member" do
         project_member = ProjectMember.create! valid_attributes
-        put :update, params: {:id => project_member.to_param, :project_member => valid_attributes}, session: valid_session
+        put :update, params: {:id => project_member.id.to_s, :project_member => valid_attributes}, session: valid_session
         expect(response).to redirect_to(project_path(1))
       end
     end
@@ -139,13 +139,13 @@ RSpec.describe ProjectMembersController, :type => :controller do
     describe "with invalid params" do
       it "assigns the project_member as @project_member" do
         project_member = ProjectMember.create! valid_attributes
-        put :update, params: {:id => project_member.to_param, :project_member => invalid_attributes}, session: valid_session
+        put :update, params: {:id => project_member.id.to_s, :project_member => invalid_attributes}, session: valid_session
         expect(assigns(:project_member)).to eq(project_member)
       end
 
       it "re-renders the 'edit' template" do
         project_member = ProjectMember.create! valid_attributes
-        put :update, params: {:id => project_member.to_param, :project_member => invalid_attributes}, session: valid_session
+        put :update, params: {:id => project_member.id.to_s, :project_member => invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -155,13 +155,13 @@ RSpec.describe ProjectMembersController, :type => :controller do
     it "destroys the requested project_member" do
       project_member = ProjectMember.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => project_member.to_param}, session: valid_session
+        delete :destroy, params: {:id => project_member.id.to_s}, session: valid_session
       }.to change(ProjectMember, :count).by(-1)
     end
 
     it "redirects to the related project page" do
       project_member = ProjectMember.create! valid_attributes
-      delete :destroy, params: {:id => project_member.to_param}, session: valid_session
+      delete :destroy, params: {:id => project_member.id.to_s}, session: valid_session
       expect(response).to redirect_to(project_path(1))
     end
   end

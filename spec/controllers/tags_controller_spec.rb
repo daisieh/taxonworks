@@ -29,7 +29,7 @@ describe TagsController, :type => :controller do
   let(:o) { FactoryGirl.create(:valid_otu) }
   let(:k) { FactoryGirl.create(:valid_keyword) }
   let(:valid_attributes) {
-    {tag_object_id: o.id, tag_object_type: o.class.to_s, keyword_id: k.to_param} }
+    {tag_object_id: o.id, tag_object_type: o.class.to_s, keyword_id: k.id.to_s} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -47,7 +47,7 @@ describe TagsController, :type => :controller do
   # describe "GET show" do
   #   it "assigns the requested tag as @tag" do
   #     tag = Tag.create! valid_attributes
-  #     get :show, {:id => tag.to_param}, valid_session
+  #     get :show, {:id => tag.id.to_s}, valid_session
   #     expect(assigns(:tag)).to eq(tag)
   #   end
   # end
@@ -62,7 +62,7 @@ describe TagsController, :type => :controller do
   # describe "GET edit" do
   #   it "assigns the requested tag as @tag" do
   #     tag = Tag.create! valid_attributes
-  #     get :edit, {:id => tag.to_param}, valid_session
+  #     get :edit, {:id => tag.id.to_s}, valid_session
   #     expect(assigns(:tag)).to eq(tag)
   #   end
   # end
@@ -143,18 +143,18 @@ describe TagsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(Tag).to receive(:update).with(update_params)
-        put :update, params: {:id => tag.to_param, :tag => {'keyword_id' => '1'}}, session: valid_session
+        put :update, params: {:id => tag.id.to_s, :tag => {'keyword_id' => '1'}}, session: valid_session
       end
 
       it 'assigns the requested tag as @tag' do
         tag = Tag.create! valid_attributes
-        put :update, params: {:id => tag.to_param, :tag => valid_attributes}, session: valid_session
+        put :update, params: {:id => tag.id.to_s, :tag => valid_attributes}, session: valid_session
         expect(assigns(:tag)).to eq(tag)
       end
 
       it 'redirects to :back' do
         tag = Tag.create! valid_attributes
-        put :update, params: {:id => tag.to_param, :tag => valid_attributes}, session: valid_session
+        put :update, params: {:id => tag.id.to_s, :tag => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
       end
     end
@@ -164,7 +164,7 @@ describe TagsController, :type => :controller do
         tag = Tag.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Tag).to receive(:save).and_return(false)
-        put :update, params: {:id => tag.to_param, :tag => {"keyword_id" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => tag.id.to_s, :tag => {"keyword_id" => "invalid value"}}, session: valid_session
         expect(assigns(:tag)).to eq(tag)
       end
 
@@ -172,7 +172,7 @@ describe TagsController, :type => :controller do
         tag = Tag.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Tag).to receive(:save).and_return(false)
-        put :update, params: {:id => tag.to_param, :tag => {"keyword_id" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => tag.id.to_s, :tag => {"keyword_id" => "invalid value"}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -187,13 +187,13 @@ describe TagsController, :type => :controller do
 
     it "destroys the requested tag" do
       expect {
-        delete :destroy, params: {:id => @tag.to_param}, session: valid_session
+        delete :destroy, params: {:id => @tag.id.to_s}, session: valid_session
       }.to change(Tag, :count).by(-1)
     end
 
     it "redirects to :back" do
       #   it "redirects to the tags list if arriving from tag_path" do
-      delete :destroy, params: {:id => @tag.to_param}, session: valid_session
+      delete :destroy, params: {:id => @tag.id.to_s}, session: valid_session
       expect(response).to redirect_to(list_otus_path)
       # end
     end
@@ -203,7 +203,7 @@ describe TagsController, :type => :controller do
     #     p = hub_path
     #     request.env["HTTP_REFERER"] = p
     #     tag = Tag.create! valid_attributes
-    #     delete :destroy, {:id => tag.to_param}, valid_session
+    #     delete :destroy, {:id => tag.id.to_s}, valid_session
     #     expect(response).to redirect_to(p)
     #   end
     # end

@@ -51,7 +51,7 @@ RSpec.describe SequenceRelationshipsController, type: :controller do
   describe "GET #show" do
     it "assigns the requested sequence_relationship as @sequence_relationship" do
       sequence_relationship = SequenceRelationship.create! valid_attributes
-      get :show, params: {id: sequence_relationship.to_param}, session: valid_session
+      get :show, params: {id: sequence_relationship.id.to_s}, session: valid_session
       expect(assigns(:sequence_relationship)).to eq(sequence_relationship)
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe SequenceRelationshipsController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested sequence_relationship as @sequence_relationship" do
       sequence_relationship = SequenceRelationship.create! valid_attributes
-      get :edit, params: {id: sequence_relationship.to_param}, session: valid_session
+      get :edit, params: {id: sequence_relationship.id.to_s}, session: valid_session
       expect(assigns(:sequence_relationship)).to eq(sequence_relationship)
     end
   end
@@ -107,14 +107,14 @@ RSpec.describe SequenceRelationshipsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        {subject_sequence_id: FactoryGirl.create(:valid_sequence).id, 
-        object_sequence_id: FactoryGirl.create(:valid_sequence).id,
-        type: SequenceRelationship::ReversePrimer}
+        {subject_sequence_id: FactoryGirl.create(:valid_sequence).id,
+         object_sequence_id:  FactoryGirl.create(:valid_sequence).id,
+         type:                SequenceRelationship::ReversePrimer}
       }
 
       it "updates the requested sequence_relationship" do
         sequence_relationship = SequenceRelationship.create! valid_attributes
-        put :update, params: {id: sequence_relationship.to_param, sequence_relationship: new_attributes}, session: valid_session
+        put :update, params: {id: sequence_relationship.id.to_s, sequence_relationship: new_attributes}, session: valid_session
         sequence_relationship.reload
 
         expect(sequence_relationship.subject_sequence_id == new_attributes[:subject_sequence_id] && sequence_relationship.object_sequence_id == new_attributes[:object_sequence_id])
@@ -122,13 +122,13 @@ RSpec.describe SequenceRelationshipsController, type: :controller do
 
       it "assigns the requested sequence_relationship as @sequence_relationship" do
         sequence_relationship = SequenceRelationship.create! valid_attributes
-        put :update, params: {id: sequence_relationship.to_param, sequence_relationship: valid_attributes}, session: valid_session
+        put :update, params: {id: sequence_relationship.id.to_s, sequence_relationship: valid_attributes}, session: valid_session
         expect(assigns(:sequence_relationship)).to eq(sequence_relationship)
       end
 
       it "redirects to the sequence_relationship" do
         sequence_relationship = SequenceRelationship.create! valid_attributes
-        put :update, params: {id: sequence_relationship.to_param, sequence_relationship: valid_attributes}, session: valid_session
+        put :update, params: {id: sequence_relationship.id.to_s, sequence_relationship: valid_attributes}, session: valid_session
         expect(response).to redirect_to(sequence_relationship.metamorphosize)
       end
     end
@@ -136,13 +136,13 @@ RSpec.describe SequenceRelationshipsController, type: :controller do
     context "with invalid params" do
       it "assigns the sequence_relationship as @sequence_relationship" do
         sequence_relationship = SequenceRelationship.create! valid_attributes
-        put :update, params: {id: sequence_relationship.to_param, sequence_relationship: invalid_attributes}, session: valid_session
+        put :update, params: {id: sequence_relationship.id.to_s, sequence_relationship: invalid_attributes}, session: valid_session
         expect(assigns(:sequence_relationship)).to eq(sequence_relationship)
       end
 
       it "re-renders the 'edit' template" do
         sequence_relationship = SequenceRelationship.create! valid_attributes
-        put :update, params: {id: sequence_relationship.to_param, sequence_relationship: invalid_attributes}, session: valid_session
+        put :update, params: {id: sequence_relationship.id.to_s, sequence_relationship: invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -152,13 +152,13 @@ RSpec.describe SequenceRelationshipsController, type: :controller do
     it "destroys the requested sequence_relationship" do
       sequence_relationship = SequenceRelationship.create! valid_attributes
       expect {
-        delete :destroy, params: {id: sequence_relationship.to_param}, session: valid_session
+        delete :destroy, params: {id: sequence_relationship.id.to_s}, session: valid_session
       }.to change(SequenceRelationship, :count).by(-1)
     end
 
     it "redirects to the sequence_relationships list" do
       sequence_relationship = SequenceRelationship.create! valid_attributes
-      delete :destroy, params: {id: sequence_relationship.to_param}, session: valid_session
+      delete :destroy, params: {id: sequence_relationship.id.to_s}, session: valid_session
       expect(response).to redirect_to(sequence_relationships_url)
     end
   end

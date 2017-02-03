@@ -65,7 +65,7 @@ describe ImagesController, :type => :controller do
     let (:image) { Image.create! valid_attributes }
 
     it "assigns the requested image as @image" do
-      get :show, params: {:id => image.to_param}, session: valid_session
+      get :show, params: {:id => image.id.to_s}, session: valid_session
       expect(assigns(:image)).to eq(image)
     end
 
@@ -73,7 +73,7 @@ describe ImagesController, :type => :controller do
       render_views
 
       context "valid image" do
-        before { get :show, params: { :id => image.to_param, :format => :json }, session: valid_session }
+        before { get :show, params: {:id => image.id.to_s, :format => :json}, session: valid_session }
         let (:data) { JSON.parse(response.body) }
 
         it "returns a successful JSON response" do
@@ -195,7 +195,7 @@ describe ImagesController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested image as @image" do
       image = Image.create! valid_attributes
-      get :edit, params: {:id => image.to_param}, session: valid_session
+      get :edit, params: {:id => image.id.to_s}, session: valid_session
       expect(assigns(:image)).to eq(image)
     end
   end
@@ -241,20 +241,20 @@ describe ImagesController, :type => :controller do
 
       it "updates the requested image" do
         image = Image.create! valid_attributes
-        put :update, params: {:id => image.to_param, image: {:image_file => fixture_file_upload((Rails.root + 'spec/files/images/Samsung_Phone.jpg'), 'image/jpg')}}, session: valid_session
+        put :update, params: {:id => image.id.to_s, image: {:image_file => fixture_file_upload((Rails.root + 'spec/files/images/Samsung_Phone.jpg'), 'image/jpg')}}, session: valid_session
         image.reload
         expect(image.user_file_name).to eq('Samsung_Phone.jpg')
       end
 
       it "assigns the requested image as @image" do
         image = Image.create! valid_attributes
-        put :update, params: {:id => image.to_param, :image => valid_attributes}, session: valid_session
+        put :update, params: {:id => image.id.to_s, :image => valid_attributes}, session: valid_session
         expect(assigns(:image)).to eq(image)
       end
 
       it "redirects to the image" do
         image = Image.create! valid_attributes
-        put :update, params: {:id => image.to_param, :image => valid_attributes}, session: valid_session
+        put :update, params: {:id => image.id.to_s, :image => valid_attributes}, session: valid_session
         expect(response).to redirect_to(image)
       end
     end
@@ -263,14 +263,14 @@ describe ImagesController, :type => :controller do
       it "assigns the image as @image" do
         image = Image.create! valid_attributes
         allow_any_instance_of(Image).to receive(:save).and_return(false)
-        put :update, params: {:id => image.to_param, :image => invalid_attributes}, session: valid_session
+        put :update, params: {:id => image.id.to_s, :image => invalid_attributes}, session: valid_session
         expect(assigns(:image)).to eq(image)
       end
 
       it "re-renders the 'edit' template" do
         image = Image.create! valid_attributes
         allow_any_instance_of(Image).to receive(:save).and_return(false)
-        put :update, params: {:id => image.to_param, :image => invalid_attributes}, session: valid_session
+        put :update, params: {:id => image.id.to_s, :image => invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -280,13 +280,13 @@ describe ImagesController, :type => :controller do
     it "destroys the requested image" do
       image = Image.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => image.to_param}, session: valid_session
+        delete :destroy, params: {:id => image.id.to_s}, session: valid_session
       }.to change(Image, :count).by(-1)
     end
 
     it "redirects to the images list" do
       image = Image.create! valid_attributes
-      delete :destroy, params: {:id => image.to_param}, session: valid_session
+      delete :destroy, params: {:id => image.id.to_s}, session: valid_session
       expect(response).to redirect_to(images_url)
     end
   end

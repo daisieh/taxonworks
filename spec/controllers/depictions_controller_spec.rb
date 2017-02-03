@@ -23,13 +23,13 @@ RSpec.describe DepictionsController, type: :controller do
   before(:each) {
     sign_in
   }
-  
+
   let(:specimen) { FactoryGirl.create(:valid_specimen) }
 
   # This should return the minimal set of attributes required to create a valid
   # Depiction. As you add validations to Depiction, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { 
+  let(:valid_attributes) {
     {
       depiction_object_type: 'CollectionObject',
       depiction_object_id: specimen.id,
@@ -37,7 +37,7 @@ RSpec.describe DepictionsController, type: :controller do
     }
   }
 
-  let(:invalid_attributes) { 
+  let(:invalid_attributes) {
     {
       depiction_object_type: 'CollectionObject',
       depiction_object_id: nil,
@@ -61,7 +61,7 @@ RSpec.describe DepictionsController, type: :controller do
   describe "GET #show" do
     it "assigns the requested depiction as @depiction" do
       depiction = Depiction.create! valid_attributes
-      get :show, params: {:id => depiction.to_param}, session: valid_session
+      get :show, params: {:id => depiction.id.to_s}, session: valid_session
       expect(assigns(:depiction)).to eq(depiction)
     end
   end
@@ -76,7 +76,7 @@ RSpec.describe DepictionsController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested depiction as @depiction" do
       depiction = Depiction.create! valid_attributes
-      get :edit, params: {:id => depiction.to_param}, session: valid_session
+      get :edit, params: {:id => depiction.id.to_s}, session: valid_session
       expect(assigns(:depiction)).to eq(depiction)
     end
   end
@@ -124,20 +124,20 @@ RSpec.describe DepictionsController, type: :controller do
 
       it "updates the requested depiction" do
         depiction = Depiction.create! valid_attributes
-        put :update, params: {:id => depiction.to_param, :depiction => new_attributes}, session: valid_session
+        put :update, params: {:id => depiction.id.to_s, :depiction => new_attributes}, session: valid_session
         depiction.reload
-        expect(depiction.depiction_object_id).to eq(specimen2.id) 
+        expect(depiction.depiction_object_id).to eq(specimen2.id)
       end
 
       it "assigns the requested depiction as @depiction" do
         depiction = Depiction.create! valid_attributes
-        put :update, params: {:id => depiction.to_param, :depiction => valid_attributes}, session: valid_session
+        put :update, params: {:id => depiction.id.to_s, :depiction => valid_attributes}, session: valid_session
         expect(assigns(:depiction)).to eq(depiction)
       end
 
       it "redirects to the depiction" do
         depiction = Depiction.create! valid_attributes
-        put :update, params: {:id => depiction.to_param, :depiction => valid_attributes}, session: valid_session
+        put :update, params: {:id => depiction.id.to_s, :depiction => valid_attributes}, session: valid_session
         expect(response).to redirect_to(depiction)
       end
     end
@@ -145,13 +145,13 @@ RSpec.describe DepictionsController, type: :controller do
     context "with invalid params" do
       it "assigns the depiction as @depiction" do
         depiction = Depiction.create! valid_attributes
-        put :update, params: {:id => depiction.to_param, :depiction => invalid_attributes}, session: valid_session
+        put :update, params: {:id => depiction.id.to_s, :depiction => invalid_attributes}, session: valid_session
         expect(assigns(:depiction)).to eq(depiction)
       end
 
       it "re-renders the 'edit' template" do
         depiction = Depiction.create! valid_attributes
-        put :update, params: {:id => depiction.to_param, :depiction => invalid_attributes}, session: valid_session
+        put :update, params: {:id => depiction.id.to_s, :depiction => invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -161,13 +161,13 @@ RSpec.describe DepictionsController, type: :controller do
     it "destroys the requested depiction" do
       depiction = Depiction.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => depiction.to_param}, session: valid_session
+        delete :destroy, params: {:id => depiction.id.to_s}, session: valid_session
       }.to change(Depiction, :count).by(-1)
     end
 
     it "redirects to the depictions list" do
       depiction = Depiction.create! valid_attributes
-      delete :destroy, params: {:id => depiction.to_param}, session: valid_session
+      delete :destroy, params: {:id => depiction.id.to_s}, session: valid_session
       expect(response).to redirect_to(depictions_url)
     end
   end

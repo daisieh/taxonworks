@@ -97,18 +97,18 @@ describe NotesController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(Note).to receive(:update).with(update_params)
-        put :update, params: {:id => note.to_param, :note => {'text' => 'MyString'}}, session: valid_session
+        put :update, params: {:id => note.id.to_s, :note => {'text' => 'MyString'}}, session: valid_session
       end
 
       it 'assigns the requested note as @note' do
         note = Note.create! valid_attributes
-        put :update, params: {:id => note.to_param, :note => valid_attributes}, session: valid_session
+        put :update, params: {:id => note.id.to_s, :note => valid_attributes}, session: valid_session
         expect(assigns(:note)).to eq(note)
       end
 
       it 'redirects to :back' do
         note = Note.create! valid_attributes
-        put :update, params: {:id => note.to_param, :note => valid_attributes}, session: valid_session
+        put :update, params: {:id => note.id.to_s, :note => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
       end
     end
@@ -118,7 +118,7 @@ describe NotesController, :type => :controller do
         note = Note.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Note).to receive(:save).and_return(false)
-        put :update, params: {:id => note.to_param, :note => { "text" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => note.id.to_s, :note => {"text" => "invalid value"}}, session: valid_session
         expect(assigns(:note)).to eq(note)
       end
 
@@ -126,7 +126,7 @@ describe NotesController, :type => :controller do
         note = Note.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Note).to receive(:save).and_return(false)
-        put :update, params: {:id => note.to_param, :note => { "text" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => note.id.to_s, :note => {"text" => "invalid value"}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -136,13 +136,13 @@ describe NotesController, :type => :controller do
     it "destroys the requested note" do
       note = Note.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => note.to_param}, session: valid_session
+        delete :destroy, params: {:id => note.id.to_s}, session: valid_session
       }.to change(Note, :count).by(-1)
     end
 
     it "redirects to :back" do
       note = Note.create! valid_attributes
-      delete :destroy, params: {:id => note.to_param}, session: valid_session
+      delete :destroy, params: {:id => note.id.to_s}, session: valid_session
       expect(response).to redirect_to(list_otus_path)
     end
   end

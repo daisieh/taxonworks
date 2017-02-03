@@ -91,22 +91,22 @@ describe ContainerItemsController, :type => :controller do
 
       it "updates the requested container_item" do
         container_item = ContainerItem.create! valid_attributes
-        # put :update, {:id => container_item.to_param, :container_item => new_attributes}, valid_session
+        # put :update, {:id => container_item.id.to_s, :container_item => new_attributes}, valid_session
         # container_item.reload
         # skip("Add assertions for updated state")
         expect_any_instance_of(ContainerItem).to receive(:update).with(update_params)
-        put :update, params: {:id => container_item.to_param, :container_item => {'container_id' => '1'}}, session: valid_session
+        put :update, params: {:id => container_item.id.to_s, :container_item => {'container_id' => '1'}}, session: valid_session
       end
 
       it "assigns the requested container_item as @container_item" do
         container_item = ContainerItem.create! valid_attributes
-        put :update, params: {:id => container_item.to_param, :container_item => valid_attributes}, session: valid_session
+        put :update, params: {:id => container_item.id.to_s, :container_item => valid_attributes}, session: valid_session
         expect(assigns(:container_item)).to eq(container_item)
       end
 
       it "redirects to :back" do
         container_item = ContainerItem.create! valid_attributes
-        put :update, params: {:id => container_item.to_param, :container_item => valid_attributes}, session: valid_session
+        put :update, params: {:id => container_item.id.to_s, :container_item => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -114,17 +114,17 @@ describe ContainerItemsController, :type => :controller do
     describe "with invalid params" do
       it "assigns the container_item as @container_item" do
         container_item = ContainerItem.create! valid_attributes
-        # put :update, {:id => container_item.to_param, :container_item => invalid_attributes}, valid_session
+        # put :update, {:id => container_item.id.to_s, :container_item => invalid_attributes}, valid_session
         allow_any_instance_of(ContainerItem).to receive(:save).and_return(false)
-        put :update, params: {:id => container_item.to_param, :container_item => {:invalid => 'parms'}}, session: valid_session
+        put :update, params: {:id => container_item.id.to_s, :container_item => {:invalid => 'parms'}}, session: valid_session
         expect(assigns(:container_item)).to eq(container_item)
       end
 
       it "re-renders the :back template" do
         container_item = ContainerItem.create! valid_attributes
-        # put :update, {:id => container_item.to_param, :container_item => invalid_attributes}, valid_session
+        # put :update, {:id => container_item.id.to_s, :container_item => invalid_attributes}, valid_session
         allow_any_instance_of(ContainerItem).to receive(:save).and_return(false)
-        put :update, params: {:id => container_item.to_param, :container_item => {:invalid => 'parms'}}, session: valid_session
+        put :update, params: {:id => container_item.id.to_s, :container_item => {:invalid => 'parms'}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -134,13 +134,13 @@ describe ContainerItemsController, :type => :controller do
     it "destroys the requested container_item" do
       container_item = ContainerItem.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => container_item.to_param}, session: valid_session
+        delete :destroy, params: {:id => container_item.id.to_s}, session: valid_session
       }.to change(ContainerItem, :count).by(-1)
     end
 
     it "redirects to :back" do
       container_item = ContainerItem.create! valid_attributes
-      delete :destroy, params: {:id => container_item.to_param}, session: valid_session
+      delete :destroy, params: {:id => container_item.id.to_s}, session: valid_session
       expect(response).to redirect_to(list_otus_path)
     end
   end

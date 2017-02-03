@@ -50,7 +50,7 @@ RSpec.describe ObservationsController, type: :controller do
   describe "GET #show" do
     it "assigns the requested observation as @observation" do
       observation = Observation.create! valid_attributes
-      get :show, params: {id: observation.to_param}, session: valid_session
+      get :show, params: {id: observation.id.to_s}, session: valid_session
       expect(assigns(:observation)).to eq(observation)
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe ObservationsController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested observation as @observation" do
       observation = Observation.create! valid_attributes
-      get :edit, params: {id: observation.to_param}, session: valid_session
+      get :edit, params: {id: observation.id.to_s}, session: valid_session
       expect(assigns(:observation)).to eq(observation)
     end
   end
@@ -111,20 +111,20 @@ RSpec.describe ObservationsController, type: :controller do
 
       it "updates the requested observation" do
         observation = Observation.create! valid_attributes
-        put :update, params: {id: observation.to_param, observation: new_attributes}, session: valid_session
+        put :update, params: {id: observation.id.to_s, observation: new_attributes}, session: valid_session
         observation.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested observation as @observation" do
         observation = Observation.create! valid_attributes
-        put :update, params: {id: observation.to_param, observation: valid_attributes}, session: valid_session
+        put :update, params: {id: observation.id.to_s, observation: valid_attributes}, session: valid_session
         expect(assigns(:observation)).to eq(observation)
       end
 
       it "redirects to the observation" do
         observation = Observation.create! valid_attributes
-        put :update, params: {id: observation.to_param, observation: valid_attributes}, session: valid_session
+        put :update, params: {id: observation.id.to_s, observation: valid_attributes}, session: valid_session
         expect(response).to redirect_to(observation.becomes(Observation))
       end
     end
@@ -132,13 +132,13 @@ RSpec.describe ObservationsController, type: :controller do
     context "with invalid params" do
       it "assigns the observation as @observation" do
         observation = Observation.create! valid_attributes
-        put :update, params: {id: observation.to_param, observation: invalid_attributes}, session: valid_session
+        put :update, params: {id: observation.id.to_s, observation: invalid_attributes}, session: valid_session
         expect(assigns(:observation)).to eq(observation)
       end
 
       it "re-renders the 'edit' template" do
         observation = Observation.create! valid_attributes
-        put :update, params: {id: observation.to_param, observation: invalid_attributes}, session: valid_session
+        put :update, params: {id: observation.id.to_s, observation: invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -148,13 +148,13 @@ RSpec.describe ObservationsController, type: :controller do
     it "destroys the requested observation" do
       observation = Observation.create! valid_attributes
       expect {
-        delete :destroy, params: {id: observation.to_param}, session: valid_session
+        delete :destroy, params: {id: observation.id.to_s}, session: valid_session
       }.to change(Observation, :count).by(-1)
     end
 
     it "redirects to the observations list" do
       observation = Observation.create! valid_attributes
-      delete :destroy, params: {id: observation.to_param}, session: valid_session
+      delete :destroy, params: {id: observation.id.to_s}, session: valid_session
       expect(response).to redirect_to(observations_url)
     end
   end

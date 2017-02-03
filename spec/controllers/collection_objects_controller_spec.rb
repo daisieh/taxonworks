@@ -59,7 +59,7 @@ describe CollectionObjectsController, :type => :controller do
   describe "GET show" do
     it "assigns the requested collection_object as @collection_object" do
       collection_object = CollectionObject.create! valid_attributes
-      get :show, params: {:id => collection_object.to_param}, session: valid_session
+      get :show, params: {:id => collection_object.id.to_s}, session: valid_session
       expect(assigns(:collection_object)).to eq(collection_object)
     end
 
@@ -81,10 +81,10 @@ describe CollectionObjectsController, :type => :controller do
       end
 
       context 'valid collection_object' do
-        before { get :show, params: {id:      collection_object.to_param,
-                             include: ['images'],
-                             format:  :json},
-                     session: valid_session }
+        before { get :show, params: {id:      collection_object.id.to_s,
+                                     include: ['images'],
+                                     format:  :json},
+                     session:       valid_session }
         let (:data) { JSON.parse(response.body) }
 
         it "returns a successful JSON response" do
@@ -114,10 +114,10 @@ describe CollectionObjectsController, :type => :controller do
               end
 
               it "has images as empty array" do
-                get :show, params: {:id      => collection_object.to_param,
-                            :include => ["images"],
-                            :format  => :json},
-                    session: valid_session
+                get :show, params: {:id      => collection_object.id.to_s,
+                                    :include => ["images"],
+                                    :format  => :json},
+                    session:       valid_session
                 expect(result["images"]).to eq([])
               end
             end
@@ -139,7 +139,7 @@ describe CollectionObjectsController, :type => :controller do
                   end
 
                   it "has an API endpoint URL" do
-                    expect(item["url"]).to eq(api_v1_image_url(image.to_param))
+                    expect(item["url"]).to eq(api_v1_image_url(image.id.to_s))
                   end
                 end
               end
@@ -147,9 +147,9 @@ describe CollectionObjectsController, :type => :controller do
               context 'when not requested' do
 
                 it 'does not have images attribute' do
-                  get :show, params: {id:     collection_object.to_param,
-                              format: :json},
-                      session: valid_session
+                  get :show, params: {id:     collection_object.id.to_s,
+                                      format: :json},
+                      session:       valid_session
                   expect(JSON.parse(response.body)['result']['images']).to be nil
                 end
               end
@@ -237,7 +237,7 @@ describe CollectionObjectsController, :type => :controller do
             end
 
             it "has an API endpoint URL" do
-              expect(item["url"]).to eq(api_v1_collection_object_url(collection_object.to_param))
+              expect(item["url"]).to eq(api_v1_collection_object_url(collection_object.id.to_s))
             end
           end
         end
@@ -268,7 +268,7 @@ describe CollectionObjectsController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested collection_object as @collection_object" do
       collection_object = CollectionObject.create! valid_attributes
-      get :edit, params: {:id => collection_object.to_param}, session: valid_session
+      get :edit, params: {:id => collection_object.id.to_s}, session: valid_session
       expect(assigns(:collection_object)).to eq(collection_object)
     end
   end
@@ -321,18 +321,18 @@ describe CollectionObjectsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(CollectionObject).to receive(:update).with(update_params)
-        put :update, params: {:id => collection_object.to_param, :collection_object => {'total' => '1'}}, session: valid_session
+        put :update, params: {:id => collection_object.id.to_s, :collection_object => {'total' => '1'}}, session: valid_session
       end
 
       it 'assigns the requested collection_object as @collection_object' do
         collection_object = CollectionObject.create! valid_attributes
-        put :update, params: {:id => collection_object.to_param, :collection_object => valid_attributes}, session: valid_session
+        put :update, params: {:id => collection_object.id.to_s, :collection_object => valid_attributes}, session: valid_session
         expect(assigns(:collection_object)).to eq(collection_object.metamorphosize)
       end
 
       it 'redirects to the collection_object' do
         collection_object = CollectionObject.create! valid_attributes
-        put :update, params: {:id => collection_object.to_param, :collection_object => valid_attributes}, session: valid_session
+        put :update, params: {:id => collection_object.id.to_s, :collection_object => valid_attributes}, session: valid_session
         expect(response).to redirect_to(collection_object.becomes(CollectionObject))
       end
     end
@@ -342,7 +342,7 @@ describe CollectionObjectsController, :type => :controller do
         collection_object = CollectionObject.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CollectionObject).to receive(:save).and_return(false)
-        put :update, params: {:id => collection_object.to_param, :collection_object => {'total' => 'invalid value'}}, session: valid_session
+        put :update, params: {:id => collection_object.id.to_s, :collection_object => {'total' => 'invalid value'}}, session: valid_session
         expect(assigns(:collection_object)).to eq(collection_object)
       end
 
@@ -350,7 +350,7 @@ describe CollectionObjectsController, :type => :controller do
         collection_object = CollectionObject.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CollectionObject).to receive(:save).and_return(false)
-        put :update, params: {:id => collection_object.to_param, :collection_object => {'total' => 'invalid value'}}, session: valid_session
+        put :update, params: {:id => collection_object.id.to_s, :collection_object => {'total' => 'invalid value'}}, session: valid_session
         expect(response).to render_template('edit')
       end
     end
@@ -360,13 +360,13 @@ describe CollectionObjectsController, :type => :controller do
     it "destroys the requested collection_object" do
       collection_object = CollectionObject.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => collection_object.to_param}, session: valid_session
+        delete :destroy, params: {:id => collection_object.id.to_s}, session: valid_session
       }.to change(CollectionObject, :count).by(-1)
     end
 
     it "redirects to the collection_objects list" do
       collection_object = CollectionObject.create! valid_attributes
-      delete :destroy, params: {:id => collection_object.to_param}, session: valid_session
+      delete :destroy, params: {:id => collection_object.id.to_s}, session: valid_session
       expect(response).to redirect_to(collection_objects_url)
     end
   end

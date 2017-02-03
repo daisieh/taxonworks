@@ -47,7 +47,7 @@ RSpec.describe CharacterStatesController, type: :controller do
   describe "GET #show" do
     it "assigns the requested character_state as @character_state" do
       character_state = CharacterState.create! valid_attributes
-      get :show, params: {id: character_state.to_param}, session: valid_session
+      get :show, params: {id: character_state.id.to_s}, session: valid_session
       expect(assigns(:character_state)).to eq(character_state)
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe CharacterStatesController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested character_state as @character_state" do
       character_state = CharacterState.create! valid_attributes
-      get :edit, params: {id: character_state.to_param}, session: valid_session
+      get :edit, params: {id: character_state.id.to_s}, session: valid_session
       expect(assigns(:character_state)).to eq(character_state)
     end
   end
@@ -108,20 +108,20 @@ RSpec.describe CharacterStatesController, type: :controller do
 
       it "updates the requested character_state" do
         character_state = CharacterState.create! valid_attributes
-        put :update, params: {id: character_state.to_param, character_state: new_attributes}, session: valid_session
+        put :update, params: {id: character_state.id.to_s, character_state: new_attributes}, session: valid_session
         character_state.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested character_state as @character_state" do
         character_state = CharacterState.create! valid_attributes
-        put :update, params: {id: character_state.to_param, character_state: valid_attributes}, session: valid_session
+        put :update, params: {id: character_state.id.to_s, character_state: valid_attributes}, session: valid_session
         expect(assigns(:character_state)).to eq(character_state)
       end
 
       it "redirects to the character_state" do
         character_state = CharacterState.create! valid_attributes
-        put :update, params: {id: character_state.to_param, character_state: valid_attributes}, session: valid_session
+        put :update, params: {id: character_state.id.to_s, character_state: valid_attributes}, session: valid_session
         expect(response).to redirect_to(character_state)
       end
     end
@@ -129,13 +129,13 @@ RSpec.describe CharacterStatesController, type: :controller do
     context "with invalid params" do
       it "assigns the character_state as @character_state" do
         character_state = CharacterState.create! valid_attributes
-        put :update, params: {id: character_state.to_param, character_state: invalid_attributes}, session: valid_session
+        put :update, params: {id: character_state.id.to_s, character_state: invalid_attributes}, session: valid_session
         expect(assigns(:character_state)).to eq(character_state)
       end
 
       it "re-renders the 'edit' template" do
         character_state = CharacterState.create! valid_attributes
-        put :update, params: {id: character_state.to_param, character_state: invalid_attributes}, session: valid_session
+        put :update, params: {id: character_state.id.to_s, character_state: invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -145,13 +145,13 @@ RSpec.describe CharacterStatesController, type: :controller do
     it "destroys the requested character_state" do
       character_state = CharacterState.create! valid_attributes
       expect {
-        delete :destroy, params: {id: character_state.to_param}, session: valid_session
+        delete :destroy, params: {id: character_state.id.to_s}, session: valid_session
       }.to change(CharacterState, :count).by(-1)
     end
 
     it "redirects to the character_states list" do
       character_state = CharacterState.create! valid_attributes
-      delete :destroy, params: {id: character_state.to_param}, session: valid_session
+      delete :destroy, params: {id: character_state.id.to_s}, session: valid_session
       expect(response).to redirect_to(character_states_url)
     end
   end

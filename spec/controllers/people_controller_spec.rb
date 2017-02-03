@@ -46,7 +46,7 @@ describe PeopleController, :type => :controller do
   describe "GET show" do
     it "assigns the requested person as @person" do
       person = Person.create! valid_attributes
-      get :show, params: {:id => person.to_param}, session: valid_session
+      get :show, params: {:id => person.id.to_s}, session: valid_session
       expect(assigns(:person)).to eq(person.becomes(Person::Unvetted))
     end
   end
@@ -61,7 +61,7 @@ describe PeopleController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested person as @person" do
       person = Person.create! valid_attributes
-      get :edit, params: {:id => person.to_param}, session: valid_session
+      get :edit, params: {:id => person.id.to_s}, session: valid_session
       expect(assigns(:person)).to eq(person.becomes(Person::Unvetted))
     end
   end
@@ -114,18 +114,18 @@ describe PeopleController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(Person).to receive(:update).with(update_params)
-        put :update, params: {:id => person.to_param, :person => {'type' => ""}}, session: valid_session
+        put :update, params: {:id => person.id.to_s, :person => {'type' => ""}}, session: valid_session
       end
 
       it 'assigns the requested person as @person' do
         person = Person.create! valid_attributes
-        put :update, params: {:id => person.to_param, :person => valid_attributes}, session: valid_session
+        put :update, params: {:id => person.id.to_s, :person => valid_attributes}, session: valid_session
         expect(assigns(:person)).to eq(person.becomes(Person::Unvetted))
       end
 
       it 'redirects to the person' do
         person = Person.create! valid_attributes
-        put :update, params: {:id => person.to_param, :person => valid_attributes}, session: valid_session
+        put :update, params: {:id => person.id.to_s, :person => valid_attributes}, session: valid_session
         expect(response).to redirect_to(person.becomes(Person))
       end
     end
@@ -135,7 +135,7 @@ describe PeopleController, :type => :controller do
         person = Person.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Person).to receive(:save).and_return(false)
-        put :update, params: {:id => person.to_param, :person => {"type" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => person.id.to_s, :person => {"type" => "invalid value"}}, session: valid_session
         expect(assigns(:person)).to eq(person.becomes(Person::Unvetted))
       end
 
@@ -143,7 +143,7 @@ describe PeopleController, :type => :controller do
         person = Person.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Person).to receive(:save).and_return(false)
-        put :update, params: {:id => person.to_param, :person => {"type" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => person.id.to_s, :person => {"type" => "invalid value"}}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -153,13 +153,13 @@ describe PeopleController, :type => :controller do
     it "destroys the requested person" do
       person = Person.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => person.to_param}, session: valid_session
+        delete :destroy, params: {:id => person.id.to_s}, session: valid_session
       }.to change(Person, :count).by(-1)
     end
 
     it "redirects to the people list" do
       person = Person.create! valid_attributes
-      delete :destroy, params: {:id => person.to_param}, session: valid_session
+      delete :destroy, params: {:id => person.id.to_s}, session: valid_session
       expect(response).to redirect_to(people_url)
     end
   end

@@ -78,7 +78,7 @@ describe TaggedSectionKeywordsController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
-      let(:update_params) { ActionController::Parameters.new({keyword_id: other_keyword.to_param})
+      let(:update_params) { ActionController::Parameters.new({keyword: other_keyword})
                               .permit(:keyword_id) }
       it 'updates the requested tagged_section_keyword' do
         tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
@@ -87,18 +87,18 @@ describe TaggedSectionKeywordsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(TaggedSectionKeyword).to receive(:update).with(update_params)
-        put :update, params: {:id => tagged_section_keyword.to_param, :tagged_section_keyword => {keyword_id: other_keyword.to_param}}, session: valid_session
+        put :update, params: {:id => tagged_section_keyword.id.to_s, :tagged_section_keyword => {keyword_id: other_keyword.id.to_s}}, session: valid_session
       end
 
       it 'assigns the requested tagged_section_keyword as @tagged_section_keyword' do
         tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
-        put :update, params: {:id => tagged_section_keyword.to_param, :tagged_section_keyword => valid_attributes}, session: valid_session
+        put :update, params: {:id => tagged_section_keyword.id.to_s, :tagged_section_keyword => valid_attributes}, session: valid_session
         expect(assigns(:tagged_section_keyword)).to eq(tagged_section_keyword)
       end
 
       it 'redirects to :back' do
         tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
-        put :update, params: {:id => tagged_section_keyword.to_param, :tagged_section_keyword => valid_attributes}, session: valid_session
+        put :update, params: {:id => tagged_section_keyword.id.to_s, :tagged_section_keyword => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -108,7 +108,7 @@ describe TaggedSectionKeywordsController, :type => :controller do
         tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(TaggedSectionKeyword).to receive(:save).and_return(false)
-        put :update, params: {:id => tagged_section_keyword.to_param, :tagged_section_keyword => {:invalid => 'parms'}}, session: valid_session
+        put :update, params: {:id => tagged_section_keyword.id.to_s, :tagged_section_keyword => {:invalid => 'parms'}}, session: valid_session
         expect(assigns(:tagged_section_keyword)).to eq(tagged_section_keyword)
       end
 
@@ -116,7 +116,7 @@ describe TaggedSectionKeywordsController, :type => :controller do
         tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(TaggedSectionKeyword).to receive(:save).and_return(false)
-        put :update, params: {:id => tagged_section_keyword.to_param, :tagged_section_keyword => {:invalid => 'parms'}}, session: valid_session
+        put :update, params: {:id => tagged_section_keyword.id.to_s, :tagged_section_keyword => {:invalid => 'parms'}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -126,13 +126,13 @@ describe TaggedSectionKeywordsController, :type => :controller do
     it "destroys the requested tagged_section_keyword" do
       tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => tagged_section_keyword.to_param}, session: valid_session
+        delete :destroy, params: {:id => tagged_section_keyword.id.to_s}, session: valid_session
       }.to change(TaggedSectionKeyword, :count).by(-1)
     end
 
     it "redirects to :back" do
       tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
-      delete :destroy, params: {:id => tagged_section_keyword.to_param}, session: valid_session
+      delete :destroy, params: {:id => tagged_section_keyword.id.to_s}, session: valid_session
       expect(response).to redirect_to(list_otus_path)
     end
   end

@@ -22,7 +22,7 @@ RSpec.describe PinboardItemsController, :type => :controller do
   before(:each) {
     sign_in
   }
- 
+
   # This should return the minimal set of attributes required to create a valid
   # PinboardItem. As you add validations to PinboardItem, be sure to
   # adjust the attributes here as well.
@@ -41,7 +41,7 @@ RSpec.describe PinboardItemsController, :type => :controller do
   let(:valid_session) { {} }
 
   describe "POST create" do
-    before { 
+    before {
       request.env["HTTP_REFERER"] = otus_path
     }
 
@@ -78,20 +78,20 @@ RSpec.describe PinboardItemsController, :type => :controller do
   end
 
   describe "DELETE destroy" do
-    before { 
-      request.env["HTTP_REFERER"] = dashboard_path 
+    before {
+      request.env["HTTP_REFERER"] = dashboard_path
     }
 
     it "destroys the requested pinboard_item" do
       pinboard_item = PinboardItem.create! valid_attributes
       expect {
-        delete :destroy, params: {id: pinboard_item.to_param}, session: valid_session
+        delete :destroy, params: {id: pinboard_item.id.to_s}, session: valid_session
       }.to change(PinboardItem, :count).by(-1)
     end
 
     it "redirects to the pinboard_items list" do
       pinboard_item = PinboardItem.create! valid_attributes
-      delete :destroy, params: {id: pinboard_item.to_param}, session: valid_session
+      delete :destroy, params: {id: pinboard_item.id.to_s}, session: valid_session
       expect(response).to redirect_to(dashboard_path)
     end
   end

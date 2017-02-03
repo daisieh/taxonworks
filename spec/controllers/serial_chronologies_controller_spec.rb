@@ -28,7 +28,7 @@ describe SerialChronologiesController, :type => :controller do
   # adjust the attributes here as well
   let(:serial1) { FactoryGirl.create(:valid_serial, name: 'A') }
   let(:serial2) { FactoryGirl.create(:valid_serial, name: 'B') }
-  let(:valid_attributes) { { type: 'SerialChronology::SerialSequence', preceding_serial_id: serial1.to_param, succeeding_serial_id: serial2.to_param } }
+  let(:valid_attributes) { {type: 'SerialChronology::SerialSequence', preceding_serial_id: serial1.id.to_s, succeeding_serial_id: serial2.id.to_s} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -90,18 +90,18 @@ describe SerialChronologiesController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(SerialChronology).to receive(:update).with(update_params)
-        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => {'preceding_serial_id' => '1'}}, session: valid_session
+        put :update, params: {:id => serial_chronology.id.to_s, :serial_chronology => {'preceding_serial_id' => '1'}}, session: valid_session
       end
 
       it 'assigns the requested serial_chronology as @serial_chronology' do
         serial_chronology = SerialChronology.create! valid_attributes
-        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => valid_attributes}, session: valid_session
+        put :update, params: {:id => serial_chronology.id.to_s, :serial_chronology => valid_attributes}, session: valid_session
         expect(assigns(:serial_chronology)).to eq(serial_chronology)
       end
 
       it 'redirects to :back' do
         serial_chronology = SerialChronology.create! valid_attributes
-        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => valid_attributes}, session: valid_session
+        put :update, params: {:id => serial_chronology.id.to_s, :serial_chronology => valid_attributes}, session: valid_session
         expect(response).to redirect_to(serial_path(serial1))
       end
     end
@@ -111,7 +111,7 @@ describe SerialChronologiesController, :type => :controller do
         serial_chronology = SerialChronology.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(SerialChronology).to receive(:save).and_return(false)
-        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => { "preceding_serial_id" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => serial_chronology.id.to_s, :serial_chronology => {"preceding_serial_id" => "invalid value"}}, session: valid_session
         expect(assigns(:serial_chronology)).to eq(serial_chronology)
       end
 
@@ -119,7 +119,7 @@ describe SerialChronologiesController, :type => :controller do
         serial_chronology = SerialChronology.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(SerialChronology).to receive(:save).and_return(false)
-        put :update, params: {:id => serial_chronology.to_param, :serial_chronology => { "preceding_serial_id" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => serial_chronology.id.to_s, :serial_chronology => {"preceding_serial_id" => "invalid value"}}, session: valid_session
         expect(response).to redirect_to(serial_path(serial1)  )
       end
     end
@@ -129,13 +129,13 @@ describe SerialChronologiesController, :type => :controller do
     it "destroys the requested serial_chronology" do
       serial_chronology = SerialChronology.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => serial_chronology.to_param}, session: valid_session
+        delete :destroy, params: {:id => serial_chronology.id.to_s}, session: valid_session
       }.to change(SerialChronology, :count).by(-1)
     end
 
     it "redirects to :back" do
       serial_chronology = SerialChronology.create! valid_attributes
-      delete :destroy, params: {:id => serial_chronology.to_param}, session: valid_session
+      delete :destroy, params: {:id => serial_chronology.id.to_s}, session: valid_session
       expect(response).to redirect_to(serial_path(serial1))
     end
   end

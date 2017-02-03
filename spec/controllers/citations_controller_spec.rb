@@ -30,7 +30,7 @@ describe CitationsController, :type => :controller do
   let(:o) { FactoryGirl.create(:valid_otu) }
   let(:s) { FactoryGirl.create(:valid_source) }
   let(:valid_attributes) {
-    {citation_object_id: o.id, citation_object_type: o.class.to_s, source_id: s.to_param} }
+    {citation_object_id: o.id, citation_object_type: o.class.to_s, source_id: s.id.to_s} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -110,20 +110,20 @@ describe CitationsController, :type => :controller do
                                                           'citation_object_id'   => o.id.to_s})
                           .permit(:citation_object_type, :citation_object_id)
         expect_any_instance_of(Citation).to receive(:update).with(update_params)
-        put :update, params: {:id => citation.to_param, :citation => {citation_object_type: 'Otu',
-                                                                      citation_object_id:   o.id}},
+        put :update, params: {:id => citation.id.to_s, :citation => {citation_object_type: 'Otu',
+                                                                     citation_object_id:   o.id}},
             session:         valid_session
       end
 
       it 'assigns the requested citation as @citation' do
         citation = Citation.create! valid_attributes
-        put :update, params: {:id => citation.to_param, :citation => valid_attributes}, session: valid_session
+        put :update, params: {:id => citation.id.to_s, :citation => valid_attributes}, session: valid_session
         expect(assigns(:citation)).to eq(citation)
       end
 
       it 'redirects to :back' do
         citation = Citation.create! valid_attributes
-        put :update, params: {:id => citation.to_param, :citation => valid_attributes}, session: valid_session
+        put :update, params: {:id => citation.id.to_s, :citation => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
       end
     end
@@ -133,7 +133,7 @@ describe CitationsController, :type => :controller do
         citation = Citation.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Citation).to receive(:save).and_return(false)
-        put :update, params: {:id => citation.to_param, :citation => {source_id: nil}}, session: valid_session
+        put :update, params: {:id => citation.id.to_s, :citation => {source_id: nil}}, session: valid_session
         expect(assigns(:citation)).to eq(citation)
       end
 
@@ -141,7 +141,7 @@ describe CitationsController, :type => :controller do
         citation = Citation.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Citation).to receive(:save).and_return(false)
-        put :update, params: {:id => citation.to_param, :citation => {source_id: nil}}, session: valid_session
+        put :update, params: {:id => citation.id.to_s, :citation => {source_id: nil}}, session: valid_session
         expect(response).to redirect_to(citation_path(1))
       end
     end
@@ -156,13 +156,13 @@ describe CitationsController, :type => :controller do
     it "destroys the requested citation" do
       citation = Citation.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => citation.to_param}, session: valid_session
+        delete :destroy, params: {:id => citation.id.to_s}, session: valid_session
       }.to change(Citation, :count).by(-1)
     end
 
     it "redirects to :back" do
       citation = Citation.create! valid_attributes
-      delete :destroy, params: {:id => citation.to_param}, session: valid_session
+      delete :destroy, params: {:id => citation.id.to_s}, session: valid_session
       expect(response).to redirect_to(otu_path(o))
     end
   end

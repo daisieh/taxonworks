@@ -58,7 +58,7 @@ describe OtusController, type: :controller do
   describe "GET show" do
     it "assigns the requested otu as @otu" do
       otu = Otu.create! valid_attributes
-      get :show, params: {:id => otu.to_param}, session: valid_session
+      get :show, params: {:id => otu.id.to_s}, session: valid_session
       expect(assigns(:otu)).to eq(otu)
     end
   end
@@ -73,7 +73,7 @@ describe OtusController, type: :controller do
   describe "GET edit" do
     it "assigns the requested otu as @otu" do
       otu = Otu.create! valid_attributes
-      get :edit, params: {:id => otu.to_param}, session: valid_session
+      get :edit, params: {:id => otu.id.to_s}, session: valid_session
       expect(assigns(:otu)).to eq(otu)
     end
   end
@@ -127,18 +127,18 @@ describe OtusController, type: :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(Otu).to receive(:update).with(update_params)
-        put :update, params: {:id => otu.to_param, :otu => {'name' => 'MyString'}}, session: valid_session
+        put :update, params: {:id => otu.id.to_s, :otu => {'name' => 'MyString'}}, session: valid_session
       end
 
       it 'assigns the requested otu as @otu' do
         otu = Otu.create! valid_attributes
-        put :update, params: {:id => otu.to_param, :otu => valid_attributes}, session: valid_session
+        put :update, params: {:id => otu.id.to_s, :otu => valid_attributes}, session: valid_session
         expect(assigns(:otu)).to eq(otu)
       end
 
       it 'redirects to the otu' do
         otu = Otu.create! valid_attributes
-        put :update, params: {:id => otu.to_param, :otu => valid_attributes}, session: valid_session
+        put :update, params: {:id => otu.id.to_s, :otu => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu)
       end
     end
@@ -148,7 +148,7 @@ describe OtusController, type: :controller do
         otu = Otu.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Otu).to receive(:save).and_return(false)
-        put :update, params: {:id => otu.to_param, :otu => {"name" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => otu.id.to_s, :otu => {"name" => "invalid value"}}, session: valid_session
         expect(assigns(:otu)).to eq(otu)
       end
 
@@ -156,7 +156,7 @@ describe OtusController, type: :controller do
         otu = Otu.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Otu).to receive(:save).and_return(false)
-        put :update, params: {:id => otu.to_param, :otu => {"name" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => otu.id.to_s, :otu => {"name" => "invalid value"}}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -165,13 +165,13 @@ describe OtusController, type: :controller do
       it "destroys the requested otu" do
         otu = Otu.create! valid_attributes
         expect {
-          delete :destroy, params: {:id => otu.to_param}, session: valid_session
+          delete :destroy, params: {:id => otu.id.to_s}, session: valid_session
         }.to change(Otu, :count).by(-1)
       end
 
       it "redirects to the otus list" do
         otu = Otu.create! valid_attributes
-        delete :destroy, params: {:id => otu.to_param}, session: valid_session
+        delete :destroy, params: {:id => otu.id.to_s}, session: valid_session
         expect(response).to redirect_to(otus_url)
       end
     end

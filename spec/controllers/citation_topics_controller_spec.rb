@@ -86,18 +86,18 @@ describe CitationTopicsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(CitationTopic).to receive(:update).with(update_params)
-        put :update, params: {:id => citation_topic.to_param, :citation_topic => {topic_id: t.id}}, session: valid_session
+        put :update, params: {:id => citation_topic.id.to_s, :citation_topic => {topic_id: t.id}}, session: valid_session
       end
 
       it 'assigns the requested citation_topic as @citation_topic' do
         citation_topic = CitationTopic.create! valid_attributes
-        put :update, params: {:id => citation_topic.to_param, :citation_topic => valid_attributes}, session: valid_session
+        put :update, params: {:id => citation_topic.id.to_s, :citation_topic => valid_attributes}, session: valid_session
         expect(assigns(:citation_topic)).to eq(citation_topic)
       end
 
       it 'redirects to :back' do
         citation_topic = CitationTopic.create! valid_attributes
-        put :update, params: {:id => citation_topic.to_param, :citation_topic => valid_attributes}, session: valid_session
+        put :update, params: {:id => citation_topic.id.to_s, :citation_topic => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -107,7 +107,7 @@ describe CitationTopicsController, :type => :controller do
         citation_topic = CitationTopic.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CitationTopic).to receive(:save).and_return(false)
-        put :update, params: {:id => citation_topic.to_param, :citation_topic => {foo: 'bar'}}, session: valid_session
+        put :update, params: {:id => citation_topic.id.to_s, :citation_topic => {foo: 'bar'}}, session: valid_session
         expect(assigns(:citation_topic)).to eq(citation_topic)
       end
 
@@ -115,7 +115,7 @@ describe CitationTopicsController, :type => :controller do
         citation_topic = CitationTopic.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CitationTopic).to receive(:save).and_return(false)
-        put :update, params: {:id => citation_topic.to_param, :citation_topic => {foo: 'bar'}}, session: valid_session
+        put :update, params: {:id => citation_topic.id.to_s, :citation_topic => {foo: 'bar'}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -125,13 +125,13 @@ describe CitationTopicsController, :type => :controller do
     it "destroys the requested citation_topic" do
       citation_topic = CitationTopic.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => citation_topic.to_param}, session: valid_session
+        delete :destroy, params: {:id => citation_topic.id.to_s}, session: valid_session
       }.to change(CitationTopic, :count).by(-1)
     end
 
     it "redirects to :back" do
       citation_topic = CitationTopic.create! valid_attributes
-      delete :destroy, params: {:id => citation_topic.to_param}, session: valid_session
+      delete :destroy, params: {:id => citation_topic.id.to_s}, session: valid_session
       expect(response).to redirect_to(list_otus_path)
     end
   end

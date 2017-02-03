@@ -52,7 +52,7 @@ describe IdentifiersController, :type => :controller do
   # describe "GET show" do
   #   it "assigns the requested identifier as @identifier" do
   #     identifier = Identifier.create! valid_attributes
-  #     get :show, {:id => identifier.to_param}, valid_session
+  #     get :show, {:id => identifier.id.to_s}, valid_session
   #     expect(assigns(:identifier)).to eq(identifier)
   #   end
   # end
@@ -67,7 +67,7 @@ describe IdentifiersController, :type => :controller do
   # describe "GET edit" do
   #   it "assigns the requested identifier as @identifier" do
   #     identifier = Identifier.create! valid_attributes
-  #     get :edit, {:id => identifier.to_param}, valid_session
+  #     get :edit, {:id => identifier.id.to_s}, valid_session
   #     expect(assigns(:identifier)).to eq(identifier)
   #   end
   # end
@@ -125,18 +125,18 @@ describe IdentifiersController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(Identifier).to receive(:update).with(update_params)
-        put :update, params: {:id => identifier.to_param, :identifier => {'identifier_object_id' => '1'}}, session: valid_session
+        put :update, params: {:id => identifier.id.to_s, :identifier => {'identifier_object_id' => '1'}}, session: valid_session
       end
 
       it 'assigns the requested identifier as @identifier' do
         identifier = Identifier.create! valid_attributes
-        put :update, params: {:id => identifier.to_param, :identifier => valid_attributes}, session: valid_session
+        put :update, params: {:id => identifier.id.to_s, :identifier => valid_attributes}, session: valid_session
         expect(assigns(:identifier)).to eq(identifier)
       end
 
       it 'redirects to :back' do
         identifier = Identifier.create! valid_attributes
-        put :update, params: {:id => identifier.to_param, :identifier => valid_attributes}, session: valid_session
+        put :update, params: {:id => identifier.id.to_s, :identifier => valid_attributes}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
       end
     end
@@ -146,7 +146,7 @@ describe IdentifiersController, :type => :controller do
         identifier = Identifier.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Identifier).to receive(:save).and_return(false)
-        put :update, params: {:id => identifier.to_param, :identifier => {"identifier_object_id" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => identifier.id.to_s, :identifier => {"identifier_object_id" => "invalid value"}}, session: valid_session
         expect(assigns(:identifier)).to eq(identifier)
       end
 
@@ -154,7 +154,7 @@ describe IdentifiersController, :type => :controller do
         identifier = Identifier.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Identifier).to receive(:save).and_return(false)
-        put :update, params: {:id => identifier.to_param, :identifier => {"identifier_object_id" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => identifier.id.to_s, :identifier => {"identifier_object_id" => "invalid value"}}, session: valid_session
         expect(response).to redirect_to(otu_path(o))
       end
     end
@@ -164,13 +164,13 @@ describe IdentifiersController, :type => :controller do
     it "destroys the requested identifier" do
       identifier = Identifier.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => identifier.to_param}, session: valid_session
+        delete :destroy, params: {:id => identifier.id.to_s}, session: valid_session
       }.to change(Identifier, :count).by(-1)
     end
 
     it "redirects to :back" do
       identifier = Identifier.create! valid_attributes
-      delete :destroy, params: {:id => identifier.to_param}, session: valid_session
+      delete :destroy, params: {:id => identifier.id.to_s}, session: valid_session
       expect(response).to redirect_to(otu_path(o))
     end
   end

@@ -44,7 +44,7 @@ describe CollectionProfilesController, :type => :controller do
   describe "GET show" do
     it "assigns the requested collection_profile as @collection_profile" do
       collection_profile = CollectionProfile.create! valid_attributes
-      get :show, params: {:id => collection_profile.to_param}, session: valid_session
+      get :show, params: {:id => collection_profile.id.to_s}, session: valid_session
       expect(assigns(:collection_profile)).to eq(collection_profile)
     end
   end
@@ -59,7 +59,7 @@ describe CollectionProfilesController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested collection_profile as @collection_profile" do
       collection_profile = CollectionProfile.create! valid_attributes
-      get :edit, params: {:id => collection_profile.to_param}, session: valid_session
+      get :edit, params: {:id => collection_profile.id.to_s}, session: valid_session
       expect(assigns(:collection_profile)).to eq(collection_profile)
     end
   end
@@ -114,20 +114,20 @@ describe CollectionProfilesController, :type => :controller do
         # submitted in the request.
         expect_any_instance_of(CollectionProfile).to receive(:update).with(update_params)
         o2 = Otu.last
-        put :update, params: {:id                 => collection_profile.to_param,
+        put :update, params: {:id                 => collection_profile.id.to_s,
                               :collection_profile => {otu_id: o2.id}},
             session:         valid_session
       end
 
       it "assigns the requested collection_profile as @collection_profile" do
         collection_profile = CollectionProfile.create! valid_attributes
-        put :update, params: {:id => collection_profile.to_param, :collection_profile => valid_attributes}, session: valid_session
+        put :update, params: {:id => collection_profile.id.to_s, :collection_profile => valid_attributes}, session: valid_session
         expect(assigns(:collection_profile)).to eq(collection_profile)
       end
 
       it "redirects to the collection_profile" do
         collection_profile = CollectionProfile.create! valid_attributes
-        put :update, params: {:id => collection_profile.to_param, :collection_profile => valid_attributes}, session: valid_session
+        put :update, params: {:id => collection_profile.id.to_s, :collection_profile => valid_attributes}, session: valid_session
         expect(response).to redirect_to(collection_profile)
       end
     end
@@ -137,7 +137,7 @@ describe CollectionProfilesController, :type => :controller do
         collection_profile = CollectionProfile.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CollectionProfile).to receive(:save).and_return(false)
-        put :update, params: {:id => collection_profile.to_param, :collection_profile => {:invalid => 'parms'}}, session: valid_session
+        put :update, params: {:id => collection_profile.id.to_s, :collection_profile => {:invalid => 'parms'}}, session: valid_session
         expect(assigns(:collection_profile)).to eq(collection_profile)
       end
 
@@ -145,7 +145,7 @@ describe CollectionProfilesController, :type => :controller do
         collection_profile = CollectionProfile.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CollectionProfile).to receive(:save).and_return(false)
-        put :update, params: {:id => collection_profile.to_param, :collection_profile => {:invalid => 'parms'}}, session: valid_session
+        put :update, params: {:id => collection_profile.id.to_s, :collection_profile => {:invalid => 'parms'}}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -155,13 +155,13 @@ describe CollectionProfilesController, :type => :controller do
     it "destroys the requested collection_profile" do
       collection_profile = CollectionProfile.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => collection_profile.to_param}, session: valid_session
+        delete :destroy, params: {:id => collection_profile.id.to_s}, session: valid_session
       }.to change(CollectionProfile, :count).by(-1)
     end
 
     it "redirects to the collection_profiles list" do
       collection_profile = CollectionProfile.create! valid_attributes
-      delete :destroy, params: {:id => collection_profile.to_param}, session: valid_session
+      delete :destroy, params: {:id => collection_profile.id.to_s}, session: valid_session
       expect(response).to redirect_to(collection_profiles_url)
     end
   end

@@ -29,7 +29,7 @@ describe TaxonNameClassificationsController, :type => :controller do
   let(:root) { FactoryGirl.create(:root_taxon_name) }
   let(:taxon_name) { Protonym.create!(parent: root, name: 'Biidae', rank_class: Ranks.lookup(:iczn, 'family')) }
   let(:valid_attributes) {
-    strip_housekeeping_attributes(FactoryGirl.build(:valid_taxon_name_classification, taxon_name_id: taxon_name.to_param).attributes)
+    strip_housekeeping_attributes(FactoryGirl.build(:valid_taxon_name_classification, taxon_name_id: taxon_name.id.to_s).attributes)
   }
 
   # This should return the minimal set of values that should be in the session
@@ -89,18 +89,18 @@ describe TaxonNameClassificationsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(TaxonNameClassification).to receive(:update).with(update_params)
-        put :update, params: {:id => taxon_name_classification.to_param, :taxon_name_classification => {'taxon_name_id' => '1'}}, session: valid_session
+        put :update, params: {:id => taxon_name_classification.id.to_s, :taxon_name_classification => {'taxon_name_id' => '1'}}, session: valid_session
       end
 
       it 'assigns the requested taxon_name_classification as @taxon_name_classification' do
         taxon_name_classification = TaxonNameClassification.create! valid_attributes
-        put :update, params: {:id => taxon_name_classification.to_param, :taxon_name_classification => valid_attributes}, session: valid_session
+        put :update, params: {:id => taxon_name_classification.id.to_s, :taxon_name_classification => valid_attributes}, session: valid_session
         expect(assigns(:taxon_name_classification)).to eq(taxon_name_classification)
       end
 
       it 'redirects to :back' do
         taxon_name_classification = TaxonNameClassification.create! valid_attributes
-        put :update, params: {:id => taxon_name_classification.to_param, :taxon_name_classification => valid_attributes}, session: valid_session
+        put :update, params: {:id => taxon_name_classification.id.to_s, :taxon_name_classification => valid_attributes}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -110,7 +110,7 @@ describe TaxonNameClassificationsController, :type => :controller do
         taxon_name_classification = TaxonNameClassification.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(TaxonNameClassification).to receive(:save).and_return(false)
-        put :update, params: {:id => taxon_name_classification.to_param, :taxon_name_classification => {"taxon_name_id" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => taxon_name_classification.id.to_s, :taxon_name_classification => {"taxon_name_id" => "invalid value"}}, session: valid_session
         expect(assigns(:taxon_name_classification)).to eq(taxon_name_classification)
       end
 
@@ -118,7 +118,7 @@ describe TaxonNameClassificationsController, :type => :controller do
         taxon_name_classification = TaxonNameClassification.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(TaxonNameClassification).to receive(:save).and_return(false)
-        put :update, params: {:id => taxon_name_classification.to_param, :taxon_name_classification => {"taxon_name_id" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => taxon_name_classification.id.to_s, :taxon_name_classification => {"taxon_name_id" => "invalid value"}}, session: valid_session
         expect(response).to redirect_to(list_otus_path)
       end
     end
@@ -128,13 +128,13 @@ describe TaxonNameClassificationsController, :type => :controller do
     it "destroys the requested taxon_name_classification" do
       taxon_name_classification = TaxonNameClassification.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => taxon_name_classification.to_param}, session: valid_session
+        delete :destroy, params: {:id => taxon_name_classification.id.to_s}, session: valid_session
       }.to change(TaxonNameClassification, :count).by(-1)
     end
 
     it "redirects to :back" do
       taxon_name_classification = TaxonNameClassification.create! valid_attributes
-      delete :destroy, params: {:id => taxon_name_classification.to_param}, session: valid_session
+      delete :destroy, params: {:id => taxon_name_classification.id.to_s}, session: valid_session
       expect(response).to redirect_to(list_otus_path)
     end
   end

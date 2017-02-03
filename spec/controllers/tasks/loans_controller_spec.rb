@@ -8,7 +8,7 @@ describe Tasks::LoansController, type: :controller do
 
   describe 'GET #complete' do
     it 'returns http success' do
-      get :complete, params: {:id => loan.to_param}
+      get :complete, params: {:id => loan.id.to_s}
       expect(response).to have_http_status(:success)
     end
   end

@@ -53,7 +53,7 @@ RSpec.describe DocumentationController, type: :controller do
   describe 'GET #show' do
     it 'assigns the requested documentation as @documentation' do
       documentation = Documentation.create! valid_attributes
-      get :show, params: {:id => documentation.to_param}, session: valid_session
+      get :show, params: {:id => documentation.id.to_s}, session: valid_session
       expect(assigns(:documentation)).to eq(documentation)
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe DocumentationController, type: :controller do
   describe 'GET #edit' do
     it 'assigns the requested documentation as @documentation' do
       documentation = Documentation.create! valid_attributes
-      get :edit, params: {:id => documentation.to_param}, session: valid_session
+      get :edit, params: {:id => documentation.id.to_s}, session: valid_session
       expect(assigns(:documentation)).to eq(documentation)
     end
   end
@@ -115,20 +115,20 @@ RSpec.describe DocumentationController, type: :controller do
 
       # it 'updates the requested documentation' do
       #   documentation = Documentation.create! valid_attributes
-      #   put :update, {:id => documentation.to_param, :documentation => new_attributes}, valid_session
+      #   put :update, {:id => documentation.id.to_s, :documentation => new_attributes}, valid_session
       #   documentation.reload
       #   skip('Add assertions for updated state')
       # end
 
       it 'assigns the requested documentation as @documentation' do
         documentation = Documentation.create! valid_attributes
-        put :update, params: {:id => documentation.to_param, :documentation => valid_attributes}, session: valid_session
+        put :update, params: {:id => documentation.id.to_s, :documentation => valid_attributes}, session: valid_session
         expect(assigns(:documentation)).to eq(documentation)
       end
 
       it 'redirects to the documentation' do
         documentation = Documentation.create! valid_attributes
-        put :update, params: {:id => documentation.to_param, :documentation => valid_attributes}, session: valid_session
+        put :update, params: {:id => documentation.id.to_s, :documentation => valid_attributes}, session: valid_session
         expect(response).to redirect_to(documentation.metamorphosize)
       end
     end
@@ -136,13 +136,13 @@ RSpec.describe DocumentationController, type: :controller do
     context 'with invalid params' do
       it 'assigns the documentation as @documentation' do
         documentation = Documentation.create! valid_attributes
-        put :update, params: {:id => documentation.to_param, :documentation => {documentation_object_id: 1}}, session: valid_session
+        put :update, params: {:id => documentation.id.to_s, :documentation => {documentation_object_id: 1}}, session: valid_session
         expect(assigns(:documentation)).to eq(documentation)
       end
 
       it 're-renders the \'edit\' template' do
         documentation = Documentation.create! valid_attributes
-        put :update, params: {:id => documentation.to_param, :documentation => {documentation_object_id: nil}}, session: valid_session
+        put :update, params: {:id => documentation.id.to_s, :documentation => {documentation_object_id: nil}}, session: valid_session
         expect(response).to render_template('edit')
       end
     end
@@ -152,13 +152,13 @@ RSpec.describe DocumentationController, type: :controller do
     it 'destroys the requested documentation' do
       documentation = Documentation.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => documentation.to_param}, session: valid_session
+        delete :destroy, params: {:id => documentation.id.to_s}, session: valid_session
       }.to change(Documentation, :count).by(-1)
     end
 
     it 'redirects to the documentation list' do
       documentation = Documentation.create! valid_attributes
-      delete :destroy, params: {:id => documentation.to_param}, session: valid_session
+      delete :destroy, params: {:id => documentation.id.to_s}, session: valid_session
       expect(response).to redirect_to(documentation_index_url)
     end
   end

@@ -36,7 +36,7 @@ describe GeographicAreasController, :type => :controller do
   describe 'GET show' do
     it 'assigns the requested geographic_area as @geographic_area' do
       geographic_area = FactoryGirl.create(:level2_geographic_area)
-      get :show, params: {:id => geographic_area.to_param}, session: valid_session
+      get :show, params: {:id => geographic_area.id.to_s}, session: valid_session
       expect(assigns(:geographic_area)).to eq(geographic_area)
     end
   end

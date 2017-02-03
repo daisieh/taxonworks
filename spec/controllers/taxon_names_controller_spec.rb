@@ -60,7 +60,7 @@ describe TaxonNamesController, :type => :controller do
   describe "GET show" do
     it "assigns the requested taxon_name as @taxon_name" do
       taxon_name = TaxonName.create! valid_attributes
-      get :show, params: {:id => taxon_name.to_param}, session: valid_session
+      get :show, params: {:id => taxon_name.id.to_s}, session: valid_session
       expect(assigns(:taxon_name)).to eq(taxon_name.becomes(taxon_name.type.constantize))
     end
   end
@@ -75,7 +75,7 @@ describe TaxonNamesController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested taxon_name as @taxon_name" do
       taxon_name = TaxonName.create! valid_attributes
-      get :edit, params: {:id => taxon_name.to_param}, session: valid_session
+      get :edit, params: {:id => taxon_name.id.to_s}, session: valid_session
       expect(assigns(:taxon_name)).to eq(taxon_name.becomes(taxon_name.type.constantize))
     end
   end
@@ -128,18 +128,18 @@ describe TaxonNamesController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(TaxonName).to receive(:update).with(update_params)
-        put :update, params: {:id => taxon_name.to_param, :taxon_name => {'name' => 'MyString'}}, session: valid_session
+        put :update, params: {:id => taxon_name.id.to_s, :taxon_name => {'name' => 'MyString'}}, session: valid_session
       end
 
       it 'assigns the requested taxon_name as @taxon_name' do
         taxon_name = TaxonName.create! valid_attributes
-        put :update, params: {:id => taxon_name.to_param, :taxon_name => valid_attributes}, session: valid_session
+        put :update, params: {:id => taxon_name.id.to_s, :taxon_name => valid_attributes}, session: valid_session
         expect(assigns(:taxon_name)).to eq(taxon_name.becomes(taxon_name.type.constantize))
       end
 
       it 'redirects to the taxon_name' do
         taxon_name = TaxonName.create! valid_attributes
-        put :update, params: {:id => taxon_name.to_param, :taxon_name => valid_attributes}, session: valid_session
+        put :update, params: {:id => taxon_name.id.to_s, :taxon_name => valid_attributes}, session: valid_session
         expect(response).to redirect_to(taxon_name.becomes(TaxonName))
       end
     end
@@ -149,7 +149,7 @@ describe TaxonNamesController, :type => :controller do
         taxon_name = TaxonName.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(TaxonName).to receive(:save).and_return(false)
-        put :update, params: {:id => taxon_name.to_param, :taxon_name => {"name" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => taxon_name.id.to_s, :taxon_name => {"name" => "invalid value"}}, session: valid_session
         expect(assigns(:taxon_name)).to eq(taxon_name.becomes(taxon_name.type.constantize))
       end
 
@@ -157,7 +157,7 @@ describe TaxonNamesController, :type => :controller do
         taxon_name = TaxonName.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(TaxonName).to receive(:save).and_return(false)
-        put :update, params: {:id => taxon_name.to_param, :taxon_name => {"name" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => taxon_name.id.to_s, :taxon_name => {"name" => "invalid value"}}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -166,13 +166,13 @@ describe TaxonNamesController, :type => :controller do
       it "destroys the requested taxon_name" do
         taxon_name = TaxonName.create! valid_attributes
         expect {
-          delete :destroy, params: {:id => taxon_name.to_param}, session: valid_session
+          delete :destroy, params: {:id => taxon_name.id.to_s}, session: valid_session
         }.to change(TaxonName, :count).by(-1)
       end
 
       it "redirects to the taxon_name list" do
         taxon_name = TaxonName.create! valid_attributes
-        delete :destroy, params: {:id => taxon_name.to_param}, session: valid_session
+        delete :destroy, params: {:id => taxon_name.id.to_s}, session: valid_session
         expect(response).to redirect_to(taxon_names_url)
       end
     end

@@ -52,7 +52,7 @@ RSpec.describe ConfidencesController, type: :controller do
   # describe "GET #show" do
   #   it "assigns the requested confidence as @confidence" do
   #     confidence = Confidence.create! valid_attributes
-  #     get :show, params: {id: confidence.to_param}, session: valid_session
+  #     get :show, params: {id: confidence.id.to_s}, session: valid_session
   #     expect(assigns(:confidence)).to eq(confidence)
   #   end
   # end
@@ -67,7 +67,7 @@ RSpec.describe ConfidencesController, type: :controller do
   # describe "GET #edit" do
   #   it "assigns the requested confidence as @confidence" do
   #     confidence = Confidence.create! valid_attributes
-  #     get :edit, params: {id: confidence.to_param}, session: valid_session
+  #     get :edit, params: {id: confidence.id.to_s}, session: valid_session
   #     expect(assigns(:confidence)).to eq(confidence)
   #   end
   # end
@@ -115,25 +115,25 @@ RSpec.describe ConfidencesController, type: :controller do
     context "with valid params" do
       let(:new_confidence_level) { FactoryGirl.create(:valid_confidence_level) }
       let(:new_attributes) {
-        { confidence_level_id: new_confidence_level.to_param  }
+        {confidence_level_id: new_confidence_level.id.to_s}
       }
 
       it "updates the requested confidence" do
         confidence = Confidence.create! valid_attributes
-        put :update, params: {id: confidence.to_param, confidence: new_attributes}, session: valid_session
+        put :update, params: {id: confidence.id.to_s, confidence: new_attributes}, session: valid_session
         confidence.reload
         expect(confidence.confidence_level).to eq(new_confidence_level)
       end
 
       it "assigns the requested confidence as @confidence" do
         confidence = Confidence.create! valid_attributes
-        put :update, params: {id: confidence.to_param, confidence: valid_attributes}, session: valid_session
+        put :update, params: {id: confidence.id.to_s, confidence: valid_attributes}, session: valid_session
         expect(assigns(:confidence)).to eq(confidence)
       end
 
       it "redirects to the confidence" do
         confidence = Confidence.create! valid_attributes
-        put :update, params: {id: confidence.to_param, confidence: valid_attributes}, session: valid_session
+        put :update, params: {id: confidence.id.to_s, confidence: valid_attributes}, session: valid_session
         expect(response).to redirect_to(confidence)
       end
     end
@@ -142,14 +142,14 @@ RSpec.describe ConfidencesController, type: :controller do
       it "assigns the confidence as @confidence" do
         confidence = Confidence.create! valid_attributes
         allow_any_instance_of(Confidence).to receive(:save).and_return(false)
-        put :update, params: {id: confidence.to_param, confidence: invalid_attributes}, session: valid_session
+        put :update, params: {id: confidence.id.to_s, confidence: invalid_attributes}, session: valid_session
         expect(assigns(:confidence)).to eq(confidence)
       end
 
       it "re-renders the 'edit' template" do
         confidence = Confidence.create! valid_attributes
         allow_any_instance_of(Confidence).to receive(:save).and_return(false)
-        put :update, params: {id: confidence.to_param, confidence: invalid_attributes}, session: valid_session
+        put :update, params: {id: confidence.id.to_s, confidence: invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -164,12 +164,12 @@ RSpec.describe ConfidencesController, type: :controller do
 
     it "destroys the requested confidence" do
       expect {
-        delete :destroy, params: {id: @confidence.to_param}, session: valid_session
+        delete :destroy, params: {id: @confidence.id.to_s}, session: valid_session
       }.to change(Confidence, :count).by(-1)
     end
 
     it "redirects to the confidences list" do
-      delete :destroy, params: {id: @confidence.to_param}, session: valid_session
+      delete :destroy, params: {id: @confidence.id.to_s}, session: valid_session
       expect(response).to redirect_to(confidences_url)
     end
   end

@@ -46,7 +46,7 @@ describe NamespacesController, :type => :controller do
   describe "GET show" do
     it "assigns the requested namespace as @namespace" do
       namespace = Namespace.create! valid_attributes
-      get :show, params: {:id => namespace.to_param}, session: valid_session
+      get :show, params: {:id => namespace.id.to_s}, session: valid_session
       expect(assigns(:namespace)).to eq(namespace)
     end
   end
@@ -61,7 +61,7 @@ describe NamespacesController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested namespace as @namespace" do
       namespace = Namespace.create! valid_attributes
-      get :edit, params: {:id => namespace.to_param}, session: valid_session
+      get :edit, params: {:id => namespace.id.to_s}, session: valid_session
       expect(assigns(:namespace)).to eq(namespace)
     end
   end
@@ -114,18 +114,18 @@ describe NamespacesController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(Namespace).to receive(:update).with(update_params)
-        put :update, params: {:id => namespace.to_param, :namespace => {'institution' => 'MyString'}}, session: valid_session
+        put :update, params: {:id => namespace.id.to_s, :namespace => {'institution' => 'MyString'}}, session: valid_session
       end
 
       it 'assigns the requested namespace as @namespace' do
         namespace = Namespace.create! valid_attributes
-        put :update, params: {:id => namespace.to_param, :namespace => valid_attributes}, session: valid_session
+        put :update, params: {:id => namespace.id.to_s, :namespace => valid_attributes}, session: valid_session
         expect(assigns(:namespace)).to eq(namespace)
       end
 
       it 'redirects to the namespace' do
         namespace = Namespace.create! valid_attributes
-        put :update, params: {:id => namespace.to_param, :namespace => valid_attributes}, session: valid_session
+        put :update, params: {:id => namespace.id.to_s, :namespace => valid_attributes}, session: valid_session
         expect(response).to redirect_to(namespace)
       end
     end
@@ -135,7 +135,7 @@ describe NamespacesController, :type => :controller do
         namespace = Namespace.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Namespace).to receive(:save).and_return(false)
-        put :update, params: {:id => namespace.to_param, :namespace => { "institution" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => namespace.id.to_s, :namespace => {"institution" => "invalid value"}}, session: valid_session
         expect(assigns(:namespace)).to eq(namespace)
       end
 
@@ -143,7 +143,7 @@ describe NamespacesController, :type => :controller do
         namespace = Namespace.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(Namespace).to receive(:save).and_return(false)
-        put :update, params: {:id => namespace.to_param, :namespace => { "institution" => "invalid value" }}, session: valid_session
+        put :update, params: {:id => namespace.id.to_s, :namespace => {"institution" => "invalid value"}}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -153,13 +153,13 @@ describe NamespacesController, :type => :controller do
     it "destroys the requested namespace" do
       namespace = Namespace.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => namespace.to_param}, session: valid_session
+        delete :destroy, params: {:id => namespace.id.to_s}, session: valid_session
       }.to change(Namespace, :count).by(-1)
     end
 
     it "redirects to the namespaces list" do
       namespace = Namespace.create! valid_attributes
-      delete :destroy, params: {:id => namespace.to_param}, session: valid_session
+      delete :destroy, params: {:id => namespace.id.to_s}, session: valid_session
       expect(response).to redirect_to(namespaces_url)
     end
   end

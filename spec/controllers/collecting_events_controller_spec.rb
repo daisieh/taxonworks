@@ -59,7 +59,7 @@ describe CollectingEventsController, :type => :controller do
   describe "GET show" do
     it "assigns the requested collecting_event as @collecting_event" do
       collecting_event = CollectingEvent.create! valid_attributes
-      get :show, params: {:id => collecting_event.to_param}, session: valid_session
+      get :show, params: {:id => collecting_event.id.to_s}, session: valid_session
       expect(assigns(:collecting_event)).to eq(collecting_event)
     end
   end
@@ -74,7 +74,7 @@ describe CollectingEventsController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested collecting_event as @collecting_event" do
       collecting_event = CollectingEvent.create! valid_attributes
-      get :edit, params: {:id => collecting_event.to_param}, session: valid_session
+      get :edit, params: {:id => collecting_event.id.to_s}, session: valid_session
       expect(assigns(:collecting_event)).to eq(collecting_event)
     end
   end
@@ -126,18 +126,18 @@ describe CollectingEventsController, :type => :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         expect_any_instance_of(CollectingEvent).to receive(:update).with(update_params)
-        put :update, params: {:id => collecting_event.to_param, :collecting_event => {'verbatim_label' => 'MyText'}}, session: valid_session
+        put :update, params: {:id => collecting_event.id.to_s, :collecting_event => {'verbatim_label' => 'MyText'}}, session: valid_session
       end
 
       it "assigns the requested collecting_event as @collecting_event" do
         collecting_event = CollectingEvent.create! valid_attributes
-        put :update, params: {:id => collecting_event.to_param, :collecting_event => valid_attributes}, session: valid_session
+        put :update, params: {:id => collecting_event.id.to_s, :collecting_event => valid_attributes}, session: valid_session
         expect(assigns(:collecting_event)).to eq(collecting_event)
       end
 
       it "redirects to the collecting_event" do
         collecting_event = CollectingEvent.create! valid_attributes
-        put :update, params: {:id => collecting_event.to_param, :collecting_event => valid_attributes}, session: valid_session
+        put :update, params: {:id => collecting_event.id.to_s, :collecting_event => valid_attributes}, session: valid_session
         expect(response).to redirect_to(collecting_event)
       end
     end
@@ -147,7 +147,7 @@ describe CollectingEventsController, :type => :controller do
         collecting_event = CollectingEvent.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CollectingEvent).to receive(:save).and_return(false)
-        put :update, params: {:id => collecting_event.to_param, :collecting_event => {"verbatim_label" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => collecting_event.id.to_s, :collecting_event => {"verbatim_label" => "invalid value"}}, session: valid_session
         expect(assigns(:collecting_event)).to eq(collecting_event)
       end
 
@@ -155,7 +155,7 @@ describe CollectingEventsController, :type => :controller do
         collecting_event = CollectingEvent.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(CollectingEvent).to receive(:save).and_return(false)
-        put :update, params: {:id => collecting_event.to_param, :collecting_event => {"verbatim_label" => "invalid value"}}, session: valid_session
+        put :update, params: {:id => collecting_event.id.to_s, :collecting_event => {"verbatim_label" => "invalid value"}}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -165,13 +165,13 @@ describe CollectingEventsController, :type => :controller do
     it "destroys the requested collecting_event" do
       collecting_event = CollectingEvent.create! valid_attributes
       expect {
-        delete :destroy, params: {:id => collecting_event.to_param}, session: valid_session
+        delete :destroy, params: {:id => collecting_event.id.to_s}, session: valid_session
       }.to change(CollectingEvent, :count).by(-1)
     end
 
     it "redirects to the collecting_events list" do
       collecting_event = CollectingEvent.create! valid_attributes
-      delete :destroy, params: {:id => collecting_event.to_param}, session: valid_session
+      delete :destroy, params: {:id => collecting_event.id.to_s}, session: valid_session
       expect(response).to redirect_to(collecting_events_url)
     end
   end
