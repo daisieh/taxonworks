@@ -374,7 +374,7 @@ class CollectingEvent < ApplicationRecord
     def in_date_range(search_start_date: nil, search_end_date: nil, partial_overlap: 'on')
       allow_partial = (partial_overlap.downcase == 'off' ? false : true)
       sql_string    = date_sql_from_dates(search_start_date, search_end_date, allow_partial)
-      where(sql_string).uniq # TODO: uniq should likely not be here
+      where(sql_string).distinct
     end
 
     # @param [Hash] of parameters in the style of 'params'
@@ -663,9 +663,7 @@ class CollectingEvent < ApplicationRecord
   def nearest_by_levenshtein(compared_string = nil, column = 'verbatim_locality', limit = 10)
     return CollectingEvent.none if compared_string.nil?
     order_str = CollectingEvent.send(:sanitize_sql_for_conditions, ["levenshtein(collecting_events.#{column}, ?)", compared_string])
-    CollectingEvent.where('id <> ?', self.to_param).
-      order(order_str).
-      limit(limit)
+    CollectingEvent.where('id <> ?', self.id.to_s).order(order_str).limit(limit)
   end
 
   # @param [String]
@@ -783,14 +781,15 @@ class CollectingEvent < ApplicationRecord
       #  Struck EGI, EGI must contain GI, therefor anything that contains EGI contains GI, threfor containing GI will always be the bigger set
       #   !! and there was no tests broken
       # GeographicItem.are_contained_in_item('any_poly', self.geographic_items.to_a).pluck(:id).uniq
-      gi_list = GeographicItem.containing(*geographic_items.pluck(:id)).pluck(:id).uniq
+      gi_list = GeographicItem.containing(*geographic_items.pluck(:id)).pluck(:id).distinct
 
     else
       # use geographic_area only if there are no GIs or EGIs
       unless self.geographic_area.nil?
         # unless self.geographic_area.geographic_items.empty?
         # we need to use the geographic_area directly
-        gi_list = GeographicItem.are_contained_in_item('any_poly', self.geographic_area.geographic_items).pluck(:id).uniq
+        gi_list = GeographicItem.are_contained_in_item('any_poly', self.geographic_area
+                                                                     .geographic_items).pluck(:id).distinct
         # end
       end
     end

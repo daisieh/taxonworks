@@ -3,7 +3,7 @@ module GeographicItemsHelper
 
   def geographic_item_tag(geographic_item)
     return nil if geographic_item.nil?
-    geographic_item.to_param 
+    geographic_item.to_param
   end
 
   def json_tag(geographic_item)
@@ -41,17 +41,17 @@ module GeographicItemsHelper
 
   def children_through_geographic_areas_links(geographic_item)
     data = {}
-    geographic_item.geographic_areas.each do |a| 
+    geographic_item.geographic_areas.each do |a|
       a.children.collect{ |c|
         data.merge!(c =>  c.geographic_items.all)
       }
-    end 
+    end
 
     links = []
     data.each do |k,v|
       next if v.nil?
       links += v.collect{ |i| geographic_item_link(i, k.name) }
-    end 
+    end
     links.join(', ').html_safe
   end
 

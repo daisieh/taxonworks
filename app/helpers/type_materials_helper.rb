@@ -2,7 +2,7 @@ module TypeMaterialsHelper
 
   def type_material_tag(type_material)
     return nil if type_material.nil?
-    type_material.to_param
+    type_material.id.to_s
   end
 
   def type_material_link(type_material)

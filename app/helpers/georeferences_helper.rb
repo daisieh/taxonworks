@@ -3,7 +3,7 @@ module GeoreferencesHelper
   # Needs to turn into a gmap with the item displayed
   def georeference_tag(georeference)
     return nil if georeference.nil?
-    georeference.to_param
+    georeference.id.to_s
   end
 
   def get_gr(gr_result)

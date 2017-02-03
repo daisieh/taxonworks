@@ -37,13 +37,13 @@ module ContainersHelper
   #    a string representation of the containers location, includes disposition of the containers if provided
   def container_location(object)
     return nil if !object.containable?
-    parts = [] 
-    object.enclosing_containers.each do |c| 
+    parts = []
+    object.enclosing_containers.each do |c|
       s = c.name.blank? ? c.class.class_name : c.name
-      s += " [#{c.disposition}]" if !c.disposition.blank? 
-      parts.push s 
+      s += " [#{c.disposition}]" if !c.disposition.blank?
+      parts.push s
     end
-    parts.join("; ") 
+    parts.join("; ")
   end
 
   # TODO: move content to containers/_card
