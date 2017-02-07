@@ -2,19 +2,20 @@
 #
 # @!attribute keyword_id
 #   @return [Integer]
-#      the keyword used in this tag 
+#     the controlled vocabulary term used in the tag 
 #
 # @!attribute tag_object_id
 #   @return [Integer]
-#      Rails polymorphic, id of the object being tagged
+#      Rails polymorphic. The id of of the object being tagged.
 #
 # @!attribute tag_object_type
 #   @return [String]
-#      Rails polymorphic, type of the object being tagged 
+#      Rails polymorphic.  The type of the object being tagged. 
 #
 # @!attribute tag_object_attribute
 #   @return [String]
-#      the specific attribute being referenced with the tag (not required)
+#      the specific attribute (column) that this tag is in reference to.  Optional.  When not
+#      provided the tag pertains to the whole object. 
 #
 # @!attribute project_id
 #   @return [Integer]
@@ -22,28 +23,33 @@
 #
 # @!attribute position
 #   @return [Integer]
-#     acts_as_list sort, scope is tagged object
-#
-class Tag < ApplicationRecord
+#     a user definable sort code on the tags on an object, handled by acts_as_list
+#      
+class Tag < ActiveRecord::Base
   include Housekeeping
   include Shared::IsData
   include Shared::AttributeAnnotations
-  include Shared::MatrixHooks
 
-  acts_as_list scope: [:keyword_id]
+  acts_as_list scope: [:tag_object_id, :tag_object_type]
 
-  belongs_to :keyword
+  belongs_to :keyword, inverse_of: :tags, validate: true
   belongs_to :tag_object, polymorphic: true
 
   # Not all tagged subclasses are keyword based, use this object for display
-  belongs_to :controlled_vocabulary_term, foreign_key: :keyword_id 
+  belongs_to :controlled_vocabulary_term, foreign_key: :keyword_id, inverse_of: :tags
 
   validates :keyword, presence: true
-  validate :keyword_is_allowed_on_object, :object_can_be_tagged_with_keyword
+  validate :keyword_is_allowed_on_object
+  validate :object_can_be_tagged_with_keyword
 
   validates_uniqueness_of :keyword_id, scope: [:tag_object_id, :tag_object_type]
 
   accepts_nested_attributes_for :keyword, reject_if: :reject_keyword, allow_destroy: true
+
+  # The column name containing the attribute name being annotated
+  def self.annotated_attribute_column
+    :tag_object_attribute
+  end
 
   def tag_object_class
     tag_object.class
@@ -58,56 +64,16 @@ class Tag < ApplicationRecord
   end
 
   def self.find_for_autocomplete(params)
-    # where('name LIKE ?', "#{params[:term]}%")
-    # todo: @mjy below code is running but not giving results we want
+    # TODO: @mjy below code is running but not giving results we want
     terms = params[:term].split.collect { |t| "'#{t}%'" }.join(' or ')
-    joins(:keyword).where('controlled_vocabulary_terms.name like ?', terms).with_project_id(params[:project_id]) # "#{params[:term]}%" )
+    joins(:keyword).where('controlled_vocabulary_terms.name like ?', terms).with_project_id(params[:project_id]) 
+    terms
   end
 
   # @return [TagObject]
   #   alias to simplify reference across classes 
   def annotated_object
     tag_object
-  end
-
-  # the column name containing the attribute name being annotated
-  def self.annotated_attribute_column
-    :tag_object_attribute
-  end
-
-  def self.generate_download(scope)
-    CSV.generate do |csv|
-      csv << column_names
-      scope.order(id: :asc).find_each do |o|
-        csv << o.attributes.values_at(*column_names).collect { |i|
-          i.to_s.gsub(/\n/, '\n').gsub(/\t/, '\t')
-        }
-      end
-    end
-  end
-
-  # @return [{"matrix_column_item": matrix_column_item, "descriptor": descriptor}, false]
-  #   the hash corresponding to the keyword used in this tag if it exists
-  def matrix_column_item
-    mci = MatrixColumnItem::TaggedDescriptor.where(controlled_vocabulary_term_id: keyword_id).limit(1)
-
-    if mci.any?
-      return { "matrix_column_item": mci.first, "descriptor": tag_object }
-    else
-      return false
-    end
-  end
-
-  # @return [{"matrix_row_item": matrix_column_item, "object": object}, false]
-  # the hash corresponding to the keyword used in this tag if it exists
-  def matrix_row_item
-    mri = MatrixRowItem::TaggedRowItem.where(controlled_vocabulary_term_id: keyword_id).limit(1)
-    
-    if mri.any?
-      return { "matrix_row_item": mri.first, "object": tag_object }
-    else
-      return false
-    end
   end
 
   protected

@@ -1,6 +1,6 @@
 # A taxonomic name (nomenclature only). See also NOMEN.
 #
-# There are 3 subclasses, Protonym, Combination, and Hybrid.  
+# There are 3 subclasses, Protonym, Combination, and Hybrid.
 #
 # @!attribute name
 #   @return [String, nil]
@@ -40,11 +40,11 @@
 #
 # @!attribute rank_class
 #   @return [String]
-#   The TW rank of this name 
+#   The TW rank of this name
 #
 # @!attribute type
 #   @return [String]
-#   The subclass of this taxon name, e.g. Protonym or Combination 
+#   The subclass of this taxon name, e.g. Protonym or Combination
 #
 # @!attribute project_id
 #   @return [Integer]
@@ -173,16 +173,16 @@ class TaxonName < ApplicationRecord
   validates_presence_of :type, message: 'is not specified'
 
   # TODO: think of a different name, and test
-  has_many :historical_taxon_names, class_name: 'TaxonName', foreign_key: :cached_valid_taxon_name_id 
+  has_many :historical_taxon_names, class_name: 'TaxonName', foreign_key: :cached_valid_taxon_name_id
 
   belongs_to :valid_taxon_name, class_name: 'TaxonName', foreign_key: :cached_valid_taxon_name_id
   has_one :source_classified_as_relationship, -> {
-    where(taxon_name_relationships: {type: 'TaxonNameRelationship::SourceClassifiedAs'} ) 
+    where(taxon_name_relationships: {type: 'TaxonNameRelationship::SourceClassifiedAs'} )
   }, class_name: 'TaxonNameRelationship::SourceClassifiedAs', foreign_key: :subject_taxon_name_id
 
-  has_one :source_classified_as, through: :source_classified_as_relationship, source: :object_taxon_name 
+  has_one :source_classified_as, through: :source_classified_as_relationship, source: :object_taxon_name
 
-  has_many :otus, inverse_of: :taxon_name, dependent: :restrict_with_error 
+  has_many :otus, inverse_of: :taxon_name, dependent: :restrict_with_error
   has_many :related_taxon_name_relationships, class_name: 'TaxonNameRelationship', foreign_key: :object_taxon_name_id, dependent: :restrict_with_error, inverse_of: :object_taxon_name
   has_many :taxon_name_author_roles, class_name: 'TaxonNameAuthor', as: :role_object, dependent: :destroy
   has_many :taxon_name_authors, through: :taxon_name_author_roles, source: :person
@@ -194,7 +194,7 @@ class TaxonName < ApplicationRecord
   accepts_nested_attributes_for :taxon_name_authors, :taxon_name_author_roles, allow_destroy: true
   accepts_nested_attributes_for :taxon_name_classifications, allow_destroy: true, reject_if: proc { |attributes| attributes['type'].blank?  }
 
-  scope :with_type, -> (type) {where(type: type)} 
+  scope :with_type, -> (type) {where(type: type)}
 
   scope :descendants_of, -> (taxon_name) { with_ancestor(taxon_name )}
   scope :ancestors_of, -> (taxon_name) { joins(:descendant_hierarchies)
@@ -203,7 +203,7 @@ class TaxonName < ApplicationRecord
     .where('taxon_name_hierarchies.ancestor_id != ?', taxon_name.id) }
 
   # this is subtly different, it includes self in present form, it also doesn't order
-  scope :ancestors_and_descendants_of, -> (taxon_name) { 
+  scope :ancestors_and_descendants_of, -> (taxon_name) {
     joins('LEFT OUTER JOIN taxon_name_hierarchies a ON taxon_names.id = a.descendant_id
              LEFT JOIN taxon_name_hierarchies b ON taxon_names.id = b.ancestor_id').
     where("(a.ancestor_id = ?) OR (b.descendant_id = ?)", taxon_name.id, taxon_name.id ).distinct }
@@ -222,24 +222,27 @@ class TaxonName < ApplicationRecord
   scope :as_object_with_taxon_name_relationship, -> (taxon_name_relationship) { includes(:related_taxon_name_relationships).where(taxon_name_relationships: {type: taxon_name_relationship}) }
   scope :as_object_with_taxon_name_relationship_base, -> (taxon_name_relationship) { includes(:related_taxon_name_relationships).where('taxon_name_relationships.type LIKE ?', "#{taxon_name_relationship}%").references(:related_taxon_name_relationships) }
   scope :as_object_with_taxon_name_relationship_containing, -> (taxon_name_relationship) { includes(:related_taxon_name_relationships).where('taxon_name_relationships.type LIKE ?', "%#{taxon_name_relationship}%").references(:related_taxon_name_relationships) }
+
   scope :with_taxon_name_relationship, -> (relationship) {
     joins('LEFT OUTER JOIN taxon_name_relationships tnr1 ON taxon_names.id = tnr1.subject_taxon_name_id').
-      joins('LEFT OUTER JOIN taxon_name_relationships tnr2 ON taxon_names.id = tnr2.object_taxon_name_id').
-      where('tnr1.type = ? OR tnr2.type = ?', relationship, relationship)
+    joins('LEFT OUTER JOIN taxon_name_relationships tnr2 ON taxon_names.id = tnr2.object_taxon_name_id').
+    where('tnr1.type = ? OR tnr2.type = ?', relationship, relationship)
   }
 
   # *Any* relationship where there IS a relationship for a subject/object/both
   scope :with_taxon_name_relationships_as_subject, -> { joins(:taxon_name_relationships) }
   scope :with_taxon_name_relationships_as_object, -> { joins(:related_taxon_name_relationships) }
+
   scope :with_taxon_name_relationships, -> {
     joins('LEFT OUTER JOIN taxon_name_relationships tnr1 ON taxon_names.id = tnr1.subject_taxon_name_id').
-      joins('LEFT OUTER JOIN taxon_name_relationships tnr2 ON taxon_names.id = tnr2.object_taxon_name_id').
-      where('tnr1.subject_taxon_name_id IS NOT NULL OR tnr2.object_taxon_name_id IS NOT NULL')
+    joins('LEFT OUTER JOIN taxon_name_relationships tnr2 ON taxon_names.id = tnr2.object_taxon_name_id').
+    where('tnr1.subject_taxon_name_id IS NOT NULL OR tnr2.object_taxon_name_id IS NOT NULL')
   }
 
   # *Any* relationship where there is NOT a relationship for a subject/object/both
   scope :without_subject_taxon_name_relationships, -> { includes(:taxon_name_relationships).where(taxon_name_relationships: {subject_taxon_name_id: nil}) }
   scope :without_object_taxon_name_relationships, -> { includes(:related_taxon_name_relationships).where(taxon_name_relationships: {object_taxon_name_id: nil}) }
+
   scope :without_taxon_name_relationships, -> {
     joins('LEFT OUTER JOIN taxon_name_relationships tnr1 ON taxon_names.id = tnr1.subject_taxon_name_id').
     joins('LEFT OUTER JOIN taxon_name_relationships tnr2 ON taxon_names.id = tnr2.object_taxon_name_id').
@@ -252,8 +255,8 @@ class TaxonName < ApplicationRecord
   scope :with_cached_original_combination, -> (original_combination) { where(cached_original_combination: original_combination) }
   scope :with_cached_html, -> (html) { where(cached_html: html) }
 
-  # @return [Protonym(s)] the **broad sense** synonyms of this name 
-  def synonyms 
+  # @return [Protonym(s)] the **broad sense** synonyms of this name
+  def synonyms
     TaxonName.with_cached_valid_taxon_name_id(self.id)
   end
 
@@ -268,19 +271,32 @@ class TaxonName < ApplicationRecord
   #   all relationships where this taxon is an object or subject.
   def all_taxon_name_relationships
     # !! If self relationships are ever made possible this needs a DISTINCT clause
-    TaxonNameRelationship.find_by_sql("SELECT taxon_name_relationships.* FROM taxon_name_relationships WHERE taxon_name_relationships.subject_taxon_name_id = #{self.id} UNION
-                         SELECT taxon_name_relationships.* FROM taxon_name_relationships WHERE taxon_name_relationships.object_taxon_name_id = #{self.id}")
+    TaxonNameRelationship.find_by_sql(
+      "SELECT taxon_name_relationships.*
+         FROM taxon_name_relationships
+         WHERE taxon_name_relationships.subject_taxon_name_id = #{self.id}
+       UNION
+       SELECT taxon_name_relationships.*
+         FROM taxon_name_relationships
+         WHERE taxon_name_relationships.object_taxon_name_id = #{self.id}")
   end
 
   # @return [Array of TaxonName]
   #   all taxon_names which have relationships to this taxon as an object or subject.
   def related_taxon_names
-    TaxonName.find_by_sql("SELECT DISTINCT tn.* FROM taxon_names tn
-                      LEFT JOIN taxon_name_relationships tnr1 ON tn.id = tnr1.subject_taxon_name_id
-                      LEFT JOIN taxon_name_relationships tnr2 ON tn.id = tnr2.object_taxon_name_id
-                      WHERE tnr1.object_taxon_name_id = #{self.id} OR tnr2.subject_taxon_name_id = #{self.id};")
+       # This was *not* good (3 orders of magnitude slower on big tables):
+       # TaxonName.find_by_sql(
+       #   "SELECT DISTINCT tn.* FROM taxon_names tn
+       #                   LEFT JOIN taxon_name_relationships tnr1 ON tn.id = tnr1.subject_taxon_name_id
+       #                   LEFT JOIN taxon_name_relationships tnr2 ON tn.id = tnr2.object_taxon_name_id
+       #                   WHERE tnr1.object_taxon_name_id = #{self.id} OR tnr2.subject_taxon_name_id = #{self.id};")
+    TaxonName.find_by_sql(
+      "SELECT tn.* from taxon_names tn join taxon_name_relationships tnr1 on tn.id = tnr1.subject_taxon_name_id and tnr1.object_taxon_name_id = #{self.id}
+      UNION
+      SELECT tn.* from taxon_names tn join taxon_name_relationships tnr2 on tn.id = tnr2.object_taxon_name_id and tnr2.subject_taxon_name_id = #{self.id}"
+    )
   end
-  
+
   # @return [String]
   #   rank as human readable shortform, like 'genus' or 'species'
   def rank
@@ -345,7 +361,7 @@ class TaxonName < ApplicationRecord
     gender_instance.try(:type_class)
   end
 
-  # @return [TaxonNameClassification instance, nil]  
+  # @return [TaxonNameClassification instance, nil]
   #    the gender classification of this name, if provided
   def gender_instance
     taxon_name_classifications.with_type_base('TaxonNameClassification::Latinized::Gender').first
@@ -370,11 +386,11 @@ class TaxonName < ApplicationRecord
   # @return [String]
   #   part of speech of a species as string.
   def part_of_speech_name
-    part_of_speech_instance.try(:classification_label).try(:downcase) 
+    part_of_speech_instance.try(:classification_label).try(:downcase)
   end
 
   # @return [Array of String]
-  #   the unique string labels derived from TaxonNameClassifications 
+  #   the unique string labels derived from TaxonNameClassifications
   def statuses_from_classifications
     list = taxon_name_classifications_for_statuses
     list.empty? ? [] : list.collect{|c| c.classification_label }.sort
@@ -409,7 +425,7 @@ class TaxonName < ApplicationRecord
   # @return [Array of Protonym]
   #   for all names this name has been in combination with, select those names that are of the same rank (!! CONFIRM?)
   def combination_list_self
-    # list = 
+    # list =
     # return [] if list.empty?
     combination_list_all.select{|c| c.protonyms_by_rank[c.protonyms_by_rank.keys.last] == self}
   end
@@ -418,9 +434,9 @@ class TaxonName < ApplicationRecord
   #   combination of cached_html and cached_author_year.
   def cached_html_name_and_author_year
     [cached_html, cached_author_year].compact.join(' ')
- 
+
   end
- 
+
  # @return [String]
  #   combination of cached and cached_author_year.
  def cached_name_and_author_year
@@ -452,9 +468,9 @@ class TaxonName < ApplicationRecord
   end
 
   # @return [Boolean]
-  #   true if there is a relationship where then name is asserted to be invalid 
+  #   true if there is a relationship where then name is asserted to be invalid
   def relationship_invalid?
-    !first_possible_valid_taxon_name_relationship.nil? 
+    !first_possible_valid_taxon_name_relationship.nil?
   end
 
   # @return [Boolean]
@@ -469,7 +485,7 @@ class TaxonName < ApplicationRecord
     taxon_name_classifications.with_type_array(TAXON_NAME_CLASS_NAMES_UNAVAILABLE_AND_INVALID).any? # !TaxonNameClassification.where_taxon_name(self).with_type_array(TAXON_NAME_CLASS_NAMES_VALID).empty?
   end
 
-  #  @return [Boolean] 
+  #  @return [Boolean]
   #     return true if name is unavailable OR invalid, else false, checks both classifications and relationships
   def unavailable_or_invalid?
     return false if classification_valid?
@@ -484,7 +500,7 @@ class TaxonName < ApplicationRecord
   end
 
   # @return [True|False]
-  #   true if this name has a TaxonNameClassification of hybrid 
+  #   true if this name has a TaxonNameClassification of hybrid
   def hybrid?
     taxon_name_classifications.where_taxon_name(self).with_type_contains('Hybrid').any?
     #   !TaxonNameClassification.where_taxon_name(self).with_type_contains('Hybrid').empty? ? true : false
@@ -500,19 +516,20 @@ class TaxonName < ApplicationRecord
   # @return [TaxonNameRelationship]
   #  returns youngest taxon name relationship where self is the subject.
   def first_possible_valid_taxon_name_relationship
-    taxon_name_relationships.reload.with_type_array(TAXON_NAME_RELATIONSHIP_NAMES_INVALID).youngest_by_citation 
+    taxon_name_relationships.reload.with_type_array(TAXON_NAME_RELATIONSHIP_NAMES_INVALID).youngest_by_citation
   end
 
   # @return [TaxonName]
   #    returns the youngest #object_taxon_name from the youngest taxon name relationship.
   def first_possible_valid_taxon_name
     return self if !unavailable_or_invalid?                      # catches all cases where no Classifications or Relationships are provided
-    relationship = first_possible_valid_taxon_name_relationship  
+    relationship = first_possible_valid_taxon_name_relationship
     relationship.nil? ? self : relationship.object_taxon_name    # ?! probably the if is caught by unavailable_or_invalid already
    end
 
   # @return [Array of TaxonName]
   #  returns list of invalid names for a given taxon.
+  # TODO: Can't we just use #valid_id now?
   def list_of_invalid_taxon_names
     first_pass = true
     list = {}
@@ -538,7 +555,7 @@ class TaxonName < ApplicationRecord
 
   def gbif_status_array
     return nil if self.class.nil?
-    return ['combination'] if self.class == 'Combination' 
+    return ['combination'] if self.class == 'Combination'
     s1 = self.taxon_name_classifications.collect{|c| c.class.gbif_status}.compact
     return s1 unless s1.empty?
     s2 = self.taxon_name_relationships.collect{|r| r.class.gbif_status_of_subject}
@@ -603,7 +620,7 @@ class TaxonName < ApplicationRecord
     else
       n = self.name.squish
     end
-    
+
     return n
   end
 
@@ -681,12 +698,12 @@ class TaxonName < ApplicationRecord
     dependants = []
     original_combination_relationships = []
     combination_relationships = []
-    
+
     begin
       TaxonName.transaction do
 
         if rank_string =~/Species|Genus/
-          dependants =  TaxonName.with_type('Protonym').descendants_of(self).to_a # self.descendant_protonyms 
+          dependants =  TaxonName.with_type('Protonym').descendants_of(self).to_a # self.descendant_protonyms
           original_combination_relationships = TaxonNameRelationship.where_subject_is_taxon_name(self).with_type_contains('OriginalCombination')
           combination_relationships = TaxonNameRelationship.where_subject_is_taxon_name(self).with_type_contains('::Combination')
         end
@@ -747,7 +764,7 @@ class TaxonName < ApplicationRecord
                         cached_primary_homonym_alternative_spelling: self.get_genus_species(:original, :alternative))
   end
 
-  # Abstract method 
+  # Abstract method
   def set_cached
     true
   end
@@ -757,7 +774,7 @@ class TaxonName < ApplicationRecord
     true
   end
 
-  # overwridden in subclasses 
+  # overwridden in subclasses
   def set_cached_original_combination
     true
   end
@@ -781,7 +798,7 @@ class TaxonName < ApplicationRecord
   end
 
   def is_combination?
-    self.type == 'Combination' 
+    self.type == 'Combination'
   end
 
   # Returns an Array of ancestors
@@ -803,12 +820,12 @@ class TaxonName < ApplicationRecord
     if self.new_record?
       ancestors_through_parents
     else
-    
+
       self.self_and_ancestors.reload.to_a.reverse ## .self_and_ancestors returns empty array!!!!!!!
     end
   end
 
-  # @return [ [rank, prefix, name], ...] for genus and below 
+  # @return [ [rank, prefix, name], ...] for genus and below
   # @taxon_name.full_name_array # =>  {"genus"=>[nil, "Aus"], "subgenus"=>[nil, "Aus"], "section"=>["sect.", "Aus"], "series"=>["ser.", "Aus"], "species"=>[nil, "aaa"], "subspecies"=>[nil, "bbb"], "variety"=>["var.", "ccc"]\}
   def full_name_array
     gender = nil
@@ -823,14 +840,14 @@ class TaxonName < ApplicationRecord
   end
 
   # @!return [ { rank => [prefix, name] }
-  #   Returns a hash of rank => [prefix, name] for genus and below 
-  # @taxon_name.full_name_hash # => 
-  #      {"genus" => [nil, "Aus"], 
-  #       "subgenus" => [nil, "Aus"], 
-  #       "section" => ["sect.", "Aus"], 
-  #       "series" => ["ser.", "Aus"], 
-  #       "species" => [nil, "aaa"], 
-  #       "subspecies" => [nil, "bbb"], 
+  #   Returns a hash of rank => [prefix, name] for genus and below
+  # @taxon_name.full_name_hash # =>
+  #      {"genus" => [nil, "Aus"],
+  #       "subgenus" => [nil, "Aus"],
+  #       "section" => ["sect.", "Aus"],
+  #       "series" => ["ser.", "Aus"],
+  #       "species" => [nil, "aaa"],
+  #       "subspecies" => [nil, "bbb"],
   #       "variety" => ["var.", "ccc"]}
   def full_name_hash
 
@@ -853,7 +870,7 @@ class TaxonName < ApplicationRecord
   end
 
   # @return [String]
-  #  a monomial if names is above genus, or a full epithet if below. 
+  #  a monomial if names is above genus, or a full epithet if below.
   def get_full_name
     return verbatim_name if type != 'Combination' && !GENUS_AND_SPECIES_RANK_NAMES.include?(rank_string) && !verbatim_name.nil?
     return name if type != 'Combination' && !GENUS_AND_SPECIES_RANK_NAMES.include?(rank_string)
@@ -879,7 +896,7 @@ class TaxonName < ApplicationRecord
     return "#{eo}#{verbatim_name}#{ec}".gsub(' f. ', ec + ' f. ' + eo).gsub(' var. ', ec + ' var. ' + eo) if !self.verbatim_name.nil? && self.type == 'Combination'
     return "#{eo}#{name}#{ec}" if self.rank_string == 'NomenclaturalRank::Iczn::GenusGroup::Supergenus'
     d = full_name_hash
-   
+
     elements = []
     d['genus'] = [nil, '[' + self.original_genus.cached_html + ']'] if !d['genus'] && self.original_genus
     d['genus'] = [nil, '[GENUS UNKNOWN]'] unless d['genus']
@@ -1056,7 +1073,7 @@ class TaxonName < ApplicationRecord
     elsif self_option == :alternative
       name1 = self.name_with_alternative_spelling
     end
-    
+
     return nil if genus.nil? && name1.nil?
     (genus.to_s + ' ' + name1.to_s).squish
   end
@@ -1098,7 +1115,7 @@ class TaxonName < ApplicationRecord
       t  += ['(' + m_obj.year_integer.to_s + ')'] unless m_obj.year_integer.nil?
       ay = t.compact.join(' ')
     end
-    
+
     ay.blank? ? nil : ay
   end
 
@@ -1170,10 +1187,10 @@ class TaxonName < ApplicationRecord
   end
 
   # A proxy for a scope
-  # @return [Array of TaxonName] 
+  # @return [Array of TaxonName]
   #   ordered by rank
   def self.sort_by_rank(taxon_names)
-    taxon_names.sort!{|a,b| RANKS.index(a.rank_string) <=> RANKS.index(b.rank_string)} 
+    taxon_names.sort!{|a,b| RANKS.index(a.rank_string) <=> RANKS.index(b.rank_string)}
   end
 
   #endregion
@@ -1207,9 +1224,9 @@ class TaxonName < ApplicationRecord
     if siblings.any?
       siblings = self_and_siblings.order(:cached).pluck(:id)
       s = siblings.index(id)
-      TaxonName.find(siblings[ s - 1]) if s != 0 
+      TaxonName.find(siblings[ s - 1]) if s != 0
     else
-      nil 
+      nil
     end
   end
 
@@ -1248,9 +1265,9 @@ class TaxonName < ApplicationRecord
   def validate_one_root_per_project
     if new_record? || project_id_changed?
       if !parent_is_set? && TaxonName.where(parent_id: nil, project_id: self.project_id).count > 0
-        errors.add(:parent_id, 'is empty, only one root is allowed per project') 
+        errors.add(:parent_id, 'is empty, only one root is allowed per project')
       end
-    end 
+    end
   end
 
   def check_new_parent_class
@@ -1294,7 +1311,7 @@ class TaxonName < ApplicationRecord
 
     if self.rank_class
       # TODO: name these Regexp somewhere
-      if (self.name =~ /^[a-zA-Z]*$/) || # !! should reference NOT_LATIN 
+      if (self.name =~ /^[a-zA-Z]*$/) || # !! should reference NOT_LATIN
           (nomenclatural_code == :iczn && self.name =~ /^[a-zA-Z]-[a-zA-Z]*$/) ||
           (nomenclatural_code == :icn && self.name =~  /^[a-zA-Z]*-[a-zA-Z]*$/) ||
           (nomenclatural_code == :icn && self.name =~ /^[a-zA-Z]*\s×\s[a-zA-Z]*$/) ||
@@ -1376,7 +1393,7 @@ class TaxonName < ApplicationRecord
       classification_names = classifications.map { |i| i.type_name }
       compare              = TAXON_NAME_CLASS_NAMES_UNAVAILABLE_AND_INVALID & classification_names
       unless compare.empty?
-        
+
 
         unless Protonym.with_parent_taxon_name(self).without_taxon_name_classification_array(TAXON_NAME_CLASS_NAMES_UNAVAILABLE_AND_INVALID).empty?
 
@@ -1450,6 +1467,7 @@ class TaxonName < ApplicationRecord
     false
   end
 
+  # TODO: does this make sense now, with #valid_taxon_name_id in place?
   def sv_not_synonym_of_self
     if list_of_invalid_taxon_names.include?(self)
       soft_validations.add(:base, "Taxon has two conflicting relationships (invalidating and validating). To resolve a conflict, add a status 'valid' to a valid taxon.")
