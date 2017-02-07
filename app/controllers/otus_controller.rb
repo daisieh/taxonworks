@@ -83,7 +83,7 @@ class OtusController < ApplicationController
   end
 
   def autocomplete
-    @otus = Otu.find_for_autocomplete(params.merge(project_id: sessions_current_project_id)).includes(:taxon_name)
+    @otus = Queries::OtuAutocompleteQuery.new(params.require(:term), project_id: sessions_current_project_id).all
 
     data = @otus.collect do |t|
       {id:              t.id,
