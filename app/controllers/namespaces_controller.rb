@@ -3,14 +3,14 @@ class NamespacesController < ApplicationController
 def batch_load
 end
 
-def preview_simple_batch_load 
-  if params[:file] 
+def preview_simple_batch_load
+  if params[:file]
     @result = BatchLoad::Import::Namespaces::SimpleInterpreter.new(batch_params)
     digest_cookie(params[:file].tempfile, :Simple_namespaces_md5)
     render 'namespaces/batch_load/simple/preview'
   else
     flash[:notice] = "No file provided!"
-    redirect_to action: :batch_load 
+    redirect_to action: :batch_load
   end
 end
 
@@ -138,6 +138,7 @@ end
   end
 
   def batch_params
-    params.permit(:file, :import_level).merge(user_id: sessions_current_user_id, project_id: $project_id).symbolize_keys
+    params.permit(:file, :import_level).merge(user_id:    sessions_current_user_id,
+                                              project_id: $project_id).to_h.symbolize_keys
   end
 end

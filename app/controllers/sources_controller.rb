@@ -149,7 +149,7 @@ class SourcesController < ApplicationController
     else
       sha256 = Digest::SHA256.file(params[:file].tempfile)
       if cookies[:batch_sources_md5] == sha256.hexdigest
-        if result_hash = Source.batch_create(params.symbolize_keys.to_h)
+        if result_hash = Source.batch_create(params.to_h.symbolize_keys)
           @count         = result_hash[:count]
           @sources       = result_hash[:records]
           flash[:notice] = "Successfully batch created #{@count} sources."

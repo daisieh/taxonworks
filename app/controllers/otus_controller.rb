@@ -128,7 +128,7 @@ class OtusController < ApplicationController
       end
       render(:batch_load)
     end
-    # if @otus = Otu.batch_create(params.symbolize_keys.to_h)
+    # if @otus = Otu.batch_create(params.to_h.symbolize_keys)
     #   flash[:notice] = "Successfully batch created #{@otus.count} OTUs."
     # else
     #   # TODOne: more response
@@ -229,7 +229,8 @@ class OtusController < ApplicationController
   end
 
   def batch_params
-    params.permit(:name, :file, :import_level, :files => []).merge(user_id: sessions_current_user_id, project_id: $project_id).symbolize_keys
+    params.permit(:name, :file, :import_level, :files => []).merge(user_id:    sessions_current_user_id,
+                                                                   project_id: $project_id).to_h.symbolize_keys
   end
 
   def user_map

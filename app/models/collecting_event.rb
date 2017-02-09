@@ -789,7 +789,7 @@ class CollectingEvent < ApplicationRecord
         # unless self.geographic_area.geographic_items.empty?
         # we need to use the geographic_area directly
         gi_list = GeographicItem.are_contained_in_item('any_poly', self.geographic_area
-                                                                     .geographic_items).pluck(:id).distinct
+                                                                     .geographic_items).pluck(:id).uniq
         # end
       end
     end

@@ -64,7 +64,7 @@ class CollectingEventsController < ApplicationController
   end
 
   def card
-   @target = params[:target] 
+    @target = params[:target]
   end
 
   def test
@@ -171,6 +171,7 @@ class CollectingEventsController < ApplicationController
   end
 
   def batch_params
-    params.permit(:ce_namespace, :file, :import_level).merge(user_id: sessions_current_user_id, project_id: $project_id).symbolize_keys
+    params.permit(:ce_namespace, :file, :import_level).merge(user_id:    sessions_current_user_id,
+                                                             project_id: $project_id).to_h.symbolize_keys
   end
 end

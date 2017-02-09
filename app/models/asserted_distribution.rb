@@ -1,7 +1,7 @@
-# An AssertedDistribution is the source-backed assertion that a taxon (OTU) is present in some *spatial area*.  It requires a Citation indicating where/who made the assertion.  
+# An AssertedDistribution is the source-backed assertion that a taxon (OTU) is present in some *spatial area*.  It requires a Citation indicating where/who made the assertion.
 # In TaxonWorks the areas are drawn from GeographicAreas, which essentially represent a gazeteer of 3 levels of subdivision (e.g. country, state, county).
 #
-# AssertedDistributions can be asserts that the source indicates that a taxon is NOT present in an area.  This is a "positive negative" in , i.e. the Source can be thought of recording evidence that a taxon is not present. TaxonWorks does not differentiate between types of negative evidence.  
+# AssertedDistributions can be asserts that the source indicates that a taxon is NOT present in an area.  This is a "positive negative" in , i.e. the Source can be thought of recording evidence that a taxon is not present. TaxonWorks does not differentiate between types of negative evidence.
 #
 #
 # @!attribute otu_id
@@ -35,13 +35,13 @@ class AssertedDistribution < ApplicationRecord
   include Shared::Citable
 
   include Shared::IsDwcOccurrence
-  include AssertedDistribution::DwcExtensions 
+  include AssertedDistribution::DwcExtensions
 
   belongs_to :otu, inverse_of: :asserted_distributions
   belongs_to :geographic_area, inverse_of: :asserted_distributions
 
-  accepts_nested_attributes_for :otu, allow_destroy: false, reject_if: proc { |attributes| attributes['name'].blank? && attributes['taxon_name_id'].blank?  }
-  
+  accepts_nested_attributes_for :otu, allow_destroy: false, reject_if: proc { |attributes| attributes['name'].blank? && attributes['taxon_name_id'].blank? }
+
   # validates_presence_of :otu_id, message: 'Taxon is not specified', if:  proc { |attributes| attributes['otu_id'].nil?  ( attributes['otu_attributes'] && (!attributes['otu_attributes']['name'] || !attributes['otu_attributes']['taxon_name_id']))}
   validates_presence_of :geographic_area_id, message: 'geographic area is not selected'
 
@@ -52,7 +52,7 @@ class AssertedDistribution < ApplicationRecord
   validates_uniqueness_of :geographic_area_id, scope: [:project_id, :otu_id], message: 'record for this source/otu combination already exists'
 
   validate :new_records_include_citation
-  
+
   scope :with_otu_id, -> (otu_id) { where(otu_id: otu_id) }
   scope :with_geographic_area_id, -> (geographic_area_id) { where(geographic_area_id: geographic_area_id) }
   scope :with_geographic_area_array, -> (geographic_area_array) { where('geographic_area_id IN (?)', geographic_area_array) }
@@ -64,20 +64,20 @@ class AssertedDistribution < ApplicationRecord
   def self.find_for_autocomplete(params)
     term = params[:term]
     include(:geographic_area, :otu).
-        where(geographic_areas: {name: term}, otus: {name: term}).with_project_id(params[:project_id])
+      where(geographic_areas: {name: term}, otus: {name: term}).with_project_id(params[:project_id])
   end
 
   # @return [AssertedDistribution]
   #   used to also stub an #origin_citation, as required
   def self.stub(defaults: {})
-    a = AssertedDistribution.new(
-      otu_id: defaults[:otu_id], 
+    a                 = AssertedDistribution.new(
+      otu_id:                     defaults[:otu_id],
       origin_citation_attributes: {source_id: defaults[:source_id]}
     )
     a.origin_citation = Citation.new if defaults[:source_id].blank?
     a
   end
-  
+
   def to_geo_json_feature
     retval = {
       'type'       => 'Feature',
@@ -100,15 +100,15 @@ class AssertedDistribution < ApplicationRecord
   protected
 
   def new_records_include_citation
-    if new_record? && source.blank? && origin_citation.blank? && !citations.any? 
+    if new_record? && source.blank? && origin_citation.blank? && !citations.any?
       errors.add(:base, 'required citation is not provided')
-    end 
+    end
   end
 
   def new_records_include_otu
 
   end
-  
+
 
   def sv_conflicting_geographic_area
     ga = self.geographic_area
@@ -127,13 +127,12 @@ class AssertedDistribution < ApplicationRecord
   # @param options [Hash] of e.g., {otu_id: 5, source_id: 5, geographic_areas: Array of {GeographicArea}}
   # @return an array of AssertedDistributions.new()
   def self.stub_new(options = {})
-    options.symbolize_keys!
-    result = []
+    options = options.Utilities::Hashes.tw_symbolize_keys(options)
+    result  = []
     options[:geographic_areas].each do |ga|
-      result.push(AssertedDistribution.new(
-        otu_id: options[:otu_id], 
-        geographic_area: ga,
-        origin_citation_attributes: {source_id: options[:source_id]}
+      result.push(AssertedDistribution.new(otu_id:                     options[:otu_id],
+                                           geographic_area:            ga,
+                                           origin_citation_attributes: {source_id: options[:source_id]}
       ))
     end
     result

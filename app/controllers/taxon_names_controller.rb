@@ -80,11 +80,11 @@ class TaxonNamesController < ApplicationController
     data = @taxon_names.collect do |t|
       str = render_to_string(partial: 'autocomplete_tag', locals: {taxon_name: t, term: params[:term] })
       {id:              t.id,
-       label:           t.cached, 
+       label:           t.cached,
        response_values: {
          params[:method] => t.id
        },
-       label_html:       str
+       label_html:      str
       }
     end
 
@@ -103,14 +103,14 @@ class TaxonNamesController < ApplicationController
   def batch_load
   end
 
-  def preview_simple_batch_load 
-    if params[:file] 
+  def preview_simple_batch_load
+    if params[:file]
       @result =  BatchLoad::Import::TaxonifiToTaxonworks.new(batch_params)
       digest_cookie(params[:file].tempfile, :simple_taxon_names_md5)
       render 'taxon_names/batch_load/simple/preview'
     else
       flash[:notice] = "No file provided!"
-      redirect_to action: :batch_load 
+      redirect_to action: :batch_load
     end
   end
 
@@ -131,23 +131,24 @@ class TaxonNamesController < ApplicationController
 
   private
   # Use callbacks to share common setup or constraints between actions.
-  def set_taxon_name 
-    @taxon_name = TaxonName.with_project_id(sessions_current_project_id).includes(:creator, :updater).find(params[:id]) 
+  def set_taxon_name
+    @taxon_name    = TaxonName.with_project_id(sessions_current_project_id).includes(:creator, :updater).find(params[:id])
     @recent_object = @taxon_name
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def taxon_name_params
-    params.require(:taxon_name).permit(:name, :parent_id,  :year_of_publication,
+    params.require(:taxon_name).permit(:name, :parent_id, :year_of_publication,
                                        :verbatim_author, :rank_class, :type, :masculine_name,
                                        :feminine_name, :neuter_name, :also_create_otu,
                                        roles_attributes: [:id, :_destroy, :type, :person_id, :position, person_attributes: [:last_name, :first_name, :suffix, :prefix]],
-                                       origin_citation_attributes: [:id, :_destroy, :source_id] 
-                                      ) 
+                                       origin_citation_attributes: [:id, :_destroy, :source_id]
+    )
   end
 
   def batch_params
-    params.permit(:file, :parent_taxon_name_id, :nomenclature_code, :also_create_otu, :import_level).merge(user_id: sessions_current_user_id, project_id: sessions_current_project_id).symbolize_keys
+    params.permit(:file, :parent_taxon_name_id, :nomenclature_code, :also_create_otu, :import_level)
+      .merge(user_id: sessions_current_user_id, project_id: sessions_current_project_id).to_h.symbolize_keys
   end
 
 end

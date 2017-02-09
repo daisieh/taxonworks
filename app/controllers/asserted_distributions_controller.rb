@@ -60,7 +60,7 @@ class AssertedDistributionsController < ApplicationController
   def destroy
     @asserted_distribution.mark_citations_for_destruction
     @asserted_distribution.destroy
-  
+
     respond_to do |format|
       format.html { redirect_to asserted_distributions_url, notice: 'Asserted distribution was successfully destroyed.' }
       format.json { head :no_content }
@@ -102,21 +102,21 @@ class AssertedDistributionsController < ApplicationController
   def batch_load
   end
 
-  def preview_simple_batch_load 
+  def preview_simple_batch_load
     if params[:file]
       @result =  BatchLoad::Import::AssertedDistributions.new(batch_params)
       digest_cookie(params[:file].tempfile, :batch_asserted_distributions_md5)
       render 'asserted_distributions/batch_load/simple/preview'
     else
       flash[:notice] = "No file provided!"
-      redirect_to action: :batch_load 
+      redirect_to action: :batch_load
     end
   end
 
   def create_simple_batch_load
     if params[:file] && digested_cookie_exists?(params[:file].tempfile, :batch_asserted_distributions_md5)
       @result =  BatchLoad::Import::AssertedDistributions.new(batch_params)
-      if @result.create 
+      if @result.create
         flash[:notice] = "Successfully proccessed file, #{@result.total_records_created} asserted distributions were created."
         render 'asserted_distributions/batch_load/simple/create' and return
       else
@@ -125,11 +125,11 @@ class AssertedDistributionsController < ApplicationController
     else
       flash[:alert] = 'File to batch upload must be supplied.'
     end
-    render :batch_load 
+    render :batch_load
   end
 
   private
-  
+
   def set_asserted_distribution
     @asserted_distribution = AssertedDistribution.with_project_id(sessions_current_project_id).find(params[:id])
     @recent_object         = @asserted_distribution
@@ -138,11 +138,12 @@ class AssertedDistributionsController < ApplicationController
   def asserted_distribution_params
     params.require(:asserted_distribution).permit(:otu_id, :geographic_area_id, :source_id, :is_absent,
                                                   otu_attributes: [:id, :_destroy, :name, :taxon_name_id],
-                                                  origin_citation_attributes: [:id, :_destroy, :source_id] 
+                                                  origin_citation_attributes: [:id, :_destroy, :source_id]
                                                  )
   end
 
   def batch_params
-    params.permit(:data_origin, :file, :import_level).merge(user_id: sessions_current_user_id, project_id: sessions_current_project_id).symbolize_keys
+    params.permit(:data_origin, :file, :import_level).merge(user_id:    sessions_current_user_id,
+                                                            project_id: sessions_current_project_id).to_h.symbolize_keys
   end
 end
