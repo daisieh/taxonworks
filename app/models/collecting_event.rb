@@ -781,7 +781,7 @@ class CollectingEvent < ApplicationRecord
       #  Struck EGI, EGI must contain GI, therefor anything that contains EGI contains GI, threfor containing GI will always be the bigger set
       #   !! and there was no tests broken
       # GeographicItem.are_contained_in_item('any_poly', self.geographic_items.to_a).pluck(:id).uniq
-      gi_list = GeographicItem.containing(*geographic_items.pluck(:id)).pluck(:id).distinct
+      gi_list = GeographicItem.containing(*geographic_items.pluck(:id)).pluck(:id).uniq
 
     else
       # use geographic_area only if there are no GIs or EGIs
