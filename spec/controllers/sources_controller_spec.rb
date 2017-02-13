@@ -108,7 +108,7 @@ describe SourcesController, :type => :controller do
     describe 'with valid params' do
       let(:update_params) { ActionController::Parameters.new({'serial_id'                  => '1',
                                                               'project_sources_attributes' => [{'project_id' => '1'}]})
-                              .permit(:serial_id, :project_sources_attributes) }
+                              .permit(:serial_id, project_sources_attributes: [:project_id]) }
       it 'updates the requested source' do
         source = Source.create! valid_attributes
         # Assuming there are no other sources in the database, this
