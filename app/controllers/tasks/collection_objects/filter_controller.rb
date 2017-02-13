@@ -93,6 +93,11 @@ class Tasks::CollectionObjects::FilterController < ApplicationController
     render json: {html: @otu_collection_objects_count.to_s}
   end
 
+  # GET
+  def download
+
+  end
+
   # @param [Integer] otu_id: an id for the selected otu
   # @param [String] descendants: 'on' for inclusion of other otus attached to the taxon_name (if available)
   #                              'off' to limit to the collection objects of this otu only
