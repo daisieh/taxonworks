@@ -33,6 +33,7 @@ class Otu < ApplicationRecord
   include Shared::IsData
   include Shared::Depictions
   include Shared::Loanable
+  include Shared::Confidence
 
   include SoftValidation
 

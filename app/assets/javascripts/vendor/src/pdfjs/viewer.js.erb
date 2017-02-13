@@ -177,23 +177,34 @@ Object.assign(TW.views.shared.slideout.pdf, {
       }, 500);
     }            
 
+    function viewerActive() {
+      return ($('[data-panel-name="pdfviewer"]').attr('data-panel-open') == 'true');
+    }
+
     //pdf.js end
 
-    var textCopy = '';
+    // Events
+
+    var textCopy = '',
+        cursorPosition = 0;
+
+    $("input").on("click", function(e) {
+      if(viewerActive()) {
+        if(this.selectionStart === this.selectionEnd) { 
+          cursorPosition = $(this).getCursorPosition();
+        }
+      }
+    });       
 
     $('#viewer').mouseup(function() {
       textCopy = getSelectedText();
     });
 
-    $( "input" ).dblclick(function() {
-      if($('[data-panel-name="pdfviewer"]').attr('data-panel-open') == 'true') {
-        $(this).val(textCopy);
+    $("textarea, input").dblclick(function() {
+      if(viewerActive()) {
+        $(this).val(insertStringInPosition($(this).val(),textCopy, cursorPosition));
       }
     });
-
-    $( "textarea" ).dblclick(function() {
-      $(this).val(textCopy);
-    });    
 
     $('[data-pdfviewer]').on("click", function() {
       loadPDF($(this).attr("data-pdfviewer"));
