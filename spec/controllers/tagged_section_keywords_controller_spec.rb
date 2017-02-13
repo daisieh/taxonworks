@@ -78,8 +78,7 @@ describe TaggedSectionKeywordsController, :type => :controller do
 
   describe 'PUT update' do
     describe 'with valid params' do
-      let(:update_params) { ActionController::Parameters.new({keyword: other_keyword})
-                              .permit(:keyword_id) }
+      let(:update_params) { ActionController::Parameters.new({keyword_id: other_keyword.id.to_s}).permit(:keyword_id) }
       it 'updates the requested tagged_section_keyword' do
         tagged_section_keyword = TaggedSectionKeyword.create! valid_attributes
         # Assuming there are no other tagged_section_keywords in the database, this
