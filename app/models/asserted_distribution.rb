@@ -127,7 +127,7 @@ class AssertedDistribution < ApplicationRecord
   # @param options [Hash] of e.g., {otu_id: 5, source_id: 5, geographic_areas: Array of {GeographicArea}}
   # @return an array of AssertedDistributions.new()
   def self.stub_new(options = {})
-    options = options.Utilities::Hashes.tw_symbolize_keys(options)
+    options = Utilities::Hashes.tw_symbolize_keys(options)
     result  = []
     options[:geographic_areas].each do |ga|
       result.push(AssertedDistribution.new(otu_id:                     options[:otu_id],
